@@ -24,7 +24,7 @@ const RealtimeChart: React.FunctionComponent<RealtimeChartProps> = () => {
             },
         },
         title: {
-            text: 'Real-Time Line Graph',
+            text: 'Biểu đồ đường thời gian thực',
         },
         xAxis: {
             type: 'datetime',

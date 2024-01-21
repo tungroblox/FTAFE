@@ -10,7 +10,7 @@ const SkillsCharts: React.FunctionComponent<SkillsChartsProps> = () => {
             type: 'pie',
         },
         title: {
-            text: 'Rate of Use of Programming Languages',
+            text: 'Thống kê sản phẩm bán',
         },
         tooltip: {
             pointFormat: '{series.name}: <b>{point.y}%</b>',
@@ -28,14 +28,14 @@ const SkillsCharts: React.FunctionComponent<SkillsChartsProps> = () => {
             {
                 name: 'Languages',
                 data: [
-                    ['JavaScript', 65],
-                    ['Python', 20],
-                    ['Java', 10],
-                    ['C++', 5],
-                    ['Ruby', 4],
-                    ['C#', 3],
-                    ['PHP', 2],
-                    ['Others', 1],
+                    ['Rau', 65],
+                    ['Củ', 20],
+                    ['Quả', 10],
+                    ['Gạo', 5],
+                    ['Thịt', 4],
+                    ['Cá', 3],
+                    ['Bột', 2],
+                    ['Khác', 1],
                 ],
             },
         ],
@@ -48,7 +48,7 @@ const SkillsCharts: React.FunctionComponent<SkillsChartsProps> = () => {
             <div className="bg-white border rounded-sm shadow-lg basis-2/3 dark:bg-slate-800 border-slate-200 dark:border-slate-700">
                 <div className="bg-white border rounded-sm shadow-lg col-span-full xl:col-span-8 dark:bg-slate-800 border-slate-200 dark:border-slate-700">
                     <header className="px-5 py-2 border-b border-slate-100 dark:border-slate-700">
-                        <h2 className="text-lg font-bold text-slate-800 dark:text-slate-100">Top Skills Are Selected</h2>
+                        <h2 className="text-lg font-bold text-slate-800 dark:text-slate-100">Bảng xếp hạng sản phẩm</h2>
                     </header>
                     <div className="p-7">
                         {/* Table */}
@@ -58,19 +58,19 @@ const SkillsCharts: React.FunctionComponent<SkillsChartsProps> = () => {
                                 <thead className="text-xs uppercase rounded-sm text-slate-400 dark:text-slate-500 bg-slate-50 dark:bg-slate-700 dark:bg-opacity-50">
                                     <tr>
                                         <th className="p-2">
-                                            <div className="font-semibold text-left">Source</div>
+                                            <div className="font-semibold text-left">Tên sản phẩm</div>
                                         </th>
                                         <th className="p-2">
-                                            <div className="font-semibold text-center">Visitors</div>
+                                            <div className="font-semibold text-center">Lượt xem</div>
                                         </th>
                                         <th className="p-2">
-                                            <div className="font-semibold text-center">Revenues</div>
+                                            <div className="font-semibold text-center">Doanh thu</div>
                                         </th>
                                         <th className="p-2">
-                                            <div className="font-semibold text-center">Sales</div>
+                                            <div className="font-semibold text-center">Bán</div>
                                         </th>
                                         <th className="p-2">
-                                            <div className="font-semibold text-center">Conversion</div>
+                                            <div className="font-semibold text-center">Thêm sau</div>
                                         </th>
                                     </tr>
                                 </thead>

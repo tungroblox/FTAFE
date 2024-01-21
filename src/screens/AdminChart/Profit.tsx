@@ -9,7 +9,7 @@ const Profit: React.FunctionComponent<ProfitProps> = () => {
             type: 'column',
         },
         title: {
-            text: 'Profit Comparison 2022-2023',
+            text: 'Thống kê lợi nhuận 2022-2023',
         },
         xAxis: {
             categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],

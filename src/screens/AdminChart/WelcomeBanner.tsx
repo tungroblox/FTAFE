@@ -52,7 +52,7 @@ const WelcomeBanner: React.FunctionComponent<WelcomeBannerProps> = () => {
             {/* Content */}
             <div className="relative">
                 <h1 className="mb-1 text-2xl font-bold uppercase md:text-3xl text-slate-800 dark:text-slate-100">Welcome, {name}. 👋</h1>
-                <p className="dark:text-indigo-200">Here is what’s happening with your projects today:</p>
+                <p className="dark:text-indigo-200">Chào mừng tới Dashboard</p>
             </div>
         </div>
     );

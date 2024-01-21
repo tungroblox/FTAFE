@@ -49,7 +49,7 @@ const TopExpert: React.FunctionComponent<TopExpertProps> = () => {
     return (
         <div className="bg-white border rounded-sm shadow-lg dark:bg-slate-800 border-slate-200 dark:border-slate-700">
             <header className="px-5 py-4 border-b border-slate-100 dark:border-slate-700">
-                <h2 className="text-lg font-bold text-slate-800 dark:text-slate-100">Top Expert Of The Month</h2>
+                <h2 className="text-lg font-bold text-slate-800 dark:text-slate-100">Bảng xếp hạng FarmHub</h2>
             </header>
             <div className="p-3">
                 {/* Table */}
@@ -59,16 +59,16 @@ const TopExpert: React.FunctionComponent<TopExpertProps> = () => {
                         <thead className="text-xs font-semibold uppercase text-slate-400 dark:text-slate-500 bg-slate-50 dark:bg-slate-700 dark:bg-opacity-50">
                             <tr>
                                 <th className="p-2 whitespace-nowrap">
-                                    <div className="font-semibold text-left">Name</div>
+                                    <div className="font-semibold text-left">Tên</div>
                                 </th>
                                 <th className="p-2 whitespace-nowrap">
                                     <div className="font-semibold text-left">Email</div>
                                 </th>
                                 <th className="p-2 whitespace-nowrap">
-                                    <div className="font-semibold text-left">Revenues</div>
+                                    <div className="font-semibold text-left">Doanh thu</div>
                                 </th>
                                 <th className="p-2 whitespace-nowrap">
-                                    <div className="font-semibold text-center">Country</div>
+                                    <div className="font-semibold text-center">Vị trí</div>
                                 </th>
                             </tr>
                         </thead>

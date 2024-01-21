@@ -29,11 +29,11 @@ const OverviewData: React.FunctionComponent<OverviewDataProps> = () => {
         },
         series: [
             {
-                name: 'Month 1',
+                name: 'Tháng 1',
                 data: [22, 20, 30, 30, 50, 60, 80],
             },
             {
-                name: 'Month 2',
+                name: 'Tháng 2',
                 data: [15, 19, 28, 45, 55, 55, 70],
             },
         ],
@@ -46,10 +46,10 @@ const OverviewData: React.FunctionComponent<OverviewDataProps> = () => {
                     <img src={'/assets/icons/icon-01.svg'} width="32" height="32" alt="Icon 01" />
                     {/* Menu button */}
                 </header>
-                <h2 className="mb-2 text-lg font-semibold text-slate-800 dark:text-slate-100">Acme Plus</h2>
-                <div className="mb-1 text-xs font-semibold uppercase text-slate-400 dark:text-slate-500">Sales</div>
+                <h2 className="mb-2 text-lg font-semibold text-slate-800 dark:text-slate-100">Doanh thu</h2>
+                <div className="mb-1 text-xs font-semibold uppercase text-slate-400 dark:text-slate-500"></div>
                 <div className="flex items-start">
-                    <div className="mr-2 text-3xl font-bold text-slate-800 dark:text-slate-100">$24,780</div>
+                    <div className="mr-2 text-3xl font-bold text-slate-800 dark:text-slate-100">500.000.000VND</div>
                     <div className="text-sm font-semibold text-white px-1.5 bg-emerald-500 rounded-full">+49%</div>
                 </div>
             </div>

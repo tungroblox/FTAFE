@@ -123,7 +123,7 @@ export const MainFooter: React.FC<MainFooterProps> = () => {
                     </div>
                 </div>
                 <div className="pt-8 border-t border-solid border-gray-900/10">
-                    <p className="text-sm font-bold text-center text-gray-900">Copyright © 2023. LiveCV. All rights reserved.</p>
+                    <p className="text-sm font-bold text-center text-gray-900">Copyright © 2023. UniFarm. All rights reserved.</p>
                 </div>
             </div>
         </footer>
