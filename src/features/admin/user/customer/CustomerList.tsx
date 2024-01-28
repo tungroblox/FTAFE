@@ -15,11 +15,11 @@ import clsx from 'clsx';
 import Link from 'next/link';
 import * as React from 'react';
 
-interface CandidateListProps {
+interface CustomerListProps {
     filter: Partial<IV1GetFilterCandidate>;
 }
 
-const CandidateList: React.FunctionComponent<CandidateListProps> = ({ filter }) => {
+const CustomerList: React.FunctionComponent<CustomerListProps> = ({ filter }) => {
     const { data, isLoading } = useQueryCandidateFilter(filter);
     const customers: Customer[] = [
         {
@@ -90,7 +90,7 @@ const CandidateList: React.FunctionComponent<CandidateListProps> = ({ filter }) 
                                         alt=""
                                         width={64}
                                         height={64}
-                                        className="rounded overflow-hidden"
+                                        className="overflow-hidden rounded"
                                         src={props.user.avatar ? props.user.avatar : stringHelper.convertTextToAvatar(props.user.fullName)}
                                     />
                                 }
@@ -138,4 +138,4 @@ const CandidateList: React.FunctionComponent<CandidateListProps> = ({ filter }) 
     );
 };
 
-export default CandidateList;
+export default CustomerList;

@@ -1,6 +1,5 @@
 import { DashboardHeaderLayout } from '@components/layouts';
-import CandidateDetail from '@features/admin/user/candidate/CandidateDetail';
-import { useQueryCandidateById } from '@hooks/api/candidate.hook';
+import CustomerDetail from '@features/admin/user/customer/CustomerDetail';
 import { UserRole } from '@models/user';
 import { NextPage } from 'next';
 import { ToggleProvider } from 'react-toggle-hook';
@@ -10,8 +9,8 @@ interface PageProps {
 }
 
 const Page: NextPage<PageProps> = ({ id }) => {
-    const { data } = useQueryCandidateById(id);
-    const fake = {
+    // const { data } = useQueryCandidateById(id);
+    const SAMEPLE_DATA = {
         user: {
             id: '1',
             type: UserRole.CUSTOMER,
@@ -36,7 +35,7 @@ const Page: NextPage<PageProps> = ({ id }) => {
         // <ProtectWrapper acceptRoles={[UserRole.ADMIN]}>
         <ToggleProvider>
             <DashboardHeaderLayout title="Customer Detail">
-                <CandidateDetail candidate={fake} />
+                <CustomerDetail customer={SAMEPLE_DATA} />
             </DashboardHeaderLayout>
         </ToggleProvider>
         // </ProtectWrapper>

@@ -13,6 +13,7 @@ import { Image, Tag } from 'antd';
 import clsx from 'clsx';
 import Link from 'next/link';
 import * as React from 'react';
+import { v4 as uuidv4 } from 'uuid';
 
 interface FarmHubListProps {
     filter: Partial<IV1GetFilterCandidate>;
@@ -22,7 +23,7 @@ const FarmHubList: React.FunctionComponent<FarmHubListProps> = ({ filter }) => {
     const { data, isLoading } = useQueryCandidateFilter(filter);
     const customers: FarmHub[] = [
         {
-            id: 'UUID',
+            id: uuidv4(),
             address: 'abc',
             description: 'abc',
             image: 'https://images.unsplash.com/photo-1706361635623-6606c945503e?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
@@ -30,13 +31,13 @@ const FarmHubList: React.FunctionComponent<FarmHubListProps> = ({ filter }) => {
             status: 'Active',
             created_at: new Date().toString(),
             user: {
-                id: '1',
+                id: uuidv4(),
                 email: 'john123@gmail.com',
                 type: UserRole.FARM_HUB,
             },
         },
         {
-            id: '1',
+            id: uuidv4(),
             address: 'abc',
             description: 'abc',
             image: 'https://images.unsplash.com/photo-1706361635623-6606c945503e?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
@@ -44,7 +45,7 @@ const FarmHubList: React.FunctionComponent<FarmHubListProps> = ({ filter }) => {
             status: 'Active',
             created_at: new Date().toString(),
             user: {
-                id: '1',
+                id: uuidv4(),
                 email: 'john123@gmail.com',
                 type: UserRole.FARM_HUB,
             },
@@ -79,7 +80,7 @@ const FarmHubList: React.FunctionComponent<FarmHubListProps> = ({ filter }) => {
                                         alt=""
                                         width={64}
                                         height={64}
-                                        className="rounded overflow-hidden"
+                                        className="overflow-hidden rounded"
                                         src={props.image ? props.image : stringHelper.convertTextToAvatar(props.name)}
                                     />
                                 }

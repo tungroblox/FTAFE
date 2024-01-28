@@ -99,11 +99,7 @@ export const DashboardLayout: React.FC<DashboardLayoutProps> = ({ children }) =>
                                                 />
                                             </div>
                                         ) : (
-                                            <img
-                                                src="https://mir-s3-cdn-cf.behance.net/project_modules/max_1200/7a3ec529632909.55fc107b84b8c.png"
-                                                className="object-cover h-12 fade-in"
-                                                alt="LivelyCV"
-                                            />
+                                            <img src={'/assets/images/logo/logo-new.png'} className="object-cover h-12 fade-in" alt="LivelyCV" />
                                         )}
                                     </div>
                                 </Link>

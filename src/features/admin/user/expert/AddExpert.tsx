@@ -1,7 +1,6 @@
 import { FormWrapper, PasswordInput, TextInput } from '@components/forms';
 import { IV1UserCreateExpert } from '@core/api';
 // import { expertApi, IV1AdminAddExpert } from '@core/api/expert.api';
-import { routes } from '@core/routes';
 import { useMutationUserCreateExpert } from '@hooks/api/user.hook';
 import { Button } from 'antd';
 import { useRouter } from 'next/router';
@@ -29,7 +28,7 @@ const AddExpert: React.FunctionComponent<AddExpertProps> = () => {
             onSuccess: (res) => {
                 toast.success('Add expert successfully');
                 methods.reset();
-                router.push(routes.admin.user.expert.list());
+                // router.push(routes.admin.user.expert.list());
             },
         });
     };

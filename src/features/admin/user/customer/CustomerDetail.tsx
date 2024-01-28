@@ -5,10 +5,10 @@ import moment from 'moment';
 import * as React from 'react';
 
 interface StaffDetailProps {
-    candidate: Customer;
+    customer: Customer;
 }
 
-const CandidateDetail: React.FunctionComponent<StaffDetailProps> = ({ candidate }) => {
+const CustomerDetail: React.FunctionComponent<StaffDetailProps> = ({ customer }) => {
     return (
         <>
             <div className="flex flex-col w-full gap-4">
@@ -24,35 +24,35 @@ const CandidateDetail: React.FunctionComponent<StaffDetailProps> = ({ candidate 
                         <Image
                             height={80}
                             width={80}
-                            className="rounded overflow-hidden"
-                            src={candidate.user.avatar ? candidate.user.avatar : convertTextToAvatar(candidate.user.fullName)}
-                            alt={candidate.user.fullName}
+                            className="overflow-hidden rounded"
+                            src={customer.user.avatar ? customer.user.avatar : convertTextToAvatar(customer.user.fullName)}
+                            alt={customer.user.fullName}
                         />
                     </Descriptions.Item>
                     <Descriptions.Item label="Fullname" span={2}>
-                        {candidate.user.fullName}
+                        {customer.user.fullName}
                     </Descriptions.Item>
                     <Descriptions.Item label="Username" span={1}>
-                        {candidate.user.username}
+                        {customer.user.username}
                     </Descriptions.Item>
                     <Descriptions.Item label="Gender" span={1}>
-                        {candidate.user.gender}
+                        {customer.user.gender}
                     </Descriptions.Item>
                     <Descriptions.Item label="Job" span={2}>
-                        {candidate.user.job_title}
+                        {customer.user.job_title}
                     </Descriptions.Item>
                     <Descriptions.Item label="Address" span={3}>
-                        {candidate.user.address}
+                        {customer.user.address}
                     </Descriptions.Item>
 
                     <Descriptions.Item label="Status" span={1}>
-                        {candidate.user.status}
+                        {customer.user.status}
                     </Descriptions.Item>
                     <Descriptions.Item label="Created at" span={1}>
-                        {moment(candidate.user.createdAt).format('DD/MM/YYYY HH:mm')}
+                        {moment(customer.user.createdAt).format('DD/MM/YYYY HH:mm')}
                     </Descriptions.Item>
                     <Descriptions.Item label="Last Updated At" span={1}>
-                        {moment(candidate.user.updatedAt).format('DD/MM/YYYY HH:mm')}
+                        {moment(customer.user.updatedAt).format('DD/MM/YYYY HH:mm')}
                     </Descriptions.Item>
                 </Descriptions>
             </div>
@@ -60,4 +60,4 @@ const CandidateDetail: React.FunctionComponent<StaffDetailProps> = ({ candidate 
     );
 };
 
-export default CandidateDetail;
+export default CustomerDetail;

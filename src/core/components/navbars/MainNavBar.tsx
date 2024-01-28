@@ -9,9 +9,8 @@ import { UserRole } from '@models/user';
 import WhiteLogo from '@public/images/logo_white.png';
 import { useStoreUser, useStoreWallet } from '@store/index';
 import { isChildrenPageActive } from '@utils/dynamicNavigation';
-import { stringHelper } from '@utils/index';
 import { Person, PersonCheck, SignOut } from 'akar-icons';
-import { Button, Empty, MenuProps } from 'antd';
+import { Empty, MenuProps } from 'antd';
 import clsx from 'clsx';
 import moment from 'moment';
 import Image from 'next/image';
@@ -111,29 +110,29 @@ const MainNavbar: React.FunctionComponent<MainNavbarProps> = () => {
     React.useEffect(() => {
         const newLinks = [...defaultLinks];
 
-        if (user.type === UserRole.CANDIDATE || user.type === UserRole.EXPERT) {
-            newLinks.push({
-                id: 'link-cv',
-                name: 'CV',
-                path: routes.cv.list(),
-            });
-        }
+        // if (user.type === UserRole.CANDIDATE || user.type === UserRole.EXPERT) {
+        //     newLinks.push({
+        //         id: 'link-cv',
+        //         name: 'CV',
+        //         path: routes.cv.list(),
+        //     });
+        // }
 
-        if (user.type === UserRole.EXPERT) {
-            newLinks.push({
-                id: 'link-expert',
-                name: 'Dashboard',
-                path: routes.expert.home(),
-            });
-        }
+        // if (user.type === UserRole.EXPERT) {
+        //     newLinks.push({
+        //         id: 'link-expert',
+        //         name: 'Dashboard',
+        //         path: routes.expert.home(),
+        //     });
+        // }
 
-        if (user.type === UserRole.CANDIDATE) {
-            newLinks.push({
-                id: 'link-interview',
-                name: 'Interview',
-                path: routes.interview.list(),
-            });
-        }
+        // if (user.type === UserRole.CANDIDATE) {
+        //     newLinks.push({
+        //         id: 'link-interview',
+        //         name: 'Interview',
+        //         path: routes.interview.list(),
+        //     });
+        // }
 
         if (user.type === UserRole.ADMIN) {
             newLinks.push({
@@ -143,13 +142,13 @@ const MainNavbar: React.FunctionComponent<MainNavbarProps> = () => {
             });
         }
 
-        if (user.type === UserRole.STAFF) {
-            newLinks.push({
-                id: 'link-staff',
-                name: 'Dashboard',
-                path: routes.staff.home(),
-            });
-        }
+        // if (user.type === UserRole.STAFF) {
+        //     newLinks.push({
+        //         id: 'link-staff',
+        //         name: 'Dashboard',
+        //         path: routes.staff.home(),
+        //     });
+        // }
 
         setLinks(newLinks);
     }, [user.type]);
@@ -170,7 +169,7 @@ const MainNavbar: React.FunctionComponent<MainNavbarProps> = () => {
                                 {/* <Image src={'/assets/images/logo/logo-new.png'} height={28} width={130} alt="Live CV" className="h-auto max-h-7 " /> */}
                                 <img
                                     src={'/assets/images/logo/logo-new.png'}
-                                    alt="Live CV"
+                                    alt="Uni Farm"
                                     className="object-cover h-auto max-h-14"
                                     style={{ filter: 'drop-shadow(0px 0px 10px rgba(0, 0, 0, 0.1))' }}
                                 />
@@ -219,7 +218,7 @@ const MainNavbar: React.FunctionComponent<MainNavbarProps> = () => {
                                         </button>
 
                                         <div className="dropdown-menu dark:bg-jacarta-800 group-dropdown-hover:opacity-100 group-dropdown-hover:visible !-right-4 !top-[95%] !left-auto min-w-[14rem] whitespace-nowrap rounded-xl bg-white transition-all will-change-transform before:absolute before:-top-3 before:h-3 before:w-full lg:absolute lg:grid lg:!translate-y-4 lg:py-4 lg:px-2 lg:shadow-2xl hidden lg:invisible lg:opacity-0 z-[50]">
-                                            {user.type === UserRole.CANDIDATE && (
+                                            {/* {user.type === UserRole.CANDIDATE && (
                                                 <Link href={routes.user.transaction.list()}>
                                                     <div className="px-5 py-2 m-0 text-base font-semibold transition-colors cursor-pointer dark:hover:bg-jacarta-600 hover:text-primary/80 focus:text-accent hover:bg-jacarta-50 rounded-xl">
                                                         Balance:{' '}
@@ -228,9 +227,9 @@ const MainNavbar: React.FunctionComponent<MainNavbarProps> = () => {
                                                         </span>
                                                     </div>
                                                 </Link>
-                                            )}
+                                            )} */}
 
-                                            {(user.type === UserRole.CANDIDATE ? candidateLinks : userLinks).map((link) =>
+                                            {/* {(user.type === UserRole.CANDIDATE ? candidateLinks : userLinks).map((link) =>
                                                 link.name === 'Sign Out' ? (
                                                     <div
                                                         className="flex items-center px-5 py-2 space-x-2 transition-colors cursor-pointer dark:hover:bg-jacarta-600 hover:text-primary/80 focus:text-accent hover:bg-jacarta-50 rounded-xl"
@@ -244,17 +243,19 @@ const MainNavbar: React.FunctionComponent<MainNavbarProps> = () => {
                                                             {link.name}
                                                         </span>
                                                     </div>
-                                                ) : (
-                                                    <Link href={link.path} key={link.id}>
-                                                        <div className="flex items-center px-5 py-2 space-x-2 transition-colors cursor-pointer dark:hover:bg-jacarta-600 hover:text-primary/80 focus:text-accent hover:bg-jacarta-50 rounded-xl">
-                                                            {link.icon}
-                                                            <span className="mt-1 text-sm font-display text-jacarta-700 dark:text-white">
-                                                                {link.name}
-                                                            </span>
-                                                        </div>
-                                                    </Link>
-                                                )
-                                            )}
+                                                ) : ( */}
+                                            {userLinks.map((link) => (
+                                                <Link href={link.path} key={link.id}>
+                                                    <div className="flex items-center px-5 py-2 space-x-2 transition-colors cursor-pointer dark:hover:bg-jacarta-600 hover:text-primary/80 focus:text-accent hover:bg-jacarta-50 rounded-xl">
+                                                        {link.icon}
+                                                        <span className="mt-1 text-sm font-display text-jacarta-700 dark:text-white">
+                                                            {link.name}
+                                                        </span>
+                                                    </div>
+                                                </Link>
+                                            ))}
+                                            {/* )
+                                            )} */}
                                         </div>
                                     </>
                                 ) : (
@@ -280,7 +281,7 @@ const MainNavbar: React.FunctionComponent<MainNavbarProps> = () => {
                                                 <h3 className="text-xl font-bold">Notifications History</h3>
                                                 <div className="flex items-center justify-between">
                                                     <span className="pb-1.5 text-base font-semibold text-black">Before that</span>
-                                                    {user.type === UserRole.EXPERT && (
+                                                    {/* {user.type === UserRole.EXPERT && (
                                                         <Button
                                                             type="link"
                                                             style={{
@@ -313,7 +314,7 @@ const MainNavbar: React.FunctionComponent<MainNavbarProps> = () => {
                                                         >
                                                             View All
                                                         </Button>
-                                                    )}
+                                                    )} */}
                                                 </div>
                                                 {Boolean(notifications?.length) ? (
                                                     notifications?.map((item, idx) => (

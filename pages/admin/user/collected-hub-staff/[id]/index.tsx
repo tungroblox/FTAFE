@@ -1,12 +1,9 @@
 import { DashboardHeaderLayout } from '@components/layouts';
 import { ProtectWrapper } from '@components/wrappers';
-import ExpertDetail from '@features/admin/user/expert/ExpertDetail';
 import StaffDetail from '@features/admin/user/staff/StaffDetail';
-import { useQueryExpertById } from '@hooks/api/expert.hook';
 import { useQueryStaffById } from '@hooks/api/staff.hook';
 import { UserRole } from '@models/user';
 import { NextPage } from 'next';
-import * as React from 'react';
 import { ToggleProvider } from 'react-toggle-hook';
 
 interface PageProps {

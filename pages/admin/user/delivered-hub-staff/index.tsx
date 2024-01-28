@@ -16,7 +16,7 @@ const ExpertListPage: NextPage<ExpertListPageProps> = ({ filter }) => {
         // <ProtectWrapper acceptRoles={[UserRole.ADMIN]}>
         <ModalProvider>
             <TableUtilProvider>
-                <DashboardHeaderLayout title="Expert List">
+                <DashboardHeaderLayout title="Delivered Hub List">
                     <ExpertList filter={filter} />
                 </DashboardHeaderLayout>
             </TableUtilProvider>

@@ -1,20 +1,17 @@
-import { SelectInput, TextInput } from '@components/forms';
+import { TextInput } from '@components/forms';
 import FormFilterWrapper from '@components/forms/FormFilterWrapper';
 import { SelectOriginInput } from '@components/forms/SelectOriginInput';
-import { TableActionCell, TableBodyCell, TableBuilder, TableHeaderCell } from '@components/tables';
+import { TableBodyCell, TableBuilder, TableHeaderCell } from '@components/tables';
 import { IV1GetFilterExpert } from '@core/api/expert.api';
 // import { expertApi, IV1GetFilterExpert } from '@core/api/expert.api';
-import { routes } from '@core/routes';
 import { PlusIcon } from '@heroicons/react/24/outline';
 import { useQueryExpertFilter } from '@hooks/api/expert.hook';
 import { useQuerySkillFilter } from '@hooks/api/skill.hook';
-import { useQuerySkillLevelFilter } from '@hooks/api/skillLevel.hook';
-import { Expert, ExpertItem } from '@models/expert';
+import { ExpertItem } from '@models/expert';
 import { SortOrder } from '@models/interface';
 import { stringHelper } from '@utils/index';
 // import { ExpertList } from '@models/expert';
-import { Image, Tag } from 'antd';
-import Link from 'next/link';
+import { Image } from 'antd';
 import { useRouter } from 'next/router';
 import * as React from 'react';
 
@@ -32,11 +29,11 @@ const ExpertList: React.FunctionComponent<ExpertListProps> = ({ filter }) => {
         <div className="flex flex-col w-full gap-2">
             <div className="flex flex-col items-end w-full gap-2 ">
                 <button
-                    onClick={() => router.push(routes.admin.user.expert.create())}
+                    // onClick={() => router.push(routes.admin.user.expert.create())}
                     className="flex items-center gap-1 px-3 py-1 text-white duration-300 hover:text-white hover:bg-primary/90 bg-primary"
                 >
                     <PlusIcon className="w-5 h-5 text-white" />
-                    <span>Create New Expert</span>
+                    <span>Create New Hub</span>
                 </button>
             </div>
 
@@ -82,6 +79,7 @@ const ExpertList: React.FunctionComponent<ExpertListProps> = ({ filter }) => {
                             <TableBodyCell
                                 label={
                                     <Image
+                                        alt="avatar"
                                         width={64}
                                         height={64}
                                         className="overflow-hidden rounded"
@@ -96,7 +94,8 @@ const ExpertList: React.FunctionComponent<ExpertListProps> = ({ filter }) => {
                         width: 400,
                         key: 'fullName',
                         render: ({ ...props }: ExpertItem) => (
-                            <TableBodyCell label={<Link href={routes.admin.user.expert.detail(props.id)}>{props.user.fullName}</Link>} />
+                            // <TableBodyCell label={<Link href={routes.admin.user.expert.detail(props.id)}>{props.user.fullName}</Link>} />
+                            <></>
                         ),
                     },
                     {
@@ -117,7 +116,8 @@ const ExpertList: React.FunctionComponent<ExpertListProps> = ({ filter }) => {
                         width: 400,
                         key: 'action',
                         render: ({ ...props }) => {
-                            return <TableBodyCell label={<Link href={routes.admin.user.expert.detail(props.id)}>View detail</Link>} />;
+                            // return <TableBodyCell label={<Link href={routes.admin.user.expert.detail(props.id)}>View detail</Link>} />;
+                            return <></>;
                         },
                     },
                 ]}

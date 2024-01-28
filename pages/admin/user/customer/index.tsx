@@ -2,7 +2,7 @@ import { DashboardHeaderLayout } from '@components/layouts';
 import { ModalProvider } from '@context/modalContext';
 import { TableUtilProvider } from '@context/tableUtilContext';
 import { IV1GetFilterCandidate } from '@core/api/candidate';
-import CandidateList from '@features/admin/user/candidate/CandidateList';
+import CustomerList from '@features/admin/user/customer/CustomerList';
 import { defaultPagingProps } from '@models/interface';
 import { objectHelper } from '@utils/index';
 import { NextPage } from 'next';
@@ -17,7 +17,7 @@ const Page: NextPage<PageProps> = ({ filter }) => {
         <ModalProvider>
             <TableUtilProvider>
                 <DashboardHeaderLayout title="Customer Management">
-                    <CandidateList filter={filter} />
+                    <CustomerList filter={filter} />
                 </DashboardHeaderLayout>
             </TableUtilProvider>
         </ModalProvider>
