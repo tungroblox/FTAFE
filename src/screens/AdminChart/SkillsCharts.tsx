@@ -135,14 +135,13 @@ const SkillsCharts: React.FunctionComponent<SkillsChartsProps> = () => {
                                     <tr>
                                         <td className="p-2">
                                             <div className="flex items-center">
-                                                <svg className="mr-2 shrink-0 sm:mr-3" width="36" height="36" viewBox="0 0 36 36">
-                                                    <circle fill="#EA4335" cx="18" cy="18" r="18" />
-                                                    <path
-                                                        d="M18 17v2.4h4.1c-.2 1-1.2 3-4 3-2.4 0-4.3-2-4.3-4.4 0-2.4 2-4.4 4.3-4.4 1.4 0 2.3.6 2.8 1.1l1.9-1.8C21.6 11.7 20 11 18.1 11c-3.9 0-7 3.1-7 7s3.1 7 7 7c4 0 6.7-2.8 6.7-6.8 0-.5 0-.8-.1-1.2H18z"
-                                                        fill="#FFF"
-                                                        fillRule="nonzero"
-                                                    />
-                                                </svg>
+                                                <img
+                                                    src={
+                                                        'https://cdn.tgdd.vn/Files/2019/11/26/1222471/7-cach-chon-rau-cu-qua-tuoi-ngon-cuc-don-gian-202112311224397887.jpg'
+                                                    }
+                                                    alt="Rau củ tươi ngon"
+                                                    className="mr-2 shrink-0 sm:mr-3 rounded-full w-9 h-9"
+                                                />
                                                 <div className="text-slate-800 dark:text-slate-100">Google (organic)</div>
                                             </div>
                                         </td>
@@ -165,11 +164,7 @@ const SkillsCharts: React.FunctionComponent<SkillsChartsProps> = () => {
                                             <div className="flex items-center">
                                                 <svg className="mr-2 shrink-0 sm:mr-3" width="36" height="36" viewBox="0 0 36 36">
                                                     <circle fill="#4BC9FF" cx="18" cy="18" r="18" />
-                                                    <path
-                                                        d="M26 14.3c-.1 1.6-1.2 3.7-3.3 6.4-2.2 2.8-4 4.2-5.5 4.2-.9 0-1.7-.9-2.4-2.6C14 19.9 13.4 15 12 15c-.1 0-.5.3-1.2.8l-.8-1c.8-.7 3.5-3.4 4.7-3.5 1.2-.1 2 .7 2.3 2.5.3 2 .8 6.1 1.8 6.1.9 0 2.5-3.4 2.6-4 .1-.9-.3-1.9-2.3-1.1.8-2.6 2.3-3.8 4.5-3.8 1.7.1 2.5 1.2 2.4 3.3z"
-                                                        fill="#FFF"
-                                                        fillRule="nonzero"
-                                                    />
+                                                    <img src="" alt="" />
                                                 </svg>
                                                 <div className="text-slate-800 dark:text-slate-100">Vimeo.com</div>
                                             </div>

@@ -88,4 +88,4 @@ const useQueryCandidateById = (id: string) => {
     );
 };
 
-export { useCandidatePutProfileMutation, useQueryCandidateById,useQueryCandidateFilter, useQueryCandidateFilterInterview, useQueryTotalCandidate };
+export { useCandidatePutProfileMutation, useQueryCandidateById, useQueryCandidateFilter, useQueryCandidateFilterInterview, useQueryTotalCandidate };

@@ -6,8 +6,7 @@ import { IV1GetFilterExpert } from '@core/api/expert.api';
 // import { expertApi, IV1GetFilterExpert } from '@core/api/expert.api';
 import { routes } from '@core/routes';
 import { useQueryCandidateFilter } from '@hooks/api/candidate.hook';
-import { CandidateItem, Customer } from '@models/candidate';
-import { UserRole } from '@models/user';
+import { FarmHub, UserRole } from '@models/user';
 import { stringHelper } from '@utils/index';
 // import { ExpertList } from '@models/expert';
 import { Image, Tag } from 'antd';
@@ -15,49 +14,39 @@ import clsx from 'clsx';
 import Link from 'next/link';
 import * as React from 'react';
 
-interface CandidateListProps {
+interface FarmHubListProps {
     filter: Partial<IV1GetFilterCandidate>;
 }
 
-const CandidateList: React.FunctionComponent<CandidateListProps> = ({ filter }) => {
+const FarmHubList: React.FunctionComponent<FarmHubListProps> = ({ filter }) => {
     const { data, isLoading } = useQueryCandidateFilter(filter);
-    const customers: Customer[] = [
+    const customers: FarmHub[] = [
         {
+            id: 'UUID',
+            address: 'abc',
+            description: 'abc',
+            image: 'https://images.unsplash.com/photo-1706361635623-6606c945503e?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+            name: 'Company Name',
+            status: 'Active',
+            created_at: new Date().toString(),
             user: {
                 id: '1',
-                type: UserRole.CUSTOMER,
-                avatar: 'https://images.unsplash.com/photo-1706361635623-6606c945503e?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-                email: 'user@example.com',
-                fullName: 'John Doe',
-                phone: '123456789',
-                status: 'active',
-                createdAt: '',
-                updatedAt: '',
-                isDeleted: false,
-                address: 'lorem ...',
-                gender: 'male',
-                username: 'john123',
-                password: '123456789',
-                job_title: ' lorem',
+                email: 'john123@gmail.com',
+                type: UserRole.FARM_HUB,
             },
         },
         {
+            id: '1',
+            address: 'abc',
+            description: 'abc',
+            image: 'https://images.unsplash.com/photo-1706361635623-6606c945503e?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+            name: 'Company Name',
+            status: 'Active',
+            created_at: new Date().toString(),
             user: {
-                id: '2',
-                type: UserRole.CUSTOMER,
-                avatar: 'https://images.unsplash.com/photo-1706361635623-6606c945503e?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-                email: 'user@example.com',
-                fullName: 'John Doe',
-                phone: '123456789',
-                status: 'inactive',
-                createdAt: '',
-                updatedAt: '',
-                isDeleted: false,
-                address: 'lorem ...',
-                gender: 'male',
-                username: 'john123',
-                password: '123456789',
-                job_title: ' lorem',
+                id: '1',
+                email: 'john123@gmail.com',
+                type: UserRole.FARM_HUB,
             },
         },
         // Add more customer objects as needed
@@ -74,7 +63,7 @@ const CandidateList: React.FunctionComponent<CandidateListProps> = ({ filter }) 
                 </div>
             </FormFilterWrapper>
 
-            <TableBuilder<Customer>
+            <TableBuilder<FarmHub>
                 rowKey="id"
                 isLoading={isLoading}
                 data={customers}
@@ -83,7 +72,7 @@ const CandidateList: React.FunctionComponent<CandidateListProps> = ({ filter }) 
                         title: () => <TableHeaderCell key="avatar" sortKey="avatar" label="Avatar" />,
                         width: 400,
                         key: 'avatar',
-                        render: ({ ...props }: CandidateItem) => (
+                        render: ({ ...props }: FarmHub) => (
                             <TableBodyCell
                                 label={
                                     <Image
@@ -91,35 +80,28 @@ const CandidateList: React.FunctionComponent<CandidateListProps> = ({ filter }) 
                                         width={64}
                                         height={64}
                                         className="rounded overflow-hidden"
-                                        src={props.user.avatar ? props.user.avatar : stringHelper.convertTextToAvatar(props.user.fullName)}
+                                        src={props.image ? props.image : stringHelper.convertTextToAvatar(props.name)}
                                     />
                                 }
                             />
                         ),
                     },
                     {
-                        title: () => <TableHeaderCell key="fullName" sortKey="fullName" label="Fullname" />,
+                        title: () => <TableHeaderCell key="fullName" sortKey="fullName" label="Company Name" />,
                         width: 400,
                         key: 'fullName',
-                        render: ({ ...props }: CandidateItem) => (
-                            <TableBodyCell label={<Link href={routes.admin.user.customer.detail(props.id)}>{props.user.fullName}</Link>} />
+                        render: ({ ...props }: FarmHub) => (
+                            <TableBodyCell label={<Link href={routes.admin.user.farm_hub.detail(props.id)}>{props.name}</Link>} />
                         ),
-                    },
-                    {
-                        title: () => <TableHeaderCell key="email" sortKey="email" label="Email" />,
-                        width: 400,
-                        key: 'email',
-                        render: ({ ...props }: CandidateItem) => <TableBodyCell label={props.user.email} />,
                     },
                     {
                         title: () => <TableHeaderCell key="status" sortKey="status" label="Status" />,
                         width: 400,
                         key: 'status',
-                        render: ({ ...props }: CandidateItem) => {
-                            // return <TableBodyCell label={props.user.status} />;
+                        render: ({ ...props }: FarmHub) => {
                             return (
-                                <Tag className={clsx(`text-sm whitespace-normal`)} color={props.user.status === 'active' ? 'geekblue' : 'volcano'}>
-                                    {props.user.status}
+                                <Tag className={clsx(`text-sm whitespace-normal`)} color={props.status === 'active' ? 'geekblue' : 'volcano'}>
+                                    {props.status}
                                 </Tag>
                             );
                         },
@@ -129,7 +111,7 @@ const CandidateList: React.FunctionComponent<CandidateListProps> = ({ filter }) 
                         width: 400,
                         key: 'action',
                         render: ({ ...props }) => {
-                            return <TableBodyCell label={<Link href={routes.admin.user.customer.detail(props.id)}>View detail</Link>} />;
+                            return <TableBodyCell label={<Link href={routes.admin.user.farm_hub.detail(props.id)}>View detail</Link>} />;
                         },
                     },
                 ]}
@@ -138,4 +120,4 @@ const CandidateList: React.FunctionComponent<CandidateListProps> = ({ filter }) 
     );
 };
 
-export default CandidateList;
+export default FarmHubList;

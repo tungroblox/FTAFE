@@ -72,28 +72,35 @@ export const routes = {
         home: () => '/admin',
         profile: () => '/admin/profile',
         user: {
-            list: () => '/admin/user',
-            detail: (id: string) => `/admin/user/${id}`,
-            create: () => '/admin/user/create',
-            update: (id: string) => `/admin/user/${id}/update`,
-            expert: {
-                list: () => `/admin/user/expert`,
-                detail: (id: string) => `/admin/user/expert/${id}`,
-                create: () => `/admin/user/expert/create`,
-                update: (id: string) => `/admin/user/expert/${id}/update`,
+            customer: {
+                list: () => `/admin/user/customer`,
+                detail: (id: string) => `/admin/user/customer/${id}`,
+                create: () => `/admin/user/customer/create`,
+                update: (id: string) => `/admin/user/customer/${id}/update`,
             },
-            staff: {
-                list: () => `/admin/user/staff`,
-                detail: (id: string) => `/admin/user/staff/${id}`,
-                create: () => `/admin/user/staff/create`,
-                update: (id: string) => `/admin/user/staff/${id}/update`,
+            farm_hub: {
+                list: () => `/admin/user/farmhub`,
+                detail: (id: string) => `/admin/user/farmhub/${id}`,
+                create: () => `/admin/user/farmhub/create`,
+                update: (id: string) => `/admin/user/farmhub/${id}/update`,
             },
-            candidate: {
-                list: () => `/admin/user/candidate`,
-                detail: (id: string) => `/admin/user/candidate/${id}`,
-                create: () => `/admin/user/candidate/create`,
-                update: (id: string) => `/admin/user/candidate/${id}/update`,
+            delivered_hub_staff: {
+                list: () => `/admin/user/delivered-hub-staff`,
+                detail: (id: string) => `/admin/user/delivered-hub-staff/${id}`,
+                create: () => `/admin/user/delivered-hub-staff/create`,
+                update: (id: string) => `/admin/user/delivered-hub-staff/${id}/update`,
             },
+            collected_hub_staff: {
+                list: () => `/admin/user/collected-hub-staff`,
+                detail: (id: string) => `/admin/user/collected-hub-staff/${id}`,
+                create: () => `/admin/user/collected-hub-staff/create`,
+                update: (id: string) => `/admin/user/collected-hub-staff/${id}/update`,
+            },
+        },
+        category: {
+            list: () => '/admin/categories',
+            create: () => '/admin/categories/create',
+            edit: () => '/admin/categories/edit',
         },
     },
 

@@ -1,4 +1,4 @@
-import { AreaChartOutlined, CalendarOutlined, MenuFoldOutlined, MenuUnfoldOutlined, MessageOutlined, UserOutlined } from '@ant-design/icons';
+import { AreaChartOutlined, MenuFoldOutlined, MenuUnfoldOutlined, UserOutlined } from '@ant-design/icons';
 import { routes } from '@core/routes';
 import { BellIcon } from '@heroicons/react/24/outline';
 import { BellAlertIcon } from '@heroicons/react/24/solid';
@@ -6,11 +6,10 @@ import { useLogoutMutation } from '@hooks/api/auth.hook';
 import { useQueryNotificationFilter } from '@hooks/api/notification.hook';
 import { SortOrder } from '@models/interface';
 import { UserRole } from '@models/user';
-import { ChatBubble, Person, PersonCheck, SignOut, Star } from 'akar-icons';
+import { Person, PersonCheck, SignOut } from 'akar-icons';
 import { Badge, Button, Dropdown, Empty, Layout, Menu } from 'antd';
 import { ItemType } from 'antd/lib/menu/hooks/useItems';
 import clsx from 'clsx';
-import { BookUser, Briefcase } from 'lucide-react';
 import moment from 'moment';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
@@ -18,63 +17,8 @@ import * as React from 'react';
 
 import { useStoreUser } from '../../store';
 import { CommonSeo } from '../commons';
+
 const { Sider, Content } = Layout;
-
-const menuExpertList: ItemType[] = [
-    // {
-    //     icon: <AreaChartOutlined />,
-    //     label: 'Dashboard',
-    //     key: routes.expert.home(),
-    // },
-    {
-        icon: <ChatBubble className="h-[14px] w-[14px]" />,
-        label: 'Interviews',
-        key: 'interviews',
-        children: [
-            {
-                icon: <MessageOutlined />,
-                label: 'List',
-                key: routes.expert.interview.list(),
-            },
-            {
-                icon: <CalendarOutlined />,
-                label: 'Calendar',
-                key: routes.expert.calendar(),
-            },
-        ],
-    },
-    {
-        icon: <Star className="h-[14px] w-[14px]" />,
-        label: 'Skill Level',
-        key: 'skill-level',
-        children: [
-            {
-                label: 'List',
-                key: routes.expert.skillLevel.detail(),
-            },
-            {
-                label: 'Request',
-                key: routes.expert.skillLevel.request(),
-            },
-        ],
-    },
-    {
-        icon: <Briefcase className="h-[14px] w-[14px]" />,
-        label: 'Jobs',
-        key: routes.expert.job.list(),
-    },
-    {
-        icon: <BookUser className="h-[14px] w-[14px]" />,
-        label: 'CV',
-        key: routes.cv.list(),
-    },
-
-    {
-        icon: <BellIcon className="h-[16px] w-[16px]" />,
-        label: 'Notification',
-        key: routes.expert.notification.list(),
-    },
-];
 
 const menuAdminList: ItemType[] = [
     {
@@ -82,61 +26,31 @@ const menuAdminList: ItemType[] = [
         label: 'Dashboard',
         key: routes.admin.home(),
     },
+
     {
         icon: <UserOutlined />,
-        label: 'Expert',
-        key: routes.admin.user.expert.list(),
-    },
-    {
-        icon: <UserOutlined />,
-        label: 'Staff',
-        key: routes.admin.user.staff.list(),
-    },
-    {
-        icon: <UserOutlined />,
-        label: 'Candidate',
-        key: routes.admin.user.candidate.list(),
+        label: 'User',
+        key: 'user',
+        children: [
+            {
+                key: routes.admin.user.customer.list(),
+                label: 'Customer',
+            },
+            {
+                label: 'FarmHub',
+                key: routes.admin.user.farm_hub.list(),
+            },
+            {
+                label: 'Delivered Hub Staff',
+                key: routes.admin.user.delivered_hub_staff.list(),
+            },
+            {
+                label: 'Collected Hub Staff',
+                key: routes.admin.user.collected_hub_staff.list(),
+            },
+        ],
     },
 ];
-const menuStaffList: ItemType[] = [
-    {
-        icon: <Briefcase className="w-[14px] h-[14px]" />,
-        label: 'Dashboard',
-        key: '/staff/dashboard',
-    },
-    // {
-    //     icon: <LibrarySquare className="w-[14px] h-[14px]" />,
-    //     label: 'Skill',
-    //     key: 'skill',
-    //     children: [
-    //         {
-    //             key: routes.staff.skill.list(),
-    //             label: 'List',
-    //         },
-    //         {
-    //             label: 'Group',
-    //             key: routes.staff.skillGroup.list(),
-    //         },
-    //     ],
-    // },
-
-    // {
-    //     icon: <UserOutlined />,
-    //     label: 'Expert',
-    //     key: 'expert',
-    //     children: [
-    //         {
-    //             key: routes.staff.expert.list(),
-    //             label: 'List',
-    //         },
-    //         {
-    //             label: 'Skill Level Request',
-    //             key: routes.staff.skillLevelRequest.list(),
-    //         },
-    //     ],
-    // },
-];
-
 interface DashboardLayoutProps {
     children: React.ReactNode;
 }
@@ -200,7 +114,9 @@ export const DashboardLayout: React.FC<DashboardLayoutProps> = ({ children }) =>
                                     }}
                                     defaultSelectedKeys={[router.pathname]}
                                     items={
-                                        user.type === UserRole.EXPERT ? menuExpertList : user.type === UserRole.ADMIN ? menuAdminList : menuStaffList
+                                        //*TODO check user role for the sidebar menu
+                                        // user.type === UserRole.EXPERT ? menuExpertList : user.type === UserRole.ADMIN ? menuAdminList : menuStaffList
+                                        menuAdminList
                                     }
                                 />
                             </div>
@@ -260,7 +176,7 @@ export const DashboardLayout: React.FC<DashboardLayoutProps> = ({ children }) =>
                                         </button>
                                     </div>
                                 </Dropdown>
-                                {user.isLogin && user.type === UserRole.EXPERT && (
+                                {user.isLogin && user.type === UserRole.ADMIN && (
                                     <div className="relative z-50 pr-8 noti-history xl:pr-12">
                                         <button className="flex items-center gap-2 hover:scale-105 noti-button" onClick={() => setIsOpen(!isOpen)}>
                                             {isOpen ? (

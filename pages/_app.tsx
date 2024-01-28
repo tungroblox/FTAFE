@@ -2,7 +2,7 @@ import '../styles/globals.css';
 
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
-import { ThemeProvider } from 'next-themes';
+// import { ThemeProvider } from 'next-themes';
 import type { AppProps } from 'next/app';
 import Script from 'next/script';
 import { Provider } from 'react-redux';
@@ -19,7 +19,7 @@ import 'swiper/css';
 import 'swiper/css/navigation';
 require('antd/dist/antd.less');
 
-import GetCurrentUserWrapper from '@components/wrappers/GetCurrentUserWrapper';
+// import GetCurrentUserWrapper from '@components/wrappers/GetCurrentUserWrapper';
 
 function MyApp({ Component, pageProps }: AppProps) {
     return (
@@ -28,16 +28,16 @@ function MyApp({ Component, pageProps }: AppProps) {
             <Provider store={store}>
                 <AutoLoginWrapper>
                     <QueryClientProvider client={queryClient}>
-                        <GetCurrentUserWrapper>
-                            <ThemeProvider enableSystem={true} attribute="class">
-                                <ToastContainer autoClose={1500} />
-                                <ProgressLoadingBar />
-                                <DynamicLayout>
-                                    <Component {...pageProps} />
-                                </DynamicLayout>
-                                <ReactQueryDevtools initialIsOpen={false} position="bottom-right" />
-                            </ThemeProvider>
-                        </GetCurrentUserWrapper>
+                        {/* <GetCurrentUserWrapper> */}
+                        {/* <ThemeProvider enableSystem={true} attribute="class"> */}
+                        <ToastContainer autoClose={1500} />
+                        <ProgressLoadingBar />
+                        <DynamicLayout>
+                            <Component {...pageProps} />
+                        </DynamicLayout>
+                        <ReactQueryDevtools initialIsOpen={false} position="bottom-right" />
+                        {/* </ThemeProvider> */}
+                        {/* </GetCurrentUserWrapper> */}
                     </QueryClientProvider>
                 </AutoLoginWrapper>
             </Provider>

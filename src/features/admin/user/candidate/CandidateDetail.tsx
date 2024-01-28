@@ -1,11 +1,11 @@
-import { CandidateItem } from '@models/candidate';
+import { Customer } from '@models/candidate';
 import { convertTextToAvatar } from '@utils/string.helper';
 import { Descriptions, Image } from 'antd';
 import moment from 'moment';
 import * as React from 'react';
 
 interface StaffDetailProps {
-    candidate: CandidateItem;
+    candidate: Customer;
 }
 
 const CandidateDetail: React.FunctionComponent<StaffDetailProps> = ({ candidate }) => {
@@ -32,6 +32,19 @@ const CandidateDetail: React.FunctionComponent<StaffDetailProps> = ({ candidate 
                     <Descriptions.Item label="Fullname" span={2}>
                         {candidate.user.fullName}
                     </Descriptions.Item>
+                    <Descriptions.Item label="Username" span={1}>
+                        {candidate.user.username}
+                    </Descriptions.Item>
+                    <Descriptions.Item label="Gender" span={1}>
+                        {candidate.user.gender}
+                    </Descriptions.Item>
+                    <Descriptions.Item label="Job" span={2}>
+                        {candidate.user.job_title}
+                    </Descriptions.Item>
+                    <Descriptions.Item label="Address" span={3}>
+                        {candidate.user.address}
+                    </Descriptions.Item>
+
                     <Descriptions.Item label="Status" span={1}>
                         {candidate.user.status}
                     </Descriptions.Item>

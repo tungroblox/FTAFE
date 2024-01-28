@@ -1,5 +1,5 @@
 import { User, UserRole } from '@models/user';
-import { createSelector, createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { PayloadAction, createSelector, createSlice } from '@reduxjs/toolkit';
 
 import { RootState } from '..';
 import { userThunk } from './thunks';
@@ -21,7 +21,7 @@ const initialState: UserState = {
     status: '',
     id: '',
     isLogin: true,
-    isAuth: false,
+    isAuth: true,
 };
 
 const reducer = createSlice({

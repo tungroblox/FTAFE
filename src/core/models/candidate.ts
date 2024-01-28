@@ -3,14 +3,14 @@ import { User, userDefaultValues } from './user';
 
 export interface Candidate extends BaseModel {
     id: string;
-    firebaseId: string;
-    deviceId: string;
+    // firebaseId: string;
+    // deviceId: string;
 }
 
 export const candidateDefaultValues: Candidate = {
     id: '',
-    firebaseId: '',
-    deviceId: '',
+    // firebaseId: '',
+    // deviceId: '',
     createdAt: '',
     isDeleted: false,
     updatedAt: '',
@@ -24,3 +24,6 @@ export const candidateItemDefaultValue: CandidateItem = {
     ...candidateDefaultValues,
     user: userDefaultValues,
 };
+export interface Customer {
+    user: User;
+}
