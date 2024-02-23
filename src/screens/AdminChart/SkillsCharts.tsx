@@ -80,55 +80,27 @@ const SkillsCharts: React.FunctionComponent<SkillsChartsProps> = () => {
                                     <tr>
                                         <td className="p-2">
                                             <div className="flex items-center">
-                                                <svg className="mr-2 shrink-0 sm:mr-3" width="36" height="36" viewBox="0 0 36 36">
-                                                    <circle fill="#24292E" cx="18" cy="18" r="18" />
-                                                    <path
-                                                        d="M18 10.2c-4.4 0-8 3.6-8 8 0 3.5 2.3 6.5 5.5 7.6.4.1.5-.2.5-.4V24c-2.2.5-2.7-1-2.7-1-.4-.9-.9-1.2-.9-1.2-.7-.5.1-.5.1-.5.8.1 1.2.8 1.2.8.7 1.3 1.9.9 2.3.7.1-.5.3-.9.5-1.1-1.8-.2-3.6-.9-3.6-4 0-.9.3-1.6.8-2.1-.1-.2-.4-1 .1-2.1 0 0 .7-.2 2.2.8.6-.2 1.3-.3 2-.3s1.4.1 2 .3c1.5-1 2.2-.8 2.2-.8.4 1.1.2 1.9.1 2.1.5.6.8 1.3.8 2.1 0 3.1-1.9 3.7-3.7 3.9.3.4.6.9.6 1.6v2.2c0 .2.1.5.6.4 3.2-1.1 5.5-4.1 5.5-7.6-.1-4.4-3.7-8-8.1-8z"
-                                                        fill="#FFF"
-                                                    />
-                                                </svg>
-                                                <div className="text-slate-800 dark:text-slate-100">Github.com</div>
+                                                <img
+                                                    src={
+                                                        'https://cdn.discordapp.com/attachments/1210447037456195595/1210447075930669096/gao-st25-chinh-phuc-nguoi-tieu-dung-my.png?ex=65ea97af&is=65d822af&hm=a98e4669f1579f2cea900e5a93cbd9f81f6963741ff1c16679a7dab05a4bbe15&'
+                                                    }
+                                                    alt="Rau củ tươi ngon"
+                                                    className="mr-2 shrink-0 sm:mr-3 rounded-full w-9 h-9"
+                                                />
+                                                <div className="text-slate-800 dark:text-slate-100">Gạo</div>
                                             </div>
                                         </td>
                                         <td className="p-2">
-                                            <div className="text-center">2.4K</div>
+                                            <div className="text-center">178.2K</div>
                                         </td>
                                         <td className="p-2">
-                                            <div className="text-center text-emerald-500">$3,877</div>
+                                            <div className="text-center text-emerald-500">1,892,000,666VNĐ</div>
                                         </td>
                                         <td className="p-2">
-                                            <div className="text-center">267</div>
+                                            <div className="text-center">14.3K</div>
                                         </td>
                                         <td className="p-2">
-                                            <div className="text-center text-sky-500">4.7%</div>
-                                        </td>
-                                    </tr>
-                                    {/* Row */}
-                                    <tr>
-                                        <td className="p-2">
-                                            <div className="flex items-center">
-                                                <svg className="mr-2 shrink-0 sm:mr-3" width="36" height="36" viewBox="0 0 36 36">
-                                                    <circle fill="#1DA1F2" cx="18" cy="18" r="18" />
-                                                    <path
-                                                        d="M26 13.5c-.6.3-1.2.4-1.9.5.7-.4 1.2-1 1.4-1.8-.6.4-1.3.6-2.1.8-.6-.6-1.5-1-2.4-1-1.7 0-3.2 1.5-3.2 3.3 0 .3 0 .5.1.7-2.7-.1-5.2-1.4-6.8-3.4-.3.5-.4 1-.4 1.7 0 1.1.6 2.1 1.5 2.7-.5 0-1-.2-1.5-.4 0 1.6 1.1 2.9 2.6 3.2-.3.1-.6.1-.9.1-.2 0-.4 0-.6-.1.4 1.3 1.6 2.3 3.1 2.3-1.1.9-2.5 1.4-4.1 1.4H10c1.5.9 3.2 1.5 5 1.5 6 0 9.3-5 9.3-9.3v-.4c.7-.5 1.3-1.1 1.7-1.8z"
-                                                        fill="#FFF"
-                                                        fillRule="nonzero"
-                                                    />
-                                                </svg>
-                                                <div className="text-slate-800 dark:text-slate-100">Twitter</div>
-                                            </div>
-                                        </td>
-                                        <td className="p-2">
-                                            <div className="text-center">2.2K</div>
-                                        </td>
-                                        <td className="p-2">
-                                            <div className="text-center text-emerald-500">$3,426</div>
-                                        </td>
-                                        <td className="p-2">
-                                            <div className="text-center">249</div>
-                                        </td>
-                                        <td className="p-2">
-                                            <div className="text-center text-sky-500">4.4%</div>
+                                            <div className="text-center text-sky-500">4.2%</div>
                                         </td>
                                     </tr>
                                     {/* Row */}
@@ -137,22 +109,22 @@ const SkillsCharts: React.FunctionComponent<SkillsChartsProps> = () => {
                                             <div className="flex items-center">
                                                 <img
                                                     src={
-                                                        'https://cdn.tgdd.vn/Files/2019/11/26/1222471/7-cach-chon-rau-cu-qua-tuoi-ngon-cuc-don-gian-202112311224397887.jpg'
+                                                        'https://cdn.discordapp.com/attachments/1210447037456195595/1210447468005695488/20200423_052100_072261_khoailang.png?ex=65ea980d&is=65d8230d&hm=b2ba607df7e8f9d5432ec35cb762c01a9e7fa8e1ebd336b81edd4cbbf3dd2d0b&'
                                                     }
                                                     alt="Rau củ tươi ngon"
                                                     className="mr-2 shrink-0 sm:mr-3 rounded-full w-9 h-9"
                                                 />
-                                                <div className="text-slate-800 dark:text-slate-100">Google (organic)</div>
+                                                <div className="text-slate-800 dark:text-slate-100">Khoai lang</div>
                                             </div>
                                         </td>
                                         <td className="p-2">
-                                            <div className="text-center">2.0K</div>
+                                            <div className="text-center">178.2K</div>
                                         </td>
                                         <td className="p-2">
-                                            <div className="text-center text-emerald-500">$2,444</div>
+                                            <div className="text-center text-emerald-500">1,892,000,666VNĐ</div>
                                         </td>
                                         <td className="p-2">
-                                            <div className="text-center">224</div>
+                                            <div className="text-center">14.3K</div>
                                         </td>
                                         <td className="p-2">
                                             <div className="text-center text-sky-500">4.2%</div>
@@ -162,21 +134,24 @@ const SkillsCharts: React.FunctionComponent<SkillsChartsProps> = () => {
                                     <tr>
                                         <td className="p-2">
                                             <div className="flex items-center">
-                                                <svg className="mr-2 shrink-0 sm:mr-3" width="36" height="36" viewBox="0 0 36 36">
-                                                    <circle fill="#4BC9FF" cx="18" cy="18" r="18" />
-                                                    <img src="" alt="" />
-                                                </svg>
-                                                <div className="text-slate-800 dark:text-slate-100">Vimeo.com</div>
+                                                <img
+                                                    src={
+                                                        'https://cdn.discordapp.com/attachments/1210447037456195595/1210447664261496913/tac-dung-it-biet-cua-cu-den-do.png?ex=65ea983c&is=65d8233c&hm=ea06288b0a51d2da804fbaf229cbc8cb5209419679f0b7ce074e65452f713ebc&'
+                                                    }
+                                                    alt="Rau củ tươi ngon"
+                                                    className="mr-2 shrink-0 sm:mr-3 rounded-full w-9 h-9"
+                                                />
+                                                <div className="text-slate-800 dark:text-slate-100">Củ dền</div>
                                             </div>
                                         </td>
                                         <td className="p-2">
-                                            <div className="text-center">1.9K</div>
+                                            <div className="text-center">178.2K</div>
                                         </td>
                                         <td className="p-2">
-                                            <div className="text-center text-emerald-500">$2,236</div>
+                                            <div className="text-center text-emerald-500">1,892,000,666VNĐ</div>
                                         </td>
                                         <td className="p-2">
-                                            <div className="text-center">220</div>
+                                            <div className="text-center">14.3K</div>
                                         </td>
                                         <td className="p-2">
                                             <div className="text-center text-sky-500">4.2%</div>
@@ -184,6 +159,59 @@ const SkillsCharts: React.FunctionComponent<SkillsChartsProps> = () => {
                                     </tr>
                                     {/* Row */}
                                     <tr>
+                                        <td className="p-2">
+                                            <div className="flex items-center">
+                                                <img
+                                                    src={
+                                                        'https://cdn.discordapp.com/attachments/1210447037456195595/1210447838706671638/images2582519_1_mi.png?ex=65ea9865&is=65d82365&hm=d2768a7aa7f1bed3e190b1d3e9de6f907b926a191b58bedb7ffed1b0eada3c39&'
+                                                    }
+                                                    alt="Rau củ tươi ngon"
+                                                    className="mr-2 shrink-0 sm:mr-3 rounded-full w-9 h-9"
+                                                />
+                                                <div className="text-slate-800 dark:text-slate-100">Củ sắn</div>
+                                            </div>
+                                        </td>
+                                        <td className="p-2">
+                                            <div className="text-center">178.2K</div>
+                                        </td>
+                                        <td className="p-2">
+                                            <div className="text-center text-emerald-500">1,892,000,666VNĐ</div>
+                                        </td>
+                                        <td className="p-2">
+                                            <div className="text-center">14.3K</div>
+                                        </td>
+                                        <td className="p-2">
+                                            <div className="text-center text-sky-500">4.2%</div>
+                                        </td>
+                                    </tr>
+                                    {/* Row */}
+                                    <tr>
+                                        <td className="p-2">
+                                            <div className="flex items-center">
+                                                <img
+                                                    src={
+                                                        'https://cdn.discordapp.com/attachments/1210447037456195595/1210448021884510238/cach-nau-khoai-mi-nuoc-cot-dua-an-la-nghien-202110301731027561.png?ex=65ea9891&is=65d82391&hm=4887f1ed18bd5f32dc6ae19731a5dc28d9f4be855b8a0c41e086ab4bb1efc6bc&'
+                                                    }
+                                                    alt="Rau củ tươi ngon"
+                                                    className="mr-2 shrink-0 sm:mr-3 rounded-full w-9 h-9"
+                                                />
+                                                <div className="text-slate-800 dark:text-slate-100">Khoai mì</div>
+                                            </div>
+                                        </td>
+                                        <td className="p-2">
+                                            <div className="text-center">178.2K</div>
+                                        </td>
+                                        <td className="p-2">
+                                            <div className="text-center text-emerald-500">1,892,000,666VNĐ</div>
+                                        </td>
+                                        <td className="p-2">
+                                            <div className="text-center">14.3K</div>
+                                        </td>
+                                        <td className="p-2">
+                                            <div className="text-center text-sky-500">4.2%</div>
+                                        </td>
+                                    </tr>
+                                    {/* <tr>
                                         <td className="p-2">
                                             <div className="flex items-center">
                                                 <svg className="mr-2 shrink-0 sm:mr-3" width="36" height="36" viewBox="0 0 36 36">
@@ -208,7 +236,7 @@ const SkillsCharts: React.FunctionComponent<SkillsChartsProps> = () => {
                                         <td className="p-2">
                                             <div className="text-center text-sky-500">3.9%</div>
                                         </td>
-                                    </tr>
+                                    </tr> */}
                                 </tbody>
                             </table>
                         </div>
