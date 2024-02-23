@@ -89,10 +89,11 @@ export const colorsUserRole: IOption[] = [{ value: UserRole.ADMIN, label: 'ADMIN
 export interface FarmHub {
     id: string;
     name: string;
+    code: string;
     description: string;
     image: string;
     address: string;
-    created_at: string;
-    status: string;
-    user: Pick<User, 'id' | 'email' | 'type'>;
+    createdAt: string;
+    updatedAt: string;
+    status: SVGStringList;
 }

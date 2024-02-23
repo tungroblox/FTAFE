@@ -160,6 +160,7 @@ export const TableUtilProvider: React.FC<TableProviderProps> = ({ children }) =>
 
 export const useTableUtil = () => {
     const context = React.useContext(TableUtilContext);
+    // console.log('useTableUtil ~ context:', context);
 
     return { ...context };
 };

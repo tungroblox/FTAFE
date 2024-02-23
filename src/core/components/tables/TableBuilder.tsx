@@ -1,7 +1,5 @@
 import { Empty } from 'antd';
 import Table, { ColumnsType } from 'antd/lib/table';
-import { useRouter } from 'next/router';
-import { ScaleLoader } from 'react-spinners';
 
 import { useTableUtil } from '../../contexts';
 interface TableBuilderProps<T extends object> {

@@ -1,5 +1,4 @@
 import { NextPage } from 'next';
-import * as React from 'react';
 
 import { CommonSeo, UnProtectWrapper } from '../../src/core/components';
 import { AuthLogin } from '../../src/features/auth/AuthLogin';

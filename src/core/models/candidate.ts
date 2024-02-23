@@ -24,6 +24,4 @@ export const candidateItemDefaultValue: CandidateItem = {
     ...candidateDefaultValues,
     user: userDefaultValues,
 };
-export interface Customer {
-    user: User;
-}
+export interface Customer extends User {}

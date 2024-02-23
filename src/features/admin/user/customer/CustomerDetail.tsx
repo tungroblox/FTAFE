@@ -25,34 +25,34 @@ const CustomerDetail: React.FunctionComponent<StaffDetailProps> = ({ customer })
                             height={80}
                             width={80}
                             className="overflow-hidden rounded"
-                            src={customer.user.avatar ? customer.user.avatar : convertTextToAvatar(customer.user.fullName)}
-                            alt={customer.user.fullName}
+                            src={customer.avatar ? customer.avatar : convertTextToAvatar(customer.fullName)}
+                            alt={customer.fullName}
                         />
                     </Descriptions.Item>
                     <Descriptions.Item label="Fullname" span={2}>
-                        {customer.user.fullName}
+                        {customer.fullName}
                     </Descriptions.Item>
                     <Descriptions.Item label="Username" span={1}>
-                        {customer.user.username}
+                        {customer.username}
                     </Descriptions.Item>
                     <Descriptions.Item label="Gender" span={1}>
-                        {customer.user.gender}
+                        {customer.gender}
                     </Descriptions.Item>
                     <Descriptions.Item label="Job" span={2}>
-                        {customer.user.job_title}
+                        {customer.job_title}
                     </Descriptions.Item>
                     <Descriptions.Item label="Address" span={3}>
-                        {customer.user.address}
+                        {customer.address}
                     </Descriptions.Item>
 
                     <Descriptions.Item label="Status" span={1}>
-                        {customer.user.status}
+                        {customer.status}
                     </Descriptions.Item>
                     <Descriptions.Item label="Created at" span={1}>
-                        {moment(customer.user.createdAt).format('DD/MM/YYYY HH:mm')}
+                        {moment(customer.createdAt).format('DD/MM/YYYY HH:mm')}
                     </Descriptions.Item>
                     <Descriptions.Item label="Last Updated At" span={1}>
-                        {moment(customer.user.updatedAt).format('DD/MM/YYYY HH:mm')}
+                        {moment(customer.updatedAt).format('DD/MM/YYYY HH:mm')}
                     </Descriptions.Item>
                 </Descriptions>
             </div>

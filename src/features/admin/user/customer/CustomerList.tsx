@@ -6,7 +6,7 @@ import { IV1GetFilterExpert } from '@core/api/expert.api';
 // import { expertApi, IV1GetFilterExpert } from '@core/api/expert.api';
 import { routes } from '@core/routes';
 import { useQueryCandidateFilter } from '@hooks/api/candidate.hook';
-import { CandidateItem, Customer } from '@models/candidate';
+import { Customer } from '@models/candidate';
 import { UserRole } from '@models/user';
 import { stringHelper } from '@utils/index';
 // import { ExpertList } from '@models/expert';
@@ -23,42 +23,38 @@ const CustomerList: React.FunctionComponent<CustomerListProps> = ({ filter }) =>
     const { data, isLoading } = useQueryCandidateFilter(filter);
     const customers: Customer[] = [
         {
-            user: {
-                id: '1',
-                type: UserRole.CUSTOMER,
-                avatar: 'https://images.unsplash.com/photo-1706361635623-6606c945503e?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-                email: 'user@example.com',
-                fullName: 'John Doe',
-                phone: '123456789',
-                status: 'active',
-                createdAt: '',
-                updatedAt: '',
-                isDeleted: false,
-                address: 'lorem ...',
-                gender: 'male',
-                username: 'john123',
-                password: '123456789',
-                job_title: ' lorem',
-            },
+            id: '1',
+            type: UserRole.CUSTOMER,
+            avatar: 'https://images.unsplash.com/photo-1706361635623-6606c945503e?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+            email: 'user@example.com',
+            fullName: 'John Doe',
+            phone: '123456789',
+            status: 'active',
+            createdAt: '',
+            updatedAt: '',
+            isDeleted: false,
+            address: 'lorem ...',
+            gender: 'male',
+            username: 'john123',
+            password: '123456789',
+            job_title: ' lorem',
         },
         {
-            user: {
-                id: '2',
-                type: UserRole.CUSTOMER,
-                avatar: 'https://images.unsplash.com/photo-1706361635623-6606c945503e?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-                email: 'user@example.com',
-                fullName: 'John Doe',
-                phone: '123456789',
-                status: 'inactive',
-                createdAt: '',
-                updatedAt: '',
-                isDeleted: false,
-                address: 'lorem ...',
-                gender: 'male',
-                username: 'john123',
-                password: '123456789',
-                job_title: ' lorem',
-            },
+            id: '2',
+            type: UserRole.CUSTOMER,
+            avatar: 'https://images.unsplash.com/photo-1706361635623-6606c945503e?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+            email: 'user@example.com',
+            fullName: 'John Doe',
+            phone: '123456789',
+            status: 'inactive',
+            createdAt: '',
+            updatedAt: '',
+            isDeleted: false,
+            address: 'lorem ...',
+            gender: 'male',
+            username: 'john123',
+            password: '123456789',
+            job_title: ' lorem',
         },
         // Add more customer objects as needed
     ];
@@ -83,15 +79,15 @@ const CustomerList: React.FunctionComponent<CustomerListProps> = ({ filter }) =>
                         title: () => <TableHeaderCell key="avatar" sortKey="avatar" label="Avatar" />,
                         width: 400,
                         key: 'avatar',
-                        render: ({ ...props }: CandidateItem) => (
+                        render: ({ ...props }: Customer) => (
                             <TableBodyCell
                                 label={
                                     <Image
                                         alt=""
                                         width={64}
                                         height={64}
-                                        className="overflow-hidden rounded"
-                                        src={props.user.avatar ? props.user.avatar : stringHelper.convertTextToAvatar(props.user.fullName)}
+                                        className="rounded overflow-hidden"
+                                        src={props.avatar ? props.avatar : stringHelper.convertTextToAvatar(props.fullName)}
                                     />
                                 }
                             />
@@ -101,25 +97,25 @@ const CustomerList: React.FunctionComponent<CustomerListProps> = ({ filter }) =>
                         title: () => <TableHeaderCell key="fullName" sortKey="fullName" label="Fullname" />,
                         width: 400,
                         key: 'fullName',
-                        render: ({ ...props }: CandidateItem) => (
-                            <TableBodyCell label={<Link href={routes.admin.user.customer.detail(props.id)}>{props.user.fullName}</Link>} />
+                        render: ({ ...props }: Customer) => (
+                            <TableBodyCell label={<Link href={routes.admin.user.customer.detail(props.id)}>{props.fullName}</Link>} />
                         ),
                     },
                     {
                         title: () => <TableHeaderCell key="email" sortKey="email" label="Email" />,
                         width: 400,
                         key: 'email',
-                        render: ({ ...props }: CandidateItem) => <TableBodyCell label={props.user.email} />,
+                        render: ({ ...props }: Customer) => <TableBodyCell label={props.email} />,
                     },
                     {
                         title: () => <TableHeaderCell key="status" sortKey="status" label="Status" />,
                         width: 400,
                         key: 'status',
-                        render: ({ ...props }: CandidateItem) => {
+                        render: ({ ...props }: Customer) => {
                             // return <TableBodyCell label={props.user.status} />;
                             return (
-                                <Tag className={clsx(`text-sm whitespace-normal`)} color={props.user.status === 'active' ? 'geekblue' : 'volcano'}>
-                                    {props.user.status}
+                                <Tag className={clsx(`text-sm whitespace-normal`)} color={props.status === 'active' ? 'geekblue' : 'volcano'}>
+                                    {props.status}
                                 </Tag>
                             );
                         },
@@ -129,6 +125,7 @@ const CustomerList: React.FunctionComponent<CustomerListProps> = ({ filter }) =>
                         width: 400,
                         key: 'action',
                         render: ({ ...props }) => {
+                            console.log(props.id);
                             return <TableBodyCell label={<Link href={routes.admin.user.customer.detail(props.id)}>View detail</Link>} />;
                         },
                     },
