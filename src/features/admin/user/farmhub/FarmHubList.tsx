@@ -5,9 +5,8 @@ import { IV1GetFilterCandidate } from '@core/api/candidate';
 import { IV1GetFilterExpert } from '@core/api/expert.api';
 // import { expertApi, IV1GetFilterExpert } from '@core/api/expert.api';
 import { routes } from '@core/routes';
-import { useQueryCandidateFilter } from '@hooks/api/candidate.hook';
-import { FarmHub, UserRole } from '@models/user';
-import { stringHelper } from '@utils/index';
+import { useQueryFarmHub } from '@hooks/api/farmhub.hook';
+import { FarmHub } from '@models/user';
 // import { ExpertList } from '@models/expert';
 import { Image, Tag } from 'antd';
 import clsx from 'clsx';
@@ -19,38 +18,9 @@ interface FarmHubListProps {
 }
 
 const FarmHubList: React.FunctionComponent<FarmHubListProps> = ({ filter }) => {
-    const { data, isLoading } = useQueryCandidateFilter(filter);
-    const customers: FarmHub[] = [
-        {
-            id: 'UUID',
-            address: 'abc',
-            description: 'abc',
-            image: 'https://images.unsplash.com/photo-1706361635623-6606c945503e?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-            name: 'Company Name',
-            status: 'Active',
-            created_at: new Date().toString(),
-            user: {
-                id: '1',
-                email: 'john123@gmail.com',
-                type: UserRole.FARM_HUB,
-            },
-        },
-        {
-            id: '1',
-            address: 'abc',
-            description: 'abc',
-            image: 'https://images.unsplash.com/photo-1706361635623-6606c945503e?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-            name: 'Company Name',
-            status: 'Active',
-            created_at: new Date().toString(),
-            user: {
-                id: '1',
-                email: 'john123@gmail.com',
-                type: UserRole.FARM_HUB,
-            },
-        },
-        // Add more customer objects as needed
-    ];
+    const { data, isLoading } = useQueryFarmHub();
+
+    const farmHub: FarmHub[] = data?.payload;
 
     return (
         <div className="flex flex-col w-full gap-2">
@@ -66,12 +36,12 @@ const FarmHubList: React.FunctionComponent<FarmHubListProps> = ({ filter }) => {
             <TableBuilder<FarmHub>
                 rowKey="id"
                 isLoading={isLoading}
-                data={customers}
+                data={farmHub}
                 columns={[
                     {
-                        title: () => <TableHeaderCell key="avatar" sortKey="avatar" label="Avatar" />,
+                        title: () => <TableHeaderCell key="image" sortKey="image" label="image" />,
                         width: 400,
-                        key: 'avatar',
+                        key: 'image',
                         render: ({ ...props }: FarmHub) => (
                             <TableBodyCell
                                 label={
@@ -80,19 +50,23 @@ const FarmHubList: React.FunctionComponent<FarmHubListProps> = ({ filter }) => {
                                         width={64}
                                         height={64}
                                         className="rounded overflow-hidden"
-                                        src={props.image ? props.image : stringHelper.convertTextToAvatar(props.name)}
+                                        // src={props.image ? props.image : stringHelper.convertTextToAvatar(props.name)}
+                                        src={'https://farmhubagro.com.ng/wp-content/uploads/2023/05/cropped-farm-hub-logo-removebg-original.png'}
                                     />
                                 }
                             />
                         ),
                     },
                     {
-                        title: () => <TableHeaderCell key="fullName" sortKey="fullName" label="Company Name" />,
+                        title: () => <TableHeaderCell key="name" sortKey="name" label="Farm Name" />,
                         width: 400,
-                        key: 'fullName',
+                        key: 'name',
                         render: ({ ...props }: FarmHub) => (
                             <TableBodyCell label={<Link href={routes.admin.user.farm_hub.detail(props.id)}>{props.name}</Link>} />
                         ),
+                        // sorter: (a, b) => {
+                        //     return a.name.localeCompare(b.name);
+                        // },
                     },
                     {
                         title: () => <TableHeaderCell key="status" sortKey="status" label="Status" />,
@@ -100,7 +74,10 @@ const FarmHubList: React.FunctionComponent<FarmHubListProps> = ({ filter }) => {
                         key: 'status',
                         render: ({ ...props }: FarmHub) => {
                             return (
-                                <Tag className={clsx(`text-sm whitespace-normal`)} color={props.status === 'active' ? 'geekblue' : 'volcano'}>
+                                <Tag
+                                    className={clsx(`text-sm whitespace-normal`)}
+                                    color={typeof props.status === 'string' && props.status === 'Active' ? 'geekblue' : 'volcano'}
+                                >
                                     {props.status}
                                 </Tag>
                             );

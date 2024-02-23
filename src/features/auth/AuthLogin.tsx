@@ -1,18 +1,14 @@
 import FormCommonErrorMessage from '@components/forms/FormCommonErrorMessage';
+import { routes } from '@core/routes';
 import { useAuthLoginMutation } from '@hooks/api/auth.hook';
-import { store } from '@store/index';
-import { userThunk } from '@store/user/thunks';
-import { useMutation } from '@tanstack/react-query';
 import { Button, Tabs } from 'antd';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 import React from 'react';
 import { useForm } from 'react-hook-form';
-import { toast } from 'react-toastify';
 
-import { authApi, IV1AuthLogin } from '../../core/api';
-import { FormBtn, FormWrapper, TextInput } from '../../core/components';
-import { constant } from '../../core/constant';
-import { routes } from '../../core/routes';
+import { IV1AuthLogin } from '../../core/api';
+import { FormWrapper, TextInput } from '../../core/components';
 import { LoginSocial } from './components/LoginSocial';
 
 const defaultValues: IV1AuthLogin = {
@@ -27,23 +23,36 @@ export const AuthLogin: React.FC<AuthLoginProps> = ({}) => {
 
     const { mutationAuthLogin, isLoading } = useAuthLoginMutation();
 
+    const router = useRouter();
+
     const TabAuth = () => {
         return (
             <Tabs
                 defaultActiveKey="1"
                 items={[
                     {
-                        label: <p className="p-0 m-0 text-black dark:text-white">CANDIDATE</p>,
+                        label: <p className="p-0 m-0 text-black dark:text-white">Farm Hub/Customer</p>,
                         key: '1',
                         children: <LoginSocial />,
                     },
                     {
-                        label: <p className="p-0 m-0 text-black dark:text-white">ADMIN / EXPERT / STAFF</p>,
+                        label: <p className="p-0 m-0 text-black dark:text-white">ADMIN / STAFF</p>,
                         key: '2',
                         children: (
                             <>
                                 <FormWrapper methods={methods}>
-                                    <form onSubmit={methods.handleSubmit((data) => mutationAuthLogin(data))} className="">
+                                    <form
+                                        onSubmit={methods.handleSubmit((data) => {
+                                            console.log('chỗ này');
+                                            console.log(data);
+                                            //TODO: handle Login
+                                            // return mutationAuthLogin(data);
+                                            if (data.email === 'admin' && data.password === 'admin') {
+                                                router.push(routes.admin.home());
+                                            }
+                                        })}
+                                        className=""
+                                    >
                                         <div className="space-y-4">
                                             <div>
                                                 <TextInput label="Email" name="email" placeholder="user@gmail.com" />
@@ -96,7 +105,7 @@ export const AuthLogin: React.FC<AuthLoginProps> = ({}) => {
                             <img src="/images/gradient_light.jpg" alt="gradient" className="w-full h-full" />
                         </picture>
                         <h1 className="mb-6 text-4xl font-bold text-jacarta-700 font-display dark:text-white">
-                            Welcome to <span className="text-blue-600">LiveCV</span>
+                            Welcome to <span className="text-blue-600">UniFarm</span>
                         </h1>
 
                         <div className="w-full max-w-[25.625rem]">{TabAuth()}</div>

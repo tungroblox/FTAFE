@@ -1,14 +1,12 @@
 import { FarmHub } from '@models/user';
-import { stringHelper } from '@utils/index';
 import { Descriptions, Image } from 'antd';
-import moment from 'moment';
 import * as React from 'react';
 
-interface StaffDetailProps {
-    farmhub: FarmHub;
+interface FarmHubDetailProps {
+    farmHub: FarmHub;
 }
 
-const FarmHubDetail: React.FunctionComponent<StaffDetailProps> = ({ farmhub }) => {
+const ProductDetail: React.FunctionComponent<FarmHubDetailProps> = ({ farmHub }) => {
     return (
         <>
             <div className="flex flex-col w-full gap-4">
@@ -25,20 +23,21 @@ const FarmHubDetail: React.FunctionComponent<StaffDetailProps> = ({ farmhub }) =
                             height={80}
                             width={80}
                             className="rounded overflow-hidden"
-                            src={farmhub.image ? farmhub.image : stringHelper.convertTextToAvatar(farmhub.name)}
-                            alt={farmhub.name}
+                            alt={farmHub?.name}
+                            // src={farmHub?.image ? farmHub?.image : stringHelper.convertTextToAvatar(farmHub.name)}
+                            src="https://farmhubagro.com.ng/wp-content/uploads/2023/05/cropped-farm-hub-logo-removebg-original.png"
                         />
                     </Descriptions.Item>
 
                     <Descriptions.Item label="Address" span={3}>
-                        {farmhub.address}
+                        {farmHub?.address}
                     </Descriptions.Item>
 
                     <Descriptions.Item label="Status" span={1}>
-                        {farmhub.status}
+                        {farmHub?.status}
                     </Descriptions.Item>
                     <Descriptions.Item label="Created at" span={1}>
-                        {moment(farmhub.created_at).format('DD/MM/YYYY HH:mm')}
+                        {farmHub?.createdAt}
                     </Descriptions.Item>
                 </Descriptions>
             </div>
@@ -46,4 +45,4 @@ const FarmHubDetail: React.FunctionComponent<StaffDetailProps> = ({ farmhub }) =
     );
 };
 
-export default FarmHubDetail;
+export default ProductDetail;

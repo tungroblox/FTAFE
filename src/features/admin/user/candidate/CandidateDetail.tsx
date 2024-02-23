@@ -9,6 +9,8 @@ interface StaffDetailProps {
 }
 
 const CandidateDetail: React.FunctionComponent<StaffDetailProps> = ({ candidate }) => {
+    console.log('candidate:', candidate);
+    console.log('-------------');
     return (
         <>
             <div className="flex flex-col w-full gap-4">
@@ -25,34 +27,34 @@ const CandidateDetail: React.FunctionComponent<StaffDetailProps> = ({ candidate 
                             height={80}
                             width={80}
                             className="rounded overflow-hidden"
-                            src={candidate.user.avatar ? candidate.user.avatar : convertTextToAvatar(candidate.user.fullName)}
-                            alt={candidate.user.fullName}
+                            src={candidate.avatar ? candidate.avatar : convertTextToAvatar(candidate.fullName)}
+                            alt={candidate.fullName}
                         />
                     </Descriptions.Item>
                     <Descriptions.Item label="Fullname" span={2}>
-                        {candidate.user.fullName}
+                        {candidate.fullName}
                     </Descriptions.Item>
                     <Descriptions.Item label="Username" span={1}>
-                        {candidate.user.username}
+                        {candidate.username}
                     </Descriptions.Item>
                     <Descriptions.Item label="Gender" span={1}>
-                        {candidate.user.gender}
+                        {candidate.gender}
                     </Descriptions.Item>
                     <Descriptions.Item label="Job" span={2}>
-                        {candidate.user.job_title}
+                        {candidate.job_title}
                     </Descriptions.Item>
                     <Descriptions.Item label="Address" span={3}>
-                        {candidate.user.address}
+                        {candidate.address}
                     </Descriptions.Item>
 
                     <Descriptions.Item label="Status" span={1}>
-                        {candidate.user.status}
+                        {candidate.status}
                     </Descriptions.Item>
                     <Descriptions.Item label="Created at" span={1}>
-                        {moment(candidate.user.createdAt).format('DD/MM/YYYY HH:mm')}
+                        {moment(candidate.createdAt).format('DD/MM/YYYY HH:mm')}
                     </Descriptions.Item>
                     <Descriptions.Item label="Last Updated At" span={1}>
-                        {moment(candidate.user.updatedAt).format('DD/MM/YYYY HH:mm')}
+                        {moment(candidate.updatedAt).format('DD/MM/YYYY HH:mm')}
                     </Descriptions.Item>
                 </Descriptions>
             </div>
