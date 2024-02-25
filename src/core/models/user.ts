@@ -95,5 +95,5 @@ export interface FarmHub {
     address: string;
     createdAt: string;
     updatedAt: string;
-    status: SVGStringList;
+    status: string;
 }

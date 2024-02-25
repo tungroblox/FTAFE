@@ -1,5 +1,6 @@
 import { FarmHub } from '@models/user';
-import { Descriptions, Image } from 'antd';
+import { Badge, Descriptions, Image } from 'antd';
+import Link from 'next/link';
 import * as React from 'react';
 
 interface FarmHubDetailProps {
@@ -17,6 +18,7 @@ const ProductDetail: React.FunctionComponent<FarmHubDetailProps> = ({ farmHub })
                     bordered
                     title={'Basic Information'}
                     className="p-4 bg-white rounded-lg"
+                    extra={<Link href={`${farmHub?.id}/edit`}>Edit</Link>}
                 >
                     <Descriptions.Item label="Avatar" span={1}>
                         <Image
@@ -29,14 +31,21 @@ const ProductDetail: React.FunctionComponent<FarmHubDetailProps> = ({ farmHub })
                         />
                     </Descriptions.Item>
 
-                    <Descriptions.Item label="Address" span={3}>
+                    <Descriptions.Item label="FarmHub's name" span={3}>
+                        {farmHub?.name}
+                    </Descriptions.Item>
+                    <Descriptions.Item label="Status" span={1}>
+                        {farmHub?.code}
+                    </Descriptions.Item>
+
+                    <Descriptions.Item label="Address" span={2}>
                         {farmHub?.address}
                     </Descriptions.Item>
 
                     <Descriptions.Item label="Status" span={1}>
-                        {farmHub?.status}
+                        <Badge status={farmHub?.status === 'Active' ? 'processing' : 'error'} text={farmHub?.status} />
                     </Descriptions.Item>
-                    <Descriptions.Item label="Created at" span={1}>
+                    <Descriptions.Item label="Created at" span={2}>
                         {farmHub?.createdAt}
                     </Descriptions.Item>
                 </Descriptions>

@@ -1,3 +1,4 @@
+import { UpdateFarmHubForm } from '@models/farmhub';
 import _get from 'lodash.get';
 
 import { http } from './http';
@@ -13,8 +14,15 @@ export const FarmHubAPI = {
                 farmHubId: id,
             },
         });
-        console.log('----------------------------------------------------------------');
-        console.log(res);
         return _get(res, 'data');
+    },
+    updateFarmHub: async (id: string, data: UpdateFarmHubForm) => {
+        const res = await http.put(`/FarmHubs/${id}`, data);
+        return _get(res, 'data');
+    },
+    deleteFarmHub: async (id: string) => {
+        const res = await http.delete(`/FarmHubs/${id}`);
+        console.log('deleteFarmHub: ~ res:', res);
+        return res;
     },
 };

@@ -3,15 +3,18 @@ import FormFilterWrapper from '@components/forms/FormFilterWrapper';
 import { TableBodyCell, TableBuilder, TableHeaderCell } from '@components/tables';
 import { IV1GetFilterCandidate } from '@core/api/candidate';
 import { IV1GetFilterExpert } from '@core/api/expert.api';
+import { FarmHubAPI } from '@core/api/farmhub';
 // import { expertApi, IV1GetFilterExpert } from '@core/api/expert.api';
 import { routes } from '@core/routes';
 import { useQueryFarmHub } from '@hooks/api/farmhub.hook';
 import { FarmHub } from '@models/user';
+import { useMutation } from '@tanstack/react-query';
 // import { ExpertList } from '@models/expert';
-import { Image, Tag } from 'antd';
+import { Button, Dropdown, Image, Menu, Modal, Tag } from 'antd';
 import clsx from 'clsx';
 import Link from 'next/link';
 import * as React from 'react';
+import { toast } from 'react-toastify';
 
 interface FarmHubListProps {
     filter: Partial<IV1GetFilterCandidate>;
@@ -21,6 +24,29 @@ const FarmHubList: React.FunctionComponent<FarmHubListProps> = ({ filter }) => {
     const { data, isLoading } = useQueryFarmHub();
 
     const farmHub: FarmHub[] = data?.payload;
+
+    const deleteFarmHubMutation = useMutation({
+        mutationKey: ['farm-hub'],
+        mutationFn: async (id: string) => await FarmHubAPI.deleteFarmHub(id),
+    });
+
+    const handleDelete = (id: string) => {
+        Modal.confirm({
+            title: 'Are you sure?',
+            content: 'You will not be able to recover this data!',
+            okText: 'Yes, delete it!',
+            okType: 'danger',
+            cancelText: 'No, cancel',
+            onOk: async () => {
+                try {
+                    await deleteFarmHubMutation.mutateAsync(id);
+                    toast.success('FarmHub deleted successfully!');
+                } catch (error) {
+                    console.error('Error deleting FarmHub:', error);
+                }
+            },
+        });
+    };
 
     return (
         <div className="flex flex-col w-full gap-2">
@@ -64,9 +90,6 @@ const FarmHubList: React.FunctionComponent<FarmHubListProps> = ({ filter }) => {
                         render: ({ ...props }: FarmHub) => (
                             <TableBodyCell label={<Link href={routes.admin.user.farm_hub.detail(props.id)}>{props.name}</Link>} />
                         ),
-                        // sorter: (a, b) => {
-                        //     return a.name.localeCompare(b.name);
-                        // },
                     },
                     {
                         title: () => <TableHeaderCell key="status" sortKey="status" label="Status" />,
@@ -88,7 +111,26 @@ const FarmHubList: React.FunctionComponent<FarmHubListProps> = ({ filter }) => {
                         width: 400,
                         key: 'action',
                         render: ({ ...props }) => {
-                            return <TableBodyCell label={<Link href={routes.admin.user.farm_hub.detail(props.id)}>View detail</Link>} />;
+                            return (
+                                <Dropdown
+                                    overlay={
+                                        <Menu>
+                                            <Menu.Item key="1">
+                                                <Button>
+                                                    <Link href={routes.admin.user.farm_hub.update(props.id)}>Edit</Link>
+                                                </Button>
+                                            </Menu.Item>
+
+                                            <Menu.Item key="2">
+                                                <Button onClick={() => handleDelete(props?.id)}>Delete</Button>
+                                            </Menu.Item>
+                                        </Menu>
+                                    }
+                                    trigger={['click']}
+                                >
+                                    <span className="cursor-pointer">Actions</span>
+                                </Dropdown>
+                            );
                         },
                     },
                 ]}
