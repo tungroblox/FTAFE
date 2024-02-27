@@ -33,7 +33,7 @@ const nextConfig = {
             },
     },
 
-    modifyVars: { '@primary-color': '#6366f1' },
+    modifyVars: { '@primary-color': '#006600' },
 };
 
 module.exports = withAntdLess(nextConfig);

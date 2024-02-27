@@ -3,8 +3,6 @@ import { routes } from '@core/routes';
 import { BellIcon } from '@heroicons/react/24/outline';
 import { BellAlertIcon } from '@heroicons/react/24/solid';
 import { useLogoutMutation } from '@hooks/api/auth.hook';
-import { useQueryNotificationFilter } from '@hooks/api/notification.hook';
-import { SortOrder } from '@models/interface';
 import { UserRole } from '@models/user';
 import { Person, PersonCheck, SignOut } from 'akar-icons';
 import { Badge, Button, Dropdown, Empty, Layout, Menu } from 'antd';
@@ -62,12 +60,13 @@ export const DashboardLayout: React.FC<DashboardLayoutProps> = ({ children }) =>
 
     const { mutationLogout } = useLogoutMutation();
     const [isOpen, setIsOpen] = React.useState(false);
-    const { data: notifications } = useQueryNotificationFilter({
-        order: SortOrder.DESC,
-        orderBy: 'createdAt',
-        page: 0,
-        pageSize: 20,
-    });
+    // const { data: notifications } = useQueryNotificationFilter({
+    //     order: SortOrder.DESC,
+    //     orderBy: 'createdAt',
+    //     page: 0,
+    //     pageSize: 20,
+    // });
+    const notifications: any[] = [];
 
     React.useEffect(() => {
         window.addEventListener('scroll', (_) => setIsOpen(false));

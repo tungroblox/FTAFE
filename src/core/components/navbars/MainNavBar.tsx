@@ -3,8 +3,6 @@ import { constant } from '@core/constant';
 import { routes } from '@core/routes';
 import { BellIcon } from '@heroicons/react/24/outline';
 import { BellAlertIcon } from '@heroicons/react/24/solid';
-import { useQueryNotificationFilter } from '@hooks/api/notification.hook';
-import { SortOrder } from '@models/interface';
 import { UserRole } from '@models/user';
 import WhiteLogo from '@public/images/logo_white.png';
 import { useStoreUser, useStoreWallet } from '@store/index';
@@ -93,16 +91,17 @@ const MainNavbar: React.FunctionComponent<MainNavbarProps> = () => {
     const user = useStoreUser();
     const _handleOnLogout = async () => {
         localStorage.removeItem(constant.TOKEN_KEY);
-        await authApi.v1PostLogout();
+        await authApi.v1GetLogout();
         if (typeof window === 'undefined') return;
         window.location.reload();
     };
-    const { data: notifications } = useQueryNotificationFilter({
-        order: SortOrder.DESC,
-        orderBy: 'createdAt',
-        page: 0,
-        pageSize: 20,
-    });
+    // const { data: notifications } = useQueryNotificationFilter({
+    //     order: SortOrder.DESC,
+    //     orderBy: 'createdAt',
+    //     page: 0,
+    //     pageSize: 20,
+    // });
+    const notifications: any[] = [];
 
     const wallet = useStoreWallet();
     const [links, setLinks] = React.useState<NavLink[]>(defaultLinks);
@@ -154,6 +153,10 @@ const MainNavbar: React.FunctionComponent<MainNavbarProps> = () => {
     }, [user.type]);
 
     const [isOpen, setIsOpen] = React.useState(false);
+    const [token, setToken] = React.useState<string>('');
+    React.useEffect(() => {
+        setToken(localStorage.getItem(constant.TOKEN_KEY) || '');
+    }, []);
 
     React.useEffect(() => {
         window.addEventListener('scroll', (_) => setIsOpen(false));
@@ -209,53 +212,39 @@ const MainNavbar: React.FunctionComponent<MainNavbarProps> = () => {
                     <div className="z-10 flex items-center ml-auto bg-white opacity-100 js-mobile-menu dark:bg-jacarta-800 lg:relative lg:inset-auto lg:bg-transparent lg:opacity-100 dark:lg:bg-transparent ">
                         <div className="flex items-center gap-4 ml-8 xl:ml-12">
                             <div className="relative js-nav-dropdown group-dropdown">
-                                {user.isLogin ? (
+                                {token ? (
                                     <>
-                                        {/* <button className="dropdown-toggle border-jacarta-200 hover:bg-primary/hover:text-primary/80 gap-2 focus:bg-accent group dark:hover:bg-primary/hover:text-primary/80 ml-2 flex items-center justify-center rounded-full border transition-colors hover:border-transparent focus:border-transparent dark:border-transparent dark:bg-white/[.15] group hover:scale-105"> */}
                                         <button className="flex items-center gap-2 hover:scale-105" onClick={() => setIsOpen(false)}>
                                             <span className="text-base font-semibold capitalize whitespace-nowrap">{user.fullName}</span>
                                             <PersonCheck strokeWidth={2} className="w-6 h-6 text-jacarta-700 dark:text-white " />
                                         </button>
 
                                         <div className="dropdown-menu dark:bg-jacarta-800 group-dropdown-hover:opacity-100 group-dropdown-hover:visible !-right-4 !top-[95%] !left-auto min-w-[14rem] whitespace-nowrap rounded-xl bg-white transition-all will-change-transform before:absolute before:-top-3 before:h-3 before:w-full lg:absolute lg:grid lg:!translate-y-4 lg:py-4 lg:px-2 lg:shadow-2xl hidden lg:invisible lg:opacity-0 z-[50]">
-                                            {/* {user.type === UserRole.CANDIDATE && (
-                                                <Link href={routes.user.transaction.list()}>
-                                                    <div className="px-5 py-2 m-0 text-base font-semibold transition-colors cursor-pointer dark:hover:bg-jacarta-600 hover:text-primary/80 focus:text-accent hover:bg-jacarta-50 rounded-xl">
-                                                        Balance:{' '}
-                                                        <span className="mt-1 font-bold text-jacarta-700 dark:text-white">
-                                                            {stringHelper.formatMoneyVND(wallet.balance)}
-                                                        </span>
-                                                    </div>
-                                                </Link>
-                                            )} */}
-
-                                            {/* {(user.type === UserRole.CANDIDATE ? candidateLinks : userLinks).map((link) =>
-                                                link.name === 'Sign Out' ? (
-                                                    <div
-                                                        className="flex items-center px-5 py-2 space-x-2 transition-colors cursor-pointer dark:hover:bg-jacarta-600 hover:text-primary/80 focus:text-accent hover:bg-jacarta-50 rounded-xl"
-                                                        key={link.id}
-                                                        onClick={() => {
-                                                            _handleOnLogout();
-                                                        }}
-                                                    >
-                                                        {link.icon}
-                                                        <span className="mt-1 text-sm font-display text-jacarta-700 dark:text-white">
-                                                            {link.name}
-                                                        </span>
-                                                    </div>
-                                                ) : ( */}
                                             {userLinks.map((link) => (
                                                 <Link href={link.path} key={link.id}>
-                                                    <div className="flex items-center px-5 py-2 space-x-2 transition-colors cursor-pointer dark:hover:bg-jacarta-600 hover:text-primary/80 focus:text-accent hover:bg-jacarta-50 rounded-xl">
-                                                        {link.icon}
-                                                        <span className="mt-1 text-sm font-display text-jacarta-700 dark:text-white">
-                                                            {link.name}
-                                                        </span>
-                                                    </div>
+                                                    {link.name === 'Sign Out' ? (
+                                                        <div
+                                                            className="flex items-center px-5 py-2 space-x-2 transition-colors cursor-pointer dark:hover:bg-jacarta-600 hover:text-primary/80 focus:text-accent hover:bg-jacarta-50 rounded-xl"
+                                                            key={link.id}
+                                                            onClick={() => {
+                                                                _handleOnLogout();
+                                                            }}
+                                                        >
+                                                            {link.icon}
+                                                            <span className="mt-1 text-sm font-display text-jacarta-700 dark:text-white">
+                                                                {link.name}
+                                                            </span>
+                                                        </div>
+                                                    ) : (
+                                                        <div className="flex items-center px-5 py-2 space-x-2 transition-colors cursor-pointer dark:hover:bg-jacarta-600 hover:text-primary/80 focus:text-accent hover:bg-jacarta-50 rounded-xl">
+                                                            {link.icon}
+                                                            <span className="mt-1 text-sm font-display text-jacarta-700 dark:text-white">
+                                                                {link.name}
+                                                            </span>
+                                                        </div>
+                                                    )}
                                                 </Link>
                                             ))}
-                                            {/* )
-                                            )} */}
                                         </div>
                                     </>
                                 ) : (

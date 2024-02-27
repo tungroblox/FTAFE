@@ -1,8 +1,8 @@
 import { User } from '@models/user';
 import _get from 'lodash.get';
 
-import { LoginTokenPayload } from '../../features/auth/components/interface';
 import { http } from '.';
+import { LoginTokenPayload } from '../../features/auth/components/interface';
 
 export interface IV1AuthLogin extends Pick<User, 'email'> {
     password: string;
@@ -25,8 +25,8 @@ export const authApi = {
         const res = await http.post('/auth/login', input);
         return _get(res, 'data.token', '');
     },
-    v1PostLogout: async () => {
-        const res = await http.post('/auth/logout');
+    v1GetLogout: async () => {
+        const res = await http.get('/auth/logout');
         return _get(res, 'data', '');
     },
 
