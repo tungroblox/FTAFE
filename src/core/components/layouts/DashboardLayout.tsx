@@ -48,6 +48,52 @@ const menuAdminList: ItemType[] = [
             },
         ],
     },
+    {
+        icon: <UserOutlined />,
+        label: 'Bán Sản Phẩm',
+        key: 'Menu',
+        children: [
+            {
+                key: routes.admin.category.list(),
+                label: 'Chuyên mục',
+            },
+            {
+                label: 'Sản phẩm',
+                key: routes.admin.product.list(),
+            },
+            {
+                label: 'Đơn hàng',
+                key: routes.admin.order.list(),
+            },
+            {
+                label: 'Menu',
+                key: routes.admin.menu.list(),
+            },
+        ],
+    },
+    {
+        icon: <UserOutlined />,
+        label: 'Lịch sử',
+        key: 'history',
+        children: [
+            {
+                key: routes.admin.category.list(),
+                label: 'Nhật ký hoạt động',
+            },
+            {
+                label: 'Biến động số dư',
+                key: routes.admin.product.list(),
+            },
+            {
+                label: 'Lịch sử nạp VNPAY',
+                key: routes.admin.order.list(),
+            },
+            {
+                label: 'Lịch sử nạp ',
+                key: routes.admin.menu.list(),
+            },
+        ],
+    },
 ];
 interface DashboardLayoutProps {
     children: React.ReactNode;

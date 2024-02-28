@@ -102,6 +102,21 @@ export const routes = {
             create: () => '/admin/categories/create',
             edit: () => '/admin/categories/edit',
         },
+        product: {
+            list: () => '/admin/product',
+            create: () => '/admin/product/create',
+            edit: () => '/admin/product/edit',
+        },
+        order: {
+            list: () => '/admin/order',
+            create: () => '/admin/order/create',
+            edit: () => '/admin/order/edit',
+        },
+        menu: {
+            list: () => '/admin/menu',
+            create: () => '/admin/menu/create',
+            edit: () => '/admin/menu/edit',
+        },
     },
 
     staff: {
