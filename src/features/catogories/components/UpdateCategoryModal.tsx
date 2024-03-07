@@ -26,6 +26,8 @@ const defaultValues = {
     minSystemPrice: 0,
     maxSystemPrice: 0,
     margin: 0,
+    createdAt: '',
+    updatedAt: '',
 };
 
 const UpdateCategoryModal: React.FC<UpdateCategoryProps> = ({ category, ...rest }) => {
@@ -55,7 +57,7 @@ const UpdateCategoryModal: React.FC<UpdateCategoryProps> = ({ category, ...rest 
 
     const queryClient = useQueryClient();
 
-    const onSubmit = (data: Category) => {
+    const onSubmit = (data: UpdateCategory) => {
         updateCategoryMutation.mutate(data, {
             onSuccess: () => {
                 rest.afterClose && rest.afterClose();
