@@ -1,5 +1,5 @@
 import { FarmHub } from '@models/user';
-import { Badge, Descriptions, Image } from 'antd';
+import { Badge, Button, Descriptions, Image } from 'antd';
 import Link from 'next/link';
 import * as React from 'react';
 
@@ -7,7 +7,8 @@ interface FarmHubDetailProps {
     farmHub: FarmHub;
 }
 
-const ProductDetail: React.FunctionComponent<FarmHubDetailProps> = ({ farmHub }) => {
+const FarmHubDetail: React.FunctionComponent<FarmHubDetailProps> = ({ farmHub }) => {
+    // const [openUpdateModal, setOpenUpdateModal] = React.useState<boolean>(false);
     return (
         <>
             <div className="flex flex-col w-full gap-4">
@@ -18,7 +19,14 @@ const ProductDetail: React.FunctionComponent<FarmHubDetailProps> = ({ farmHub })
                     bordered
                     title={'Basic Information'}
                     className="p-4 bg-white rounded-lg"
-                    extra={<Link href={`${farmHub?.id}/edit`}>Edit</Link>}
+                    extra={
+                        <Link href={`${farmHub?.id}/edit`}>
+                            <Button>Update</Button>
+                        </Link>
+                        // <Button type="primary" onClick={() => setOpenUpdateModal(!openUpdateModal)}>
+                        //     Update
+                        // </Button>
+                    }
                 >
                     <Descriptions.Item label="Avatar" span={1}>
                         <Image
@@ -49,9 +57,23 @@ const ProductDetail: React.FunctionComponent<FarmHubDetailProps> = ({ farmHub })
                         {farmHub?.createdAt}
                     </Descriptions.Item>
                 </Descriptions>
+                {/* <UpdateUserModal
+                    currentValue={{
+                        avatar: farmHub?.image,
+                        fullName: farmHub?.name,
+                        id: farmHub?.id,
+                        phone: farmHub?.address,
+                    }}
+                    open={openUpdateModal}
+                    afterClose={() => setOpenUpdateModal(false)}
+                    onCancel={() => {
+                        setOpenUpdateModal(false);
+                        toast.success('Cancel updated');
+                    }}
+                /> */}
             </div>
         </>
     );
 };
 
-export default ProductDetail;
+export default FarmHubDetail;

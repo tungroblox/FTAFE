@@ -1,14 +1,14 @@
 import { DashboardHeaderLayout } from '@components/layouts';
-import AddExpert from '@features/admin/user/expert/AddExpert';
+import AddFarmHub from '@features/admin/user/farmhub/AddFarmHub';
 import * as React from 'react';
 
-interface AddExpertPageProps {}
+interface AddFarmHubPageProps {}
 
-const AddExpertPage: React.FunctionComponent<AddExpertPageProps> = () => {
+const AddExpertPage: React.FunctionComponent<AddFarmHubPageProps> = () => {
     return (
         // <ProtectWrapper acceptRoles={[UserRole.ADMIN]}>
-        <DashboardHeaderLayout title="Create Expert">
-            <AddExpert />
+        <DashboardHeaderLayout title="Create Farm H">
+            <AddFarmHub />
         </DashboardHeaderLayout>
         // </ProtectWrapper>
     );

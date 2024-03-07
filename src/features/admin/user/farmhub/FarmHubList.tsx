@@ -12,7 +12,9 @@ import { useMutation } from '@tanstack/react-query';
 // import { ExpertList } from '@models/expert';
 import { Button, Dropdown, Image, Menu, Modal, Tag } from 'antd';
 import clsx from 'clsx';
+import { PlusIcon } from 'lucide-react';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 import * as React from 'react';
 import { toast } from 'react-toastify';
 
@@ -24,6 +26,8 @@ const FarmHubList: React.FunctionComponent<FarmHubListProps> = ({ filter }) => {
     const { data, isLoading } = useQueryFarmHub();
 
     const farmHub: FarmHub[] = data?.payload;
+
+    const router = useRouter();
 
     const deleteFarmHubMutation = useMutation({
         mutationKey: ['farm-hub'],
@@ -50,6 +54,17 @@ const FarmHubList: React.FunctionComponent<FarmHubListProps> = ({ filter }) => {
 
     return (
         <div className="flex flex-col w-full gap-2">
+            <div className="flex flex-col items-end w-full gap-2 ">
+                <button
+                    onClick={() => {
+                        router.push(routes.admin.user.farm_hub.create());
+                    }}
+                    className="flex items-center gap-1 px-3 py-1 text-white duration-300 hover:text-white hover:bg-primary/90 bg-primary"
+                >
+                    <PlusIcon className="w-5 h-5 text-white" />
+                    <span>Create New Farm Hub</span>
+                </button>
+            </div>
             <FormFilterWrapper<IV1GetFilterExpert> defaultValues={{ ...filter }}>
                 <div className="w-56">
                     <TextInput name="name" label="Name" />

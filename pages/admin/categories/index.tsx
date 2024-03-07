@@ -2,7 +2,7 @@ import { DashboardHeaderLayout } from '@components/layouts';
 import { ModalProvider } from '@context/modalContext';
 import { TableUtilProvider } from '@context/tableUtilContext';
 import { IV1GetFilterStaff } from '@core/api/staff.api';
-import StaffList from '@features/admin/user/staff/StaffList';
+import CategoryList from '@features/catogories/CategoryList';
 import { defaultPagingProps } from '@models/interface';
 // import { UserRole } from '@models/user';
 import { objectHelper } from '@utils/index';
@@ -17,8 +17,8 @@ const StaffListPage: NextPage<StaffListPageProps> = ({ filter }) => {
         // <ProtectWrapper acceptRoles={[UserRole.ADMIN]}>
         <ModalProvider>
             <TableUtilProvider>
-                <DashboardHeaderLayout title="Sản Phẩm">
-                    <StaffList filter={filter} />
+                <DashboardHeaderLayout title="Chuyên Mục">
+                    <CategoryList filter={filter} />
                 </DashboardHeaderLayout>
             </TableUtilProvider>
         </ModalProvider>

@@ -18,9 +18,6 @@ const Page: NextPage<PageProps> = ({ id }) => {
             <DashboardHeaderLayout title="FarmHub Detail">
                 <FarmHubDetail farmHub={farmHub} />
             </DashboardHeaderLayout>
-            {/* <DashboardHeaderLayout title="Product List">
-                <ProductList farmhub={farmHub} />
-            </DashboardHeaderLayout> */}
         </ToggleProvider>
         // </ProtectWrapper>
     );

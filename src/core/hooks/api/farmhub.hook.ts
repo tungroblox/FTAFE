@@ -18,7 +18,7 @@ export const useQueryFarmHubById = (id: string) => {
         queryKey: ['farm-hub', id],
         queryFn: async () => {
             const res = await FarmHubAPI.getFarmHubById(id);
-            console.log('queryFn: ~ res:', res);
+
             return res;
         },
     });
