@@ -29,7 +29,6 @@ const defaultValues = {
 };
 
 const UpdateCategoryModal: React.FC<UpdateCategoryProps> = ({ category, ...rest }) => {
-    console.log('category:', category);
     const updateCategoryMutation = useMutation({
         mutationFn: async (data: UpdateCategory) => {
             const res = await CategoryAPI.updateCategory(category.id, data);

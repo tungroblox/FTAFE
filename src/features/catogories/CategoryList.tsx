@@ -39,6 +39,8 @@ const CategoryList: React.FunctionComponent<CategoryListProps> = (filter) => {
         minSystemPrice: 0,
         maxSystemPrice: 0,
         margin: 0,
+        createdAt: '',
+        updatedAt: '',
     });
 
     const { data, isLoading } = useQuery({

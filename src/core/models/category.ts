@@ -12,4 +12,6 @@ export type Category = {
     minSystemPrice: number;
     maxSystemPrice: number;
     margin: number;
+    createdAt: string;
+    updatedAt: string;
 };
