@@ -3,6 +3,7 @@ import { IV1GetFilterCandidate } from '@core/api/candidate';
 import { CategoryAPI } from '@core/api/category.api';
 import { Category } from '@models/category';
 import { useMutation, useQuery } from '@tanstack/react-query';
+import { stringHelper } from '@utils/index';
 import { Button, Dropdown, Image, Menu, Modal, Tag } from 'antd';
 import clsx from 'clsx';
 import { PlusIcon } from 'lucide-react';
@@ -47,8 +48,6 @@ const CategoryList: React.FunctionComponent<CategoryListProps> = (filter) => {
         queryKey: ['categories'],
         queryFn: async () => {
             const res = await CategoryAPI.getAllCategories();
-            // console.log('queryFn: ~ res:', res);
-
             return res;
         },
     });
@@ -120,12 +119,7 @@ const CategoryList: React.FunctionComponent<CategoryListProps> = (filter) => {
                                         width={64}
                                         height={64}
                                         className="rounded overflow-hidden"
-                                        src={
-                                            'https://farmhubagro.com.ng/wp-content/uploads/2023/05/cropped-farm-hub-logo-removebg-original.png'
-                                            // props.image
-                                            //     ? props.image
-                                            //     : 'https://farmhubagro.com.ng/wp-content/uploads/2023/05/cropped-farm-hub-logo-removebg-original.png'
-                                        }
+                                        src={props.image ? props.image : stringHelper.convertTextToAvatar(props.name)}
                                     />
                                 }
                             />
@@ -216,7 +210,11 @@ const CategoryList: React.FunctionComponent<CategoryListProps> = (filter) => {
                 onCancel={() => setOpenUpdateModalState(false)}
             />
 
-            <CreateCategoryModal open={openCreateModalState} onCancel={() => setOpenCreateModalState(false)} />
+            <CreateCategoryModal
+                open={openCreateModalState}
+                afterClose={() => setOpenCreateModalState(false)}
+                onCancel={() => setOpenCreateModalState(false)}
+            />
         </div>
     );
 };

@@ -14,18 +14,13 @@ interface FormErrorMessageProps {
 export const FormErrorMessage: React.FC<FormErrorMessageProps> = ({ name, label, className }) => {
     const { errorDetails } = useStoreApi();
     const [errorMessage, setErrorMessage] = React.useState('');
+
     const formMethods = useFormContext();
 
     React.useEffect(() => {
         setErrorMessage('');
 
         const key = Object.keys(errorDetails).find((item) => stringHelper.lowercaseFirstLetter(item) === name);
-
-        // if (key) {
-        //     setErrorMessage(errorDetails[key]);
-        // } else if (formMethods.formState.errors[name]) {
-        //     setErrorMessage(_get(formMethods.formState, `errors.${name}.message`, ''));
-        // }
 
         if (key) {
             setErrorMessage(errorDetails[key]);
@@ -37,5 +32,5 @@ export const FormErrorMessage: React.FC<FormErrorMessageProps> = ({ name, label,
             setErrorMessage(clientError);
         }
     }, [errorDetails, name, formMethods.formState.errors]);
-    return <>{Boolean(errorMessage) && <div className={className}>{errorMessage.replaceAll('"', '')}</div>}</>;
+    return <>{Boolean(errorMessage) && <div className={className}>{errorMessage}</div>}</>;
 };

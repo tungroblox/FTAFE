@@ -104,8 +104,8 @@ export const routes = {
         },
         product: {
             list: () => '/admin/product',
-            create: () => '/admin/product/create',
-            edit: () => '/admin/product/edit',
+            detail: (id: string) => `/admin/product/${id}`,
+            listItem: (productId: string) => `/admin/product/${productId}/items`,
         },
         order: {
             list: () => '/admin/order',

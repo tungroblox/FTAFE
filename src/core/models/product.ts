@@ -1,12 +1,14 @@
-import { FarmHub } from './user';
-
-export interface Product extends FarmHub {
+export interface Product {
+    id: string;
+    categoryId: string;
     code: string;
     name: string;
     description: string;
     label: string;
-    p_image: String[];
-    special_tag: string;
+    createdAt: string;
+    updatedAt: string;
     status: string;
-    farm_hub: FarmHub;
 }
+export type CreateProduct = Pick<Product, 'categoryId' | 'name' | 'code' | 'description' | 'label'>;
+
+export type UpdateProduct = Pick<Product, 'categoryId' | 'name' | 'code' | 'description' | 'label' | 'status' | 'id'>;

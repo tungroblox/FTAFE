@@ -26,25 +26,23 @@ const CreateCategoryModal: React.FC<CreateCategoryModalProps> = ({ ...rest }) =>
     });
     const queryClient = useQueryClient();
 
-    const createCategoryMutation = useMutation({
-        mutationFn: async (data: CreateCategory) => {
-            const res = await CategoryAPI.createCategory(data);
-            console.log('mutationFn: ~ res:', res);
-            return res;
+    const { errors } = methods.formState;
+    console.log('errors:', errors);
+
+    const createCategoryMutation = useMutation(async (data: CreateCategory) => await CategoryAPI.createCategory(data), {
+        onSuccess: (res) => {
+            methods.reset();
+            toast.success('Create success');
+            queryClient.invalidateQueries();
+            rest.afterClose && rest.afterClose();
+        },
+        onError: (error) => {
+            toast.error('created fail');
         },
     });
-
     const onSubmit = async (data: CreateCategory) => {
-        createCategoryMutation.mutate(data, {
-            onSuccess: () => {
-                rest.afterClose && rest.afterClose();
-                methods.reset();
-                toast.success('Create success');
-                queryClient.invalidateQueries();
-            },
-        });
+        createCategoryMutation.mutate(data);
     };
-
     return (
         <FormWrapper methods={methods}>
             <Modal

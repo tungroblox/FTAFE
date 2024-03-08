@@ -57,20 +57,6 @@ const FarmHubDetail: React.FunctionComponent<FarmHubDetailProps> = ({ farmHub })
                         {farmHub?.createdAt}
                     </Descriptions.Item>
                 </Descriptions>
-                {/* <UpdateUserModal
-                    currentValue={{
-                        avatar: farmHub?.image,
-                        fullName: farmHub?.name,
-                        id: farmHub?.id,
-                        phone: farmHub?.address,
-                    }}
-                    open={openUpdateModal}
-                    afterClose={() => setOpenUpdateModal(false)}
-                    onCancel={() => {
-                        setOpenUpdateModal(false);
-                        toast.success('Cancel updated');
-                    }}
-                /> */}
             </div>
         </>
     );

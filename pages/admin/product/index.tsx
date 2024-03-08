@@ -2,7 +2,7 @@ import { DashboardHeaderLayout } from '@components/layouts';
 import { ModalProvider } from '@context/modalContext';
 import { TableUtilProvider } from '@context/tableUtilContext';
 import { IV1GetFilterStaff } from '@core/api/staff.api';
-import StaffList from '@features/admin/user/staff/StaffList';
+import ProductList from '@features/product/ProductList';
 import { defaultPagingProps } from '@models/interface';
 // import { UserRole } from '@models/user';
 import { objectHelper } from '@utils/index';
@@ -18,7 +18,7 @@ const StaffListPage: NextPage<StaffListPageProps> = ({ filter }) => {
         <ModalProvider>
             <TableUtilProvider>
                 <DashboardHeaderLayout title="Sản Phẩm">
-                    <StaffList filter={filter} />
+                    <ProductList />
                 </DashboardHeaderLayout>
             </TableUtilProvider>
         </ModalProvider>

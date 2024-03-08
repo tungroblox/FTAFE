@@ -17,6 +17,7 @@ const CategoryDetailModal: React.FunctionComponent<CategoryDetail> = ({ category
         },
     });
 
+    console.log('data:', data);
     return (
         <Modal {...rest}>
             <Descriptions
@@ -28,14 +29,7 @@ const CategoryDetailModal: React.FunctionComponent<CategoryDetail> = ({ category
                 className="p-4 bg-white rounded-lg"
             >
                 <Descriptions.Item label="Image" span={1}>
-                    <Image
-                        height={80}
-                        width={80}
-                        className="rounded overflow-hidden"
-                        alt={data?.name}
-                        // src={farmHub?.image ? farmHub?.image : stringHelper.convertTextToAvatar(farmHub.name)}
-                        src="https://farmhubagro.com.ng/wp-content/uploads/2023/05/cropped-farm-hub-logo-removebg-original.png"
-                    />
+                    <Image height={80} width={80} className="rounded overflow-hidden" alt={data?.name} src={data?.image} />
                 </Descriptions.Item>
                 <Descriptions.Item label="Name" span={2}>
                     {data?.name}
