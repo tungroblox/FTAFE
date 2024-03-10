@@ -12,8 +12,7 @@ const useAuthLoginMutation = () => {
     const { mutate, mutateAsync, ...rest } = useMutation(async (input: IV1AuthLogin) => await authApi.v1PostLogin(input), {
         onSuccess: async (data) => {
             localStorage.setItem(constant.TOKEN_KEY, data);
-            // store.dispatch(userThunk.getCurrentUser());
-            router.push('/');
+            store.dispatch(userThunk.getCurrentUser());
         },
         onError: (error) => {
             toast.error('Đăng nhập thất bại!');

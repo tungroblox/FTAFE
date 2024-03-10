@@ -1,4 +1,4 @@
-import { User, UserRole } from '@models/user';
+import { User } from '@models/user';
 import { PayloadAction, createSelector, createSlice } from '@reduxjs/toolkit';
 
 import { RootState } from '..';
@@ -10,18 +10,19 @@ export interface UserState extends User {
 }
 
 const initialState: UserState = {
-    type: UserRole.GUESS,
+    id: '',
+    firstName: '',
+    lastName: '',
     updatedAt: '',
     avatar: '',
     createdAt: '',
     email: '',
-    fullName: '',
-    isDeleted: false,
-    phone: '',
-    status: '',
-    id: '',
+    phoneNumber: '',
+    code: '',
+    address: '',
     isLogin: true,
-    isAuth: true,
+    isAuth: false,
+    isDeleted: false,
 };
 
 const reducer = createSlice({
@@ -34,7 +35,7 @@ const reducer = createSlice({
     },
     extraReducers: (builder) => {
         builder.addCase(userThunk.getCurrentUser.fulfilled, (state, { payload }) => {
-            const { candidate, expert, wallet, ...rest } = payload;
+            const { wallet, ...rest } = payload;
 
             return { ...state, ...rest, isLogin: true, isAuth: true };
         });

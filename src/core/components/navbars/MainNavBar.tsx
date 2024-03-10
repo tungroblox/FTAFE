@@ -1,9 +1,8 @@
-import { authApi } from '@core/api';
 import { constant } from '@core/constant';
 import { routes } from '@core/routes';
 import { BellIcon } from '@heroicons/react/24/outline';
 import { BellAlertIcon } from '@heroicons/react/24/solid';
-import { UserRole } from '@models/user';
+import { useLogoutMutation } from '@hooks/api/auth.hook';
 import WhiteLogo from '@public/images/logo_white.png';
 import { useStoreUser, useStoreWallet } from '@store/index';
 import { isChildrenPageActive } from '@utils/dynamicNavigation';
@@ -89,18 +88,15 @@ const items: MenuProps['items'] = [
 const MainNavbar: React.FunctionComponent<MainNavbarProps> = () => {
     const route = useRouter();
     const user = useStoreUser();
-    const _handleOnLogout = async () => {
-        localStorage.removeItem(constant.TOKEN_KEY);
-        await authApi.v1GetLogout();
-        if (typeof window === 'undefined') return;
-        window.location.reload();
-    };
+
+    const { mutationLogout } = useLogoutMutation();
     // const { data: notifications } = useQueryNotificationFilter({
     //     order: SortOrder.DESC,
     //     orderBy: 'createdAt',
     //     page: 0,
     //     pageSize: 20,
     // });
+    console.log('user', user);
     const notifications: any[] = [];
 
     const wallet = useStoreWallet();
@@ -109,48 +105,8 @@ const MainNavbar: React.FunctionComponent<MainNavbarProps> = () => {
     React.useEffect(() => {
         const newLinks = [...defaultLinks];
 
-        // if (user.type === UserRole.CANDIDATE || user.type === UserRole.EXPERT) {
-        //     newLinks.push({
-        //         id: 'link-cv',
-        //         name: 'CV',
-        //         path: routes.cv.list(),
-        //     });
-        // }
-
-        // if (user.type === UserRole.EXPERT) {
-        //     newLinks.push({
-        //         id: 'link-expert',
-        //         name: 'Dashboard',
-        //         path: routes.expert.home(),
-        //     });
-        // }
-
-        // if (user.type === UserRole.CANDIDATE) {
-        //     newLinks.push({
-        //         id: 'link-interview',
-        //         name: 'Interview',
-        //         path: routes.interview.list(),
-        //     });
-        // }
-
-        if (user.type === UserRole.ADMIN) {
-            newLinks.push({
-                id: 'link-admin',
-                name: 'Dashboard',
-                path: routes.admin.home(),
-            });
-        }
-
-        // if (user.type === UserRole.STAFF) {
-        //     newLinks.push({
-        //         id: 'link-staff',
-        //         name: 'Dashboard',
-        //         path: routes.staff.home(),
-        //     });
-        // }
-
         setLinks(newLinks);
-    }, [user.type]);
+    }, []);
 
     const [isOpen, setIsOpen] = React.useState(false);
     const [token, setToken] = React.useState<string>('');
@@ -215,7 +171,9 @@ const MainNavbar: React.FunctionComponent<MainNavbarProps> = () => {
                                 {token ? (
                                     <>
                                         <button className="flex items-center gap-2 hover:scale-105" onClick={() => setIsOpen(false)}>
-                                            <span className="text-base font-semibold capitalize whitespace-nowrap">{user.fullName}</span>
+                                            <span className="text-base font-semibold capitalize whitespace-nowrap">
+                                                {user.firstName + ' ' + user.lastName}
+                                            </span>
                                             <PersonCheck strokeWidth={2} className="w-6 h-6 text-jacarta-700 dark:text-white " />
                                         </button>
 
@@ -224,21 +182,19 @@ const MainNavbar: React.FunctionComponent<MainNavbarProps> = () => {
                                                 <Link href={link.path} key={link.id}>
                                                     {link.name === 'Sign Out' ? (
                                                         <div
-                                                            className="flex items-center px-5 py-2 space-x-2 transition-colors cursor-pointer dark:hover:bg-jacarta-600 hover:text-primary/80 focus:text-accent hover:bg-jacarta-50 rounded-xl"
+                                                            className="flex items-center px-5 py-2 space-x-2 transition-colors cursor-pointer dark:hover:bg-jacarta-600 hover:text-primary/80 focus:text-accent hover:bg-jacarta-50 rounded-xl group"
                                                             key={link.id}
-                                                            onClick={() => {
-                                                                _handleOnLogout();
-                                                            }}
+                                                            onClick={() => mutationLogout()}
                                                         >
                                                             {link.icon}
-                                                            <span className="mt-1 text-sm font-display text-jacarta-700 dark:text-white">
+                                                            <span className="mt-1 text-sm transition-colors font-display text-jacarta-700 dark:text-white group-hover:text-primary/80">
                                                                 {link.name}
                                                             </span>
                                                         </div>
                                                     ) : (
-                                                        <div className="flex items-center px-5 py-2 space-x-2 transition-colors cursor-pointer dark:hover:bg-jacarta-600 hover:text-primary/80 focus:text-accent hover:bg-jacarta-50 rounded-xl">
+                                                        <div className="flex items-center px-5 py-2 space-x-2 transition-colors cursor-pointer dark:hover:bg-jacarta-600 hover:text-primary/80 focus:text-accent hover:bg-jacarta-50 rounded-xl group">
                                                             {link.icon}
-                                                            <span className="mt-1 text-sm font-display text-jacarta-700 dark:text-white">
+                                                            <span className="mt-1 text-sm transition-colors font-display text-jacarta-700 dark:text-white group-hover:text-primary/80">
                                                                 {link.name}
                                                             </span>
                                                         </div>

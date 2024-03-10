@@ -1,8 +1,11 @@
+import { config } from './config';
+
 export const routes = {
     auth: {
         login: () => '/auth/login',
         register: () => '/auth/register',
         verify: () => '/auth/verify',
+        loginSocial: () => `${config.SERVER_URL}/auth/google/login`,
     },
 
     job: {

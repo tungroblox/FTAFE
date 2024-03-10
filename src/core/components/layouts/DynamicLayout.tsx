@@ -3,7 +3,7 @@ import * as React from 'react';
 
 import { MainFooter } from '../footers';
 import MainNavbar from '../navbars/MainNavBar';
-import { ProtectWrapper, UnProtectWrapper } from '../wrappers';
+import { UnProtectWrapper } from '../wrappers';
 import { AuthLayout } from './AuthLayout';
 import { DashboardLayout } from './DashboardLayout';
 
@@ -33,14 +33,14 @@ export const DynamicLayout: React.FC<DynamicLayoutProps> = ({ children }) => {
 
     // Footless UI
 
-    if (router.pathname.startsWith('/job')) {
-        return (
-            <div className="relative flex flex-col justify-start h-full min-h-screen">
-                <MainNavbar />
-                <div className="w-full py-20">{children}</div>
-            </div>
-        );
-    }
+    // if (router.pathname.startsWith('/job')) {
+    //     return (
+    //         <div className="relative flex flex-col justify-start h-full min-h-screen">
+    //             <MainNavbar />
+    //             <div className="w-full py-20">{children}</div>
+    //         </div>
+    //     );
+    // }
 
     // Headless UI
 
@@ -52,14 +52,6 @@ export const DynamicLayout: React.FC<DynamicLayoutProps> = ({ children }) => {
                 <MainFooter />
             </div>
         );
-    }
-
-    if (router.pathname.startsWith('/recording')) {
-        return <>{children}</>;
-    }
-
-    if (router.pathname.startsWith('/agora')) {
-        return <ProtectWrapper acceptRoles={[]}>{children}</ProtectWrapper>;
     }
 
     if (router.pathname.startsWith('/admin') || router.pathname.startsWith('/expert') || router.pathname.startsWith('/staff')) {

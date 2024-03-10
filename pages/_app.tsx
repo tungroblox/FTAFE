@@ -19,7 +19,8 @@ import 'swiper/css';
 import 'swiper/css/navigation';
 require('antd/dist/antd.less');
 
-// import GetCurrentUserWrapper from '@components/wrappers/GetCurrentUserWrapper';
+import GetCurrentUserWrapper from '@components/wrappers/GetCurrentUserWrapper';
+import { ThemeProvider } from 'next-themes';
 
 function MyApp({ Component, pageProps }: AppProps) {
     return (
@@ -28,16 +29,16 @@ function MyApp({ Component, pageProps }: AppProps) {
             <Provider store={store}>
                 <AutoLoginWrapper>
                     <QueryClientProvider client={queryClient}>
-                        {/* <GetCurrentUserWrapper> */}
-                        {/* <ThemeProvider enableSystem={true} attribute="class"> */}
-                        <ToastContainer autoClose={1500} />
-                        <ProgressLoadingBar />
-                        <DynamicLayout>
-                            <Component {...pageProps} />
-                        </DynamicLayout>
-                        <ReactQueryDevtools initialIsOpen={false} position="bottom-right" />
-                        {/* </ThemeProvider> */}
-                        {/* </GetCurrentUserWrapper> */}
+                        <GetCurrentUserWrapper>
+                            <ThemeProvider enableSystem={true} attribute="class">
+                                <ToastContainer autoClose={1500} />
+                                <ProgressLoadingBar />
+                                <DynamicLayout>
+                                    <Component {...pageProps} />
+                                </DynamicLayout>
+                                <ReactQueryDevtools initialIsOpen={false} position="bottom-right" />
+                            </ThemeProvider>
+                        </GetCurrentUserWrapper>
                     </QueryClientProvider>
                 </AutoLoginWrapper>
             </Provider>

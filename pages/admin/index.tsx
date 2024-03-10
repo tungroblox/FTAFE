@@ -1,3 +1,4 @@
+import { ProtectWrapper } from '@components/wrappers';
 import * as React from 'react';
 import AdminChart from 'src/screens/AdminChart';
 
@@ -6,7 +7,9 @@ interface DashboardAdminPageProps {}
 const DashboardAdminPage: React.FunctionComponent<DashboardAdminPageProps> = () => {
     return (
         <React.Fragment>
-            <AdminChart />
+            <ProtectWrapper acceptRoles={[]}>
+                <AdminChart />
+            </ProtectWrapper>
         </React.Fragment>
     );
 };

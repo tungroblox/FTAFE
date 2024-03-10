@@ -22,7 +22,7 @@ export const ProtectWrapper: React.FC<ProtectWrapperProps> = ({ children, accept
         if (acceptRoles.length <= 0) {
             return;
         }
-        if (user.isAuth && !acceptRoles.includes(user.type)) {
+        if (user.isAuth) {
             router.push(routes.auth.login());
         }
     }, [acceptRoles, user, router]);

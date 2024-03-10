@@ -41,11 +41,7 @@ export const AuthLogin: React.FC<AuthLoginProps> = ({}) => {
                         children: (
                             <>
                                 <FormWrapper methods={methods}>
-                                    <form
-                                        onSubmit={methods.handleSubmit((data) => {
-                                            mutationAuthLogin(data);
-                                        })}
-                                    >
+                                    <form onSubmit={methods.handleSubmit((data) => mutationAuthLogin(data))}>
                                         <div className="space-y-4">
                                             <div>
                                                 <TextInput label="Email" name="email" type="email" placeholder="user@gmail.com" />

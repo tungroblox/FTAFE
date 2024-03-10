@@ -1,4 +1,5 @@
 import { CommonSeo } from '@components/commons';
+import { ProtectWrapper } from '@components/wrappers';
 import { NextPage } from 'next';
 import * as React from 'react';
 
@@ -9,11 +10,13 @@ const HomePage: NextPage<HomePageProps> = () => {
         <React.Fragment>
             <CommonSeo title="Home" />
             {/* <LandingPage /> */}
-            <div className="w-full h-screen">
-                <div className="flex items-center justify-center w-full h-full">
-                    <div className="text-4xl font-bold">Hello World!</div>
+            <ProtectWrapper acceptRoles={[]}>
+                <div className="w-full h-screen">
+                    <div className="flex items-center justify-center w-full h-full">
+                        <div className="text-4xl font-bold">Hello World!</div>
+                    </div>
                 </div>
-            </div>
+            </ProtectWrapper>
         </React.Fragment>
     );
 };

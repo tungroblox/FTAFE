@@ -1,6 +1,6 @@
 export interface BaseModel {
     createdAt: string;
-    updatedAt: string;
+    updatedAt: string | null;
     isDeleted: boolean;
 }
 

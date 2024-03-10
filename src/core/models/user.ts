@@ -1,5 +1,3 @@
-import { Candidate } from './candidate';
-import { ExpertItem } from './expert';
 import { BaseModel, IOption } from './interface';
 import { Wallet } from './wallet';
 
@@ -19,50 +17,48 @@ export enum UserStatus {
 
 export interface User extends BaseModel {
     id: string;
-    type: UserRole;
-    avatar: string;
+    firstName: string;
+    lastName: string;
     email: string;
-    fullName: string;
-    phone: string;
-    status: string;
-    //! UNLOCK sau
-    // first_name: string;
-    // last_name: string;
-    address: string;
-    job_title: string;
-    password: string;
-    username: string;
-    gender: string;
+    phoneNumber: string;
+    avatar: string | null;
+    code: string | null;
+    address: string | null;
+    createdAt: string;
+    updatedAt: string | null;
+    // wallet: {
+    //     id: '5d76359b-9cd8-40d5-88e0-5f3498d49718';
+    //     accountId: '4a846001-c2c0-4eba-8fcf-f36a8106813f';
+    //     balance: 0.0;
+    //     createdAt: '2024-03-07T18:22:41.6895101';
+    //     updatedAt: null;
+    //     status: 'Active';
+    //     account: null;
+    //     payments: [];
+    //     transactions: [];
+    // };
 }
 
 export const userDefaultValues: User = {
     id: '',
-    type: UserRole.GUESS,
-    avatar: '',
+    firstName: '',
+    lastName: '',
     email: '',
-    fullName: '',
-    phone: '',
-    status: '',
+    phoneNumber: '',
+    avatar: null,
+    code: null,
+    address: null,
     createdAt: '',
     updatedAt: '',
     isDeleted: false,
-    address: '',
-    gender: 'male',
-    username: '',
-    password: '',
-    job_title: '',
 };
 
 export interface UserItem extends User {
-    expert: ExpertItem | null;
-    candidate: Candidate | null;
     wallet: Wallet | null;
 }
 
 export const userItemDefaultValues: UserItem = {
     ...userDefaultValues,
-    expert: null,
-    candidate: null,
     wallet: null,
 };
 

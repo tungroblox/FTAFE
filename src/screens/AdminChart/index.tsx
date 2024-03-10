@@ -1,12 +1,9 @@
-import Highcharts from 'highcharts';
-import HighchartsReact from 'highcharts-react-official';
 import React from 'react';
-import WelcomeBanner from './WelcomeBanner';
 import OverviewData from './OverviewData';
 import Profit from './Profit';
-import RealtimeChart from './RealtimeChart';
 import SkillsCharts from './SkillsCharts';
 import TopExpert from './TopExpert';
+import WelcomeBanner from './WelcomeBanner';
 
 interface AdminChartProps {}
 const options = {
@@ -103,7 +100,7 @@ const AdminChart: React.FunctionComponent<AdminChartProps> = () => {
             </div>
             <div className="flex justify-between gap-6">
                 <Profit />
-                <RealtimeChart />
+                {/* <RealtimeChart /> */}
             </div>
             <SkillsCharts />
             <TopExpert />

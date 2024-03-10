@@ -1,14 +1,10 @@
 import { AreaChartOutlined, MenuFoldOutlined, MenuUnfoldOutlined, UserOutlined } from '@ant-design/icons';
 import { routes } from '@core/routes';
-import { BellIcon } from '@heroicons/react/24/outline';
-import { BellAlertIcon } from '@heroicons/react/24/solid';
 import { useLogoutMutation } from '@hooks/api/auth.hook';
-import { UserRole } from '@models/user';
 import { Person, PersonCheck, SignOut } from 'akar-icons';
-import { Badge, Button, Dropdown, Empty, Layout, Menu } from 'antd';
+import { Button, Dropdown, Layout, Menu } from 'antd';
 import { ItemType } from 'antd/lib/menu/hooks/useItems';
 import clsx from 'clsx';
-import moment from 'moment';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import * as React from 'react';
@@ -212,12 +208,14 @@ export const DashboardLayout: React.FC<DashboardLayoutProps> = ({ children }) =>
                                 >
                                     <div className="flex items-center justify-center gap-2 duration-300 cursor-pointer text-jacarta-700 ">
                                         <button className="flex items-center gap-2 hover:scale-105" onClick={() => setIsOpen(false)}>
-                                            <span className="text-base font-semibold capitalize whitespace-nowrap">{user.fullName}</span>
+                                            <span className="text-base font-semibold capitalize whitespace-nowrap">
+                                                {user.firstName + ' ' + user.lastName}
+                                            </span>
                                             <PersonCheck strokeWidth={2} className="w-6 h-6 text-jacarta-700 dark:text-white " />
                                         </button>
                                     </div>
                                 </Dropdown>
-                                {user.isLogin && user.type === UserRole.ADMIN && (
+                                {/* {user.isLogin && user.type === UserRole.ADMIN && (
                                     <div className="relative z-50 pr-8 noti-history xl:pr-12">
                                         <button className="flex items-center gap-2 hover:scale-105 noti-button" onClick={() => setIsOpen(!isOpen)}>
                                             {isOpen ? (
@@ -274,7 +272,7 @@ export const DashboardLayout: React.FC<DashboardLayoutProps> = ({ children }) =>
                                             </div>
                                         )}
                                     </div>
-                                )}
+                                )} */}
                             </div>
                         </div>
                         <Content>
