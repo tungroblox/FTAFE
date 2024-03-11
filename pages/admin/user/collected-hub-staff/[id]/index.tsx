@@ -1,8 +1,9 @@
 import { DashboardHeaderLayout } from '@components/layouts';
 import { ProtectWrapper } from '@components/wrappers';
-import StaffDetail from '@features/admin/user/staff/StaffDetail';
-import { useQueryStaffById } from '@hooks/api/staff.hook';
+import { CollectedHubAPI } from '@core/api/collected-hub.api';
+import HubDetail from '@features/admin/user/collected-hub/HubDetail';
 import { UserRole } from '@models/user';
+import { useQuery } from '@tanstack/react-query';
 import { NextPage } from 'next';
 import { ToggleProvider } from 'react-toggle-hook';
 
@@ -11,12 +12,16 @@ interface PageProps {
 }
 
 const Page: NextPage<PageProps> = ({ id }) => {
-    const { data } = useQueryStaffById(id);
+    const { data } = useQuery({
+        queryKey: ['collected-hub', id],
+        queryFn: async () => await CollectedHubAPI.getById(id),
+    });
+
     return (
         <ProtectWrapper acceptRoles={[UserRole.ADMIN]}>
             <ToggleProvider>
-                <DashboardHeaderLayout title="Staff Detail">
-                    <StaffDetail staff={data} />
+                <DashboardHeaderLayout title="Hub Detail">
+                    <HubDetail value={data} />
                 </DashboardHeaderLayout>
             </ToggleProvider>
         </ProtectWrapper>

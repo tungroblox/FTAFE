@@ -1,39 +1,40 @@
 import { DashboardHeaderLayout } from '@components/layouts';
+import { ProtectWrapper } from '@components/wrappers';
 import { ModalProvider } from '@context/modalContext';
 import { TableUtilProvider } from '@context/tableUtilContext';
-import { IV1GetFilterStaff } from '@core/api/staff.api';
-import StaffList from '@features/admin/user/staff/StaffList';
+import { CollectedHubFilter } from '@core/api/collected-hub.api';
+import CollectedHubList from '@features/admin/user/collected-hub/CollectedHubList';
 import { defaultPagingProps } from '@models/interface';
-// import { UserRole } from '@models/user';
+import { UserRole } from '@models/user';
 import { objectHelper } from '@utils/index';
 import { NextPage } from 'next';
 
-interface StaffListPageProps {
-    filter: Partial<IV1GetFilterStaff>;
+interface CollectedHubPageProps {
+    filter: Partial<CollectedHubFilter>;
 }
 
-const StaffListPage: NextPage<StaffListPageProps> = ({ filter }) => {
+const CollectedHubPage: NextPage<CollectedHubPageProps> = ({ filter }) => {
     return (
-        // <ProtectWrapper acceptRoles={[UserRole.ADMIN]}>
-        <ModalProvider>
-            <TableUtilProvider>
-                <DashboardHeaderLayout title="Staff Management">
-                    <StaffList filter={filter} />
-                </DashboardHeaderLayout>
-            </TableUtilProvider>
-        </ModalProvider>
-        // </ProtectWrapper>
+        <ProtectWrapper acceptRoles={[UserRole.ADMIN]}>
+            <ModalProvider>
+                <TableUtilProvider>
+                    <DashboardHeaderLayout title="Collected hub">
+                        <CollectedHubList filter={filter} />
+                    </DashboardHeaderLayout>
+                </TableUtilProvider>
+            </ModalProvider>
+        </ProtectWrapper>
     );
 };
 
-StaffListPage.getInitialProps = async (ctx): Promise<StaffListPageProps> => {
+CollectedHubPage.getInitialProps = async (ctx): Promise<CollectedHubPageProps> => {
     return {
-        filter: objectHelper.getObjectWithDefault<Partial<IV1GetFilterStaff>>(ctx.query, {
+        filter: objectHelper.getObjectWithDefault<Partial<CollectedHubFilter>>(ctx.query, {
             ...defaultPagingProps,
             name: '',
-            email: '',
-            phone: '',
+            description: '',
+            address: '',
         }),
     };
 };
-export default StaffListPage;
+export default CollectedHubPage;

@@ -1,17 +1,15 @@
 import { TextInput } from '@components/forms';
 import FormFilterWrapper from '@components/forms/FormFilterWrapper';
-import { TableActionCell, TableBodyCell, TableBuilder, TableHeaderCell } from '@components/tables';
-import { useTableUtil } from '@context/tableUtilContext';
-import { expertApi, IV1GetFilterExpert } from '@core/api/expert.api';
+import { TableBodyCell, TableBuilder, TableHeaderCell } from '@components/tables';
+import { IV1GetFilterExpert } from '@core/api/expert.api';
 import { IV1GetFilterStaff } from '@core/api/staff.api';
 import { routes } from '@core/routes';
 import { PlusIcon } from '@heroicons/react/24/outline';
 import { useQueryStaffFilter } from '@hooks/api/staff.hook';
 import { UserItem } from '@models/user';
 // import { ExpertList } from '@models/expert';
-import { useQuery } from '@tanstack/react-query';
 import { stringHelper } from '@utils/index';
-import { Image, Tag } from 'antd';
+import { Image } from 'antd';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import * as React from 'react';
@@ -69,8 +67,7 @@ const StaffList: React.FunctionComponent<StaffListProps> = ({ filter }) => {
                                     />
                                 }
                             />
-                        ),
-                    },
+                        ),z
                     {
                         title: () => <TableHeaderCell key="fullName" sortKey="fullName" label="Fullname" />,
                         width: 400,

@@ -3,7 +3,7 @@ import { ProductItemAPI } from '@core/api/product-item.api';
 import { routes } from '@core/routes';
 import { Product } from '@models/product';
 import { ProductItem } from '@models/product-item';
-import { useMutation, useQuery } from '@tanstack/react-query';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { Badge, Button, Descriptions, Modal } from 'antd';
 import Link from 'next/link';
 import { toast } from 'react-toastify';
@@ -21,6 +21,8 @@ const ProductDetail: React.FC<ProductDetailProps> = ({ product }) => {
 
     const deleteItemMutation = useMutation(async (id: string) => await ProductItemAPI.deleteProductItem(id));
 
+    const queryClient = useQueryClient();
+
     const handleDeleteProductItem = (id: string) => {
         Modal.confirm({
             title: 'Are you sure?',
@@ -30,8 +32,12 @@ const ProductDetail: React.FC<ProductDetailProps> = ({ product }) => {
             cancelText: 'No, cancel',
             onOk: async () => {
                 try {
-                    deleteItemMutation.mutateAsync(id);
-                    toast.success('Product deleted successfully!');
+                    deleteItemMutation.mutateAsync(id, {
+                        onSuccess: () => {
+                            queryClient.invalidateQueries(['product-items', 'product', product?.id]);
+                            toast.success('Product deleted successfully!');
+                        },
+                    });
                 } catch (error) {
                     console.error('Error deleting FarmHub:', error);
                 }

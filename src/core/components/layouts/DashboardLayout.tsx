@@ -35,11 +35,11 @@ const menuAdminList: ItemType[] = [
                 key: routes.admin.user.farm_hub.list(),
             },
             {
-                label: 'Delivered Hub Staff',
+                label: 'Station',
                 key: routes.admin.user.delivered_hub_staff.list(),
             },
             {
-                label: 'Collected Hub Staff',
+                label: 'Collected Hub',
                 key: routes.admin.user.collected_hub_staff.list(),
             },
         ],

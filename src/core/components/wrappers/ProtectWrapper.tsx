@@ -14,7 +14,6 @@ export const ProtectWrapper: React.FC<ProtectWrapperProps> = ({ children, accept
     const router = useRouter();
 
     React.useEffect(() => {
-        // Note - Enbale this when we have auth api
         if (!user.isLogin && !user.isAuth) {
             router.push(routes.auth.login());
             return;
@@ -22,9 +21,9 @@ export const ProtectWrapper: React.FC<ProtectWrapperProps> = ({ children, accept
         if (acceptRoles.length <= 0) {
             return;
         }
-        if (user.isAuth) {
-            router.push(routes.auth.login());
-        }
+        // if (user.isAuth) {
+        // router.push(routes.auth.login());
+        // }
     }, [acceptRoles, user, router]);
 
     return <>{children}</>;

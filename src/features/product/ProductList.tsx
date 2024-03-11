@@ -2,7 +2,7 @@ import { TableBuilder, TableHeaderCell } from '@components/tables';
 import { ProductAPI } from '@core/api/product.api';
 import { routes } from '@core/routes';
 import { Product } from '@models/product';
-import { useMutation, useQuery } from '@tanstack/react-query';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { Button, Dropdown, Menu, Modal, Tag } from 'antd';
 import clsx from 'clsx';
 import { PlusIcon } from 'lucide-react';
@@ -47,6 +47,8 @@ const ProductList: React.FunctionComponent<ProductListProps> = () => {
         },
     });
 
+    const queryClient = useQueryClient();
+
     const handleDeleteProduct = (id: string) => {
         Modal.confirm({
             title: 'Are you sure?',
@@ -56,8 +58,12 @@ const ProductList: React.FunctionComponent<ProductListProps> = () => {
             cancelText: 'No, cancel',
             onOk: async () => {
                 try {
-                    deleteProductMutation.mutateAsync(id);
-                    toast.success('Product deleted successfully!');
+                    await deleteProductMutation.mutateAsync(id, {
+                        onSuccess: () => {
+                            queryClient.invalidateQueries();
+                            toast.success('Product deleted successfully!');
+                        },
+                    });
                 } catch (error) {
                     console.error('Error deleting FarmHub:', error);
                 }

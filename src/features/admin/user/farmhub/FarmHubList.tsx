@@ -8,7 +8,7 @@ import { FarmHubAPI } from '@core/api/farmhub';
 import { routes } from '@core/routes';
 import { useQueryFarmHub } from '@hooks/api/farmhub.hook';
 import { FarmHub } from '@models/user';
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 // import { ExpertList } from '@models/expert';
 import { Button, Dropdown, Image, Menu, Modal, Tag } from 'antd';
 import clsx from 'clsx';
@@ -33,6 +33,7 @@ const FarmHubList: React.FunctionComponent<FarmHubListProps> = ({ filter }) => {
         mutationKey: ['farm-hub'],
         mutationFn: async (id: string) => await FarmHubAPI.deleteFarmHub(id),
     });
+    const queryClient = useQueryClient();
 
     const handleDelete = (id: string) => {
         Modal.confirm({
@@ -43,8 +44,12 @@ const FarmHubList: React.FunctionComponent<FarmHubListProps> = ({ filter }) => {
             cancelText: 'No, cancel',
             onOk: async () => {
                 try {
-                    await deleteFarmHubMutation.mutateAsync(id);
-                    toast.success('FarmHub deleted successfully!');
+                    await deleteFarmHubMutation.mutateAsync(id, {
+                        onSuccess: () => {
+                            queryClient.invalidateQueries(['farm-hub']);
+                            toast.success('FarmHub deleted successfully!');
+                        },
+                    });
                 } catch (error) {
                     console.error('Error deleting FarmHub:', error);
                 }

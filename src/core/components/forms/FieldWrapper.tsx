@@ -19,7 +19,7 @@ export const FieldWrapper: React.FC<FieldWrapperProps & React.PropsWithChildren>
     return (
         <div className="w-full space-y-2">
             {Boolean(label) && (
-                <label htmlFor={name} className="block text-sm font-medium text-gray-700 dark:text-gray-100">
+                <label htmlFor={name} className="block text-sm font-medium text-gray-700">
                     {label}
                     {required && <span className="text-red"> *</span>}
                 </label>

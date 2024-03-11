@@ -15,7 +15,7 @@ export enum SortOrder {
 }
 
 export interface PagingProps {
-    page: number;
+    pageIndex: number;
     pageSize: number;
     orderBy: string;
     order: SortOrder;
@@ -23,11 +23,10 @@ export interface PagingProps {
 }
 
 export const defaultPagingProps: PagingProps = {
-    page: 0,
+    pageIndex: 0,
     pageSize: 10,
-    orderBy: 'date',
+    orderBy: 'createdAt',
     order: SortOrder.DESC,
-    // isShowInactive: false,
 };
 
 export interface IOption {

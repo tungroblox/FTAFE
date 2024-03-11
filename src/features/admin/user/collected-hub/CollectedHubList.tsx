@@ -1,67 +1,44 @@
+import { DashOutlined } from '@ant-design/icons';
+import { TextInput } from '@components/forms';
+import FormFilterWrapper from '@components/forms/FormFilterWrapper';
 import { TableBodyCell, TableBuilder, TableHeaderCell } from '@components/tables';
-import { IV1GetFilterCandidate } from '@core/api/candidate';
-import { CategoryAPI } from '@core/api/category.api';
-import { Category } from '@models/category';
+import { CollectedHubAPI, CollectedHubFilter } from '@core/api/collected-hub.api';
+import { IV1GetFilterExpert } from '@core/api/expert.api';
+import { PlusIcon } from '@heroicons/react/24/outline';
+import { CollectedHub } from '@models/staff';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { stringHelper } from '@utils/index';
 import { Button, Dropdown, Image, Menu, Modal, Tag } from 'antd';
 import clsx from 'clsx';
-import { PlusIcon } from 'lucide-react';
+import Link from 'next/link';
+import { useRouter } from 'next/router';
 import * as React from 'react';
 import { toast } from 'react-toastify';
 
-import CategoryDetailModal from './components/CategoryDetailModal';
-import CreateCategoryModal from './components/CreateCategoryModal';
-import UpdateCategoryModal from './components/UpdateCategoryModal';
+import CreateCollectedHubModal from './components/CreateCollectedHubModal';
+import UpdateCollectedHubModal from './components/UpdateCollectedHubModal';
 
-interface CategoryListProps {
-    filter: Partial<IV1GetFilterCandidate>;
+interface CollectedHubListProps {
+    filter: Partial<CollectedHubFilter>;
 }
 
-const CategoryList: React.FunctionComponent<CategoryListProps> = (filter) => {
-    const [openDetailModal, setOpenDetailModalState] = React.useState<boolean>(false);
-    const [categoryDetailId, setCategoryDetailId] = React.useState<string>('');
-    const queryClient = useQueryClient();
-    const setOpenDetailModal = (isOpen: boolean, categoryId: string) => {
-        setCategoryDetailId(categoryId);
-        setOpenDetailModalState(isOpen);
-    };
-
-    const [openUpdateModal, setOpenUpdateModalState] = React.useState<boolean>(false);
-    const [defaultCategory, setDefaultCategoryState] = React.useState<Category>({
-        id: '',
-        name: '',
-        description: '',
-        image: '',
-        code: '',
-        status: '',
-        displayIndex: 0,
-        systemPrice: 0,
-        minSystemPrice: 0,
-        maxSystemPrice: 0,
-        margin: 0,
-        createdAt: '',
-        updatedAt: '',
-    });
+const CollectedHubList: React.FunctionComponent<CollectedHubListProps> = ({ filter }) => {
+    const router = useRouter();
 
     const { data, isLoading } = useQuery({
-        queryKey: ['categories'],
+        queryKey: ['collected-hub-list', filter],
         queryFn: async () => {
-            const res = await CategoryAPI.getAllCategories();
+            const res = await CollectedHubAPI.getAll(filter);
             return res;
         },
     });
+    const hubs: CollectedHub[] = data;
 
-    const deleteCategoryMutation = useMutation({
-        mutationFn: async (categoryId: string) => {
-            const res = await CategoryAPI.deleteCategory(categoryId);
-            return res;
-        },
-    });
+    const deleteCollectedHubMutation = useMutation(async (id: string) => await CollectedHubAPI.deleteOne(id));
 
-    const [openCreateModalState, setOpenCreateModalState] = React.useState<boolean>(false);
+    const queryClient = useQueryClient();
 
-    const handleDeleteCategory = (id: string) => {
+    const handleDelete = (id: string) => {
         Modal.confirm({
             title: 'Are you sure?',
             content: 'You will not be able to recover this data!',
@@ -70,10 +47,10 @@ const CategoryList: React.FunctionComponent<CategoryListProps> = (filter) => {
             cancelText: 'No, cancel',
             onOk: async () => {
                 try {
-                    await deleteCategoryMutation.mutateAsync(id, {
+                    await deleteCollectedHubMutation.mutateAsync(id, {
                         onSuccess: () => {
-                            queryClient.invalidateQueries();
-                            toast.success('Category deleted successfully!');
+                            queryClient.invalidateQueries(['collected-hub-list', filter]);
+                            toast.success('FarmHub deleted successfully!');
                         },
                     });
                 } catch (error) {
@@ -82,8 +59,21 @@ const CategoryList: React.FunctionComponent<CategoryListProps> = (filter) => {
             },
         });
     };
-
-    const categories: Category[] = data?.payload;
+    //Open modal
+    const [openCreateModalState, setOpenCreateModalState] = React.useState<boolean>(false);
+    //Update modal
+    const [updateModalState, setUpdateModalState] = React.useState<boolean>(false);
+    const [currentValue, setCurrentValue] = React.useState<CollectedHub>({
+        id: '',
+        name: '',
+        description: '',
+        image: '',
+        code: '',
+        status: '',
+        address: '',
+        createdAt: '',
+        updatedAt: '',
+    });
 
     return (
         <div className="flex flex-col w-full gap-2">
@@ -93,33 +83,36 @@ const CategoryList: React.FunctionComponent<CategoryListProps> = (filter) => {
                     className="flex items-center gap-1 px-3 py-1 text-white duration-300 hover:text-white hover:bg-primary/90 bg-primary"
                 >
                     <PlusIcon className="w-5 h-5 text-white" />
-                    <span>Create New Category</span>
+                    <span>Create New Staff</span>
                 </button>
             </div>
 
-            {/* <FormFilterWrapper<IV1GetFilterExpert> defaultValues={{ ...filter }}>
+            <FormFilterWrapper<IV1GetFilterExpert> defaultValues={{ ...filter }}>
                 <div className="w-56">
                     <TextInput name="name" label="Name" />
                 </div>
                 <div className="w-56">
-                    <TextInput name="email" label="Email" />
+                    <TextInput name="description" label="Phone" />
                 </div>
-            </FormFilterWrapper> */}
+                <div className="w-56">
+                    <TextInput name="address" label="Address" />
+                </div>
+            </FormFilterWrapper>
 
-            <TableBuilder<Category>
+            <TableBuilder<CollectedHub>
                 rowKey="id"
                 isLoading={isLoading}
-                data={categories}
+                data={hubs}
                 columns={[
                     {
                         title: () => <TableHeaderCell key="image" sortKey="image" label="image" />,
-                        width: 200,
+                        width: 100,
                         key: 'image',
-                        render: ({ ...props }: Category) => (
+                        render: ({ ...props }: CollectedHub) => (
                             <TableBodyCell
                                 label={
                                     <Image
-                                        alt={props.name}
+                                        alt=""
                                         width={64}
                                         height={64}
                                         className="rounded overflow-hidden"
@@ -131,29 +124,30 @@ const CategoryList: React.FunctionComponent<CategoryListProps> = (filter) => {
                     },
                     {
                         title: () => <TableHeaderCell key="name" sortKey="name" label="Name" />,
-                        width: 400,
+                        width: 300,
                         key: 'name',
-                        render: ({ ...props }: Category) => (
-                            // <TableBodyCell label={<Link href={routes.admin.user.farm_hub.detail(props.id)}>{props.name}</Link>} />
-                            <Button type="text" onClick={() => setOpenDetailModal(true, props.id)}>
-                                {props.name}
-                            </Button>
-                        ),
+                        render: ({ ...props }: CollectedHub) => {
+                            return <TableBodyCell label={<Link href={`collected-hub-staff/${props.id}`}>{props.name}</Link>} />;
+                        },
                     },
                     {
-                        title: () => <TableHeaderCell key="description" sortKey="description" label="Mô tả" />,
+                        title: () => <TableHeaderCell key="description" sortKey="description" label="Description" />,
                         width: 400,
                         key: 'description',
-                        render: ({ ...props }: Category) => (
-                            // <TableBodyCell label={<Link href={routes.admin.user.farm_hub.detail(props.id)}></Link>} />
-                            <span>{props.description}</span>
-                        ),
+                        render: ({ ...props }: CollectedHub) => <TableBodyCell label={<span>{props.description}</span>} />,
+                    },
+
+                    {
+                        title: () => <TableHeaderCell key="address" sortKey="address" label="address" />,
+                        width: 400,
+                        key: 'address',
+                        render: ({ ...props }: CollectedHub) => <TableBodyCell label={<span>{props.address}</span>} />,
                     },
                     {
                         title: () => <TableHeaderCell key="status" sortKey="status" label="Status" />,
-                        width: 400,
+                        width: 100,
                         key: 'status',
-                        render: ({ ...props }: Category) => {
+                        render: ({ ...props }: CollectedHub) => {
                             return (
                                 <Tag
                                     className={clsx(`text-sm whitespace-normal`)}
@@ -164,10 +158,9 @@ const CategoryList: React.FunctionComponent<CategoryListProps> = (filter) => {
                             );
                         },
                     },
-
                     {
                         title: () => <TableHeaderCell key="" sortKey="" label="" />,
-                        width: 400,
+                        width: 50,
                         key: 'action',
                         render: ({ ...props }) => {
                             return (
@@ -177,50 +170,41 @@ const CategoryList: React.FunctionComponent<CategoryListProps> = (filter) => {
                                             <Menu.Item key="1">
                                                 <Button
                                                     onClick={() => {
-                                                        setOpenUpdateModalState(true);
-                                                        setDefaultCategoryState(props);
+                                                        setCurrentValue(props);
+                                                        setUpdateModalState(!updateModalState);
                                                     }}
                                                 >
-                                                    Update
+                                                    Edit
                                                 </Button>
                                             </Menu.Item>
+
                                             <Menu.Item key="2">
-                                                <Button onClick={() => handleDeleteCategory(props.id)}>Delete</Button>
+                                                <Button onClick={() => handleDelete(props.id)}>Delete</Button>
                                             </Menu.Item>
                                         </Menu>
                                     }
                                     trigger={['click']}
                                 >
-                                    <span className="cursor-pointer">Actions</span>
+                                    <DashOutlined />
                                 </Dropdown>
                             );
                         },
                     },
                 ]}
             />
-            <CategoryDetailModal
-                categoryId={categoryDetailId}
-                footer={null}
-                width={1000}
-                open={openDetailModal}
-                onCancel={() => setOpenDetailModalState(false)}
-            />
-
-            <UpdateCategoryModal
-                category={defaultCategory}
-                width={1000}
-                open={openUpdateModal}
-                afterClose={() => setOpenUpdateModalState(false)}
-                onCancel={() => setOpenUpdateModalState(false)}
-            />
-
-            <CreateCategoryModal
+            <CreateCollectedHubModal
                 open={openCreateModalState}
                 afterClose={() => setOpenCreateModalState(false)}
                 onCancel={() => setOpenCreateModalState(false)}
+            />
+            <UpdateCollectedHubModal
+                open={updateModalState}
+                currentValue={currentValue}
+                onCancel={() => setUpdateModalState(false)}
+                afterClose={() => setUpdateModalState(false)}
             />
         </div>
     );
 };
 
-export default CategoryList;
+export default CollectedHubList;
