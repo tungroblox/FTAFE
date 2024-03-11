@@ -27,6 +27,7 @@ const useAuthLoginMutation = () => {
 };
 
 const useLogoutMutation = () => {
+    const router = useRouter();
     const { mutate, mutateAsync, ...rest } = useMutation(
         async () => {
             localStorage.removeItem(constant.TOKEN_KEY);
@@ -35,6 +36,7 @@ const useLogoutMutation = () => {
         {
             onSuccess: async () => {
                 store.dispatch(userThunk.getCurrentUser());
+                router.push('/auth/login');
             },
         }
     );
