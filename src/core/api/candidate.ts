@@ -1,4 +1,4 @@
-import { Candidate, CandidateItem } from '@models/candidate';
+import { CandidateItem } from '@models/candidate';
 import { PagingProps, ResponseList } from '@models/interface';
 import { Interview, InterviewItem } from '@models/interview';
 import { User } from '@models/user';
@@ -20,8 +20,6 @@ export interface IV1GetFilterCandidate extends Pick<User, 'email'>, PagingProps 
     name: string;
 }
 
-export interface IV1CandidateUpdateProfile extends Pick<User, 'fullName' | 'email' | 'phone' | 'avatar'> {}
-
 export const candidateApi = {
     v1GetInterviewFilter: async (filter: Partial<IV1CandidateFilterInterview>) => {
         const res = await http.get('/candidate/interviews', { params: { ...filter } });
@@ -37,11 +35,6 @@ export const candidateApi = {
         return _get(res, 'data') as {
             total: number;
         };
-    },
-
-    v1UpdateCandidateProfile: async (input: IV1CandidateUpdateProfile) => {
-        const res = await http.put('/candidate/profile', input);
-        return _get(res, 'data') as Candidate;
     },
 
     v1GetFilterCandidate: async (filter: Partial<IV1GetFilterCandidate>) => {

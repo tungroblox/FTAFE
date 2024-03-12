@@ -14,7 +14,7 @@ const useQueryNotificationFilter = (filter: Partial<IV1GetFilterNotification>) =
         {
             initialData: [],
             // refetchInterval: 5000,
-            refetchIntervalInBackground: true,
+            // refetchIntervalInBackground: true,
         }
     );
 };

@@ -21,9 +21,9 @@ export const ProtectWrapper: React.FC<ProtectWrapperProps> = ({ children, accept
         if (acceptRoles.length <= 0) {
             return;
         }
-        // if (user.isAuth) {
-        // router.push(routes.auth.login());
-        // }
+        if (user.isAuth && !acceptRoles.includes(user.roleName)) {
+            router.push(routes.auth.login());
+        }
     }, [acceptRoles, user, router]);
 
     return <>{children}</>;

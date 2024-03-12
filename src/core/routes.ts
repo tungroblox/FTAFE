@@ -121,6 +121,9 @@ export const routes = {
             edit: () => '/admin/menu/edit',
         },
     },
+    farmhub: {
+        home: () => '/farmhub',
+    },
 
     staff: {
         home: () => '/staff',

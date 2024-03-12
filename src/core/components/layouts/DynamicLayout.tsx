@@ -54,7 +54,7 @@ export const DynamicLayout: React.FC<DynamicLayoutProps> = ({ children }) => {
         );
     }
 
-    if (router.pathname.startsWith('/admin') || router.pathname.startsWith('/expert') || router.pathname.startsWith('/staff')) {
+    if (router.pathname.startsWith('/admin') || router.pathname.startsWith('/farmhub') || router.pathname.startsWith('/staff')) {
         return <DashboardLayout>{children}</DashboardLayout>;
     }
 

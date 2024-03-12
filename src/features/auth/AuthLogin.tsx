@@ -1,5 +1,4 @@
 import FormCommonErrorMessage from '@components/forms/FormCommonErrorMessage';
-import { routes } from '@core/routes';
 import { useAuthLoginMutation } from '@hooks/api/auth.hook';
 import { Button, Tabs } from 'antd';
 import Link from 'next/link';
@@ -9,7 +8,6 @@ import { useForm } from 'react-hook-form';
 
 import { IV1AuthLogin } from '../../core/api';
 import { FormWrapper, TextInput } from '../../core/components';
-import { LoginSocial } from './components/LoginSocial';
 
 const defaultValues: IV1AuthLogin = {
     email: '',
@@ -25,23 +23,30 @@ export const AuthLogin: React.FC<AuthLoginProps> = ({}) => {
 
     const router = useRouter();
 
+    const onSubmit = (data: IV1AuthLogin) => {
+        if (data.email === '') {
+            methods.setError('email', { type: 'manual', message: 'Email không được để trống' });
+            return;
+        }
+        if (data.password === '') {
+            methods.setError('password', { type: 'manual', message: 'Mật khẩu không được để trống' });
+            return;
+        }
+        mutationAuthLogin(data);
+    };
+
     const TabAuth = () => {
         return (
             <Tabs
                 defaultActiveKey="1"
                 items={[
                     {
-                        label: <p className="p-0 m-0 text-black dark:text-white">Farm Hub/Customer</p>,
+                        label: <p className="p-0 m-0 text-black dark:text-white">ADMIN / STAFF(CollectHub, FarmHub)</p>,
                         key: '1',
-                        children: <LoginSocial />,
-                    },
-                    {
-                        label: <p className="p-0 m-0 text-black dark:text-white">ADMIN / STAFF</p>,
-                        key: '2',
                         children: (
                             <>
                                 <FormWrapper methods={methods}>
-                                    <form onSubmit={methods.handleSubmit((data) => mutationAuthLogin(data))}>
+                                    <form onSubmit={methods.handleSubmit(onSubmit)}>
                                         <div className="space-y-4">
                                             <div>
                                                 <TextInput label="Email" name="email" type="email" placeholder="user@gmail.com" />
@@ -57,7 +62,7 @@ export const AuthLogin: React.FC<AuthLoginProps> = ({}) => {
                                 <div className="mt-6">
                                     <div className="space-y-6">
                                         <div className="flex justify-center ">
-                                            <Link href={routes.auth.register()}>
+                                            {/* <Link href={routes.auth.register()}>
                                                 <a>
                                                     <div className="space-x-1 text-sm font-medium">
                                                         <div className="space-x-1 text-sm font-medium">
@@ -66,7 +71,7 @@ export const AuthLogin: React.FC<AuthLoginProps> = ({}) => {
                                                         </div>
                                                     </div>
                                                 </a>
-                                            </Link>
+                                            </Link> */}
                                         </div>
                                     </div>
                                 </div>

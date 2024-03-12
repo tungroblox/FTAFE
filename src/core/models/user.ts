@@ -7,7 +7,7 @@ export enum UserRole {
     COLLECTED_STAFF = 'Collected_staff',
     CUSTOMER = 'Customer',
     DELIVERED_STAFF = 'Delivered_staff',
-    FARM_HUB = 'Farm_Hub',
+    FARM_HUB = 'FarmHub',
 }
 
 export enum UserStatus {
@@ -26,6 +26,7 @@ export interface User extends BaseModel {
     address: string | null;
     createdAt: string;
     updatedAt: string | null;
+    roleName: UserRole;
     // wallet: {
     //     id: '5d76359b-9cd8-40d5-88e0-5f3498d49718';
     //     accountId: '4a846001-c2c0-4eba-8fcf-f36a8106813f';
@@ -51,6 +52,7 @@ export const userDefaultValues: User = {
     createdAt: '',
     updatedAt: '',
     isDeleted: false,
+    roleName: UserRole.GUESS,
 };
 
 export interface UserItem extends User {
@@ -92,4 +94,5 @@ export interface FarmHub {
     createdAt: string;
     updatedAt: string;
     status: string;
+    roleName: UserRole.FARM_HUB;
 }

@@ -86,7 +86,7 @@ const CustomerList: React.FunctionComponent<CustomerListProps> = ({ filter }) =>
                                         alt=""
                                         width={64}
                                         height={64}
-                                        className="rounded overflow-hidden"
+                                        className="overflow-hidden rounded"
                                         src={props.avatar ? props.avatar : stringHelper.convertTextToAvatar(props.fullName)}
                                     />
                                 }

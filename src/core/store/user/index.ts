@@ -1,4 +1,4 @@
-import { User } from '@models/user';
+import { User, UserRole } from '@models/user';
 import { PayloadAction, createSelector, createSlice } from '@reduxjs/toolkit';
 
 import { RootState } from '..';
@@ -23,6 +23,7 @@ const initialState: UserState = {
     isLogin: true,
     isAuth: false,
     isDeleted: false,
+    roleName: UserRole.GUESS,
 };
 
 const reducer = createSlice({

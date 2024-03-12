@@ -14,8 +14,10 @@ const useAuthLoginMutation = () => {
             localStorage.setItem(constant.TOKEN_KEY, data);
             store.dispatch(userThunk.getCurrentUser());
         },
-        onError: (error) => {
-            toast.error('Đăng nhập thất bại!');
+        onError: (error: any) => {
+            if (error.status === 401) {
+                toast.error('Sai tên đăng nhập hoặc mật khẩu!');
+            }
         },
     });
 

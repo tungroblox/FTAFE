@@ -1,9 +1,11 @@
 import { DashboardHeaderLayout } from '@components/layouts';
+import { ProtectWrapper } from '@components/wrappers';
 import { ModalProvider } from '@context/modalContext';
 import { TableUtilProvider } from '@context/tableUtilContext';
 import { IV1GetFilterCandidate } from '@core/api/candidate';
 import FarmHubList from '@features/admin/user/farmhub/FarmHubList';
 import { defaultPagingProps } from '@models/interface';
+import { UserRole } from '@models/user';
 import { objectHelper } from '@utils/index';
 import { NextPage } from 'next';
 
@@ -13,15 +15,15 @@ interface PageProps {
 
 const Page: NextPage<PageProps> = ({ filter }) => {
     return (
-        // <ProtectWrapper acceptRoles={[UserRole.ADMIN]}>
-        <ModalProvider>
-            <TableUtilProvider>
-                <DashboardHeaderLayout title="Farm Hub Management">
-                    <FarmHubList filter={filter} />
-                </DashboardHeaderLayout>
-            </TableUtilProvider>
-        </ModalProvider>
-        // </ProtectWrapper>
+        <ProtectWrapper acceptRoles={[UserRole.FARM_HUB]}>
+            <ModalProvider>
+                <TableUtilProvider>
+                    <DashboardHeaderLayout title="Farm Hub Management">
+                        <FarmHubList filter={filter} />
+                    </DashboardHeaderLayout>
+                </TableUtilProvider>
+            </ModalProvider>
+        </ProtectWrapper>
     );
 };
 

@@ -1,47 +1,24 @@
 import { useTableUtil } from '@context/tableUtilContext';
-import {
-    candidateApi,
-    IV1CandidateFilterInterview,
-    IV1CandidateGetTotalStatistic,
-    IV1CandidateUpdateProfile,
-    IV1GetFilterCandidate,
-} from '@core/api/candidate';
+import { candidateApi, IV1CandidateFilterInterview, IV1CandidateGetTotalStatistic, IV1GetFilterCandidate } from '@core/api/candidate';
 import { candidateItemDefaultValue } from '@models/candidate';
-import { store } from '@store/index';
-import { userThunk } from '@store/user/thunks';
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { toast } from 'react-toastify';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
 
 const useQueryCandidateFilterInterview = (filter: Partial<IV1CandidateFilterInterview>) => {
     const { setTotalItem } = useTableUtil();
-    return useQuery(
-        ['candidate', 'interviews', filter],
-        async () => {
-            const res = await candidateApi.v1GetInterviewFilter(filter);
-            setTotalItem(res.total);
-            return res.data;
-        },
-        {
-            initialData: [],
-        }
-    );
+    return null;
 };
 
 const useCandidatePutProfileMutation = () => {
     const queryClient = useQueryClient();
-    const { mutate, mutateAsync, ...rest } = useMutation(async (input: IV1CandidateUpdateProfile) => {
-        const res = await candidateApi.v1UpdateCandidateProfile(input);
-        store.dispatch(userThunk.getCurrentUser());
-        queryClient.invalidateQueries();
-        toast.success('Update profile successfully');
-        return res;
-    });
+    // const { mutate, mutateAsync, ...rest } = useMutation(async (input: IV1CandidateUpdateProfile) => {
+    //     const res = await candidateApi.v1UpdateCandidateProfile(input);
+    //     store.dispatch(userThunk.getCurrentUser());
+    //     queryClient.invalidateQueries();
+    //     toast.success('Update profile successfully');
+    //     return res;
+    // });
 
-    return {
-        mutateCandidateUpdateProfile: mutate,
-        mutateCandidateUpdateProfileAsync: mutateAsync,
-        ...rest,
-    };
+    return null;
 };
 
 const useQueryTotalCandidate = (dto: IV1CandidateGetTotalStatistic) => {

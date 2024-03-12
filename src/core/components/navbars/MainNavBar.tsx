@@ -96,7 +96,6 @@ const MainNavbar: React.FunctionComponent<MainNavbarProps> = () => {
     //     page: 0,
     //     pageSize: 20,
     // });
-    console.log('user', user);
     const notifications: any[] = [];
 
     const wallet = useStoreWallet();
