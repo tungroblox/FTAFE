@@ -2,10 +2,10 @@ import { DashOutlined } from '@ant-design/icons';
 import { TextInput } from '@components/forms';
 import FormFilterWrapper from '@components/forms/FormFilterWrapper';
 import { TableBodyCell, TableBuilder, TableHeaderCell } from '@components/tables';
-import { CollectedHubAPI, CollectedHubFilter } from '@core/api/collected-hub.api';
 import { IV1GetFilterExpert } from '@core/api/expert.api';
+import { StationAPI, StationFilter } from '@core/api/station.api';
 import { PlusIcon } from '@heroicons/react/24/outline';
-import { CollectedHub } from '@models/staff';
+import { CollectedHub, Station } from '@models/staff';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { stringHelper } from '@utils/index';
 import { Button, Dropdown, Image, Menu, Modal, Tag } from 'antd';
@@ -15,26 +15,26 @@ import { useRouter } from 'next/router';
 import * as React from 'react';
 import { toast } from 'react-toastify';
 
-import CreateCollectedHubModal from './components/CreateCollectedHubModal';
-import UpdateCollectedHubModal from './components/UpdateCollectedHubModal';
+import CreateStationModal from './components/CreateStationModal';
+import UpdateStationModal from './components/UpdateStationModal';
 
-interface CollectedHubListProps {
-    filter: Partial<CollectedHubFilter>;
+interface StationListProps {
+    filter: Partial<StationFilter>;
 }
 
-const CollectedHubList: React.FunctionComponent<CollectedHubListProps> = ({ filter }) => {
+const StationList: React.FunctionComponent<StationListProps> = ({ filter }) => {
     const router = useRouter();
 
     const { data, isLoading } = useQuery({
-        queryKey: ['collected-hub-list', filter],
+        queryKey: ['stations', filter],
         queryFn: async () => {
-            const res = await CollectedHubAPI.getAll(filter);
+            const res = await StationAPI.getAll(filter);
             return res;
         },
     });
-    const hubs: CollectedHub[] = data;
+    const hubs: Station[] = data;
 
-    const deleteCollectedHubMutation = useMutation(async (id: string) => await CollectedHubAPI.deleteOne(id));
+    const deleteCollectedHubMutation = useMutation(async (id: string) => await StationAPI.deleteOne(id));
 
     const queryClient = useQueryClient();
 
@@ -63,7 +63,7 @@ const CollectedHubList: React.FunctionComponent<CollectedHubListProps> = ({ filt
     const [openCreateModalState, setOpenCreateModalState] = React.useState<boolean>(false);
     //Update modal
     const [updateModalState, setUpdateModalState] = React.useState<boolean>(false);
-    const [currentValue, setCurrentValue] = React.useState<CollectedHub>({
+    const [currentValue, setCurrentValue] = React.useState<Station>({
         id: '',
         name: '',
         description: '',
@@ -73,6 +73,8 @@ const CollectedHubList: React.FunctionComponent<CollectedHubListProps> = ({ filt
         address: '',
         createdAt: '',
         updatedAt: '',
+        areaId: '',
+        area: null,
     });
 
     return (
@@ -83,7 +85,7 @@ const CollectedHubList: React.FunctionComponent<CollectedHubListProps> = ({ filt
                     className="flex items-center gap-1 px-3 py-1 text-white duration-300 hover:text-white hover:bg-primary/90 bg-primary"
                 >
                     <PlusIcon className="w-5 h-5 text-white" />
-                    <span>Create New Staff</span>
+                    <span>Create New Station</span>
                 </button>
             </div>
 
@@ -108,7 +110,7 @@ const CollectedHubList: React.FunctionComponent<CollectedHubListProps> = ({ filt
                         title: () => <TableHeaderCell key="image" sortKey="image" label="image" />,
                         width: 100,
                         key: 'image',
-                        render: ({ ...props }: CollectedHub) => (
+                        render: ({ ...props }: Station) => (
                             <TableBodyCell
                                 label={
                                     <Image
@@ -126,28 +128,28 @@ const CollectedHubList: React.FunctionComponent<CollectedHubListProps> = ({ filt
                         title: () => <TableHeaderCell key="name" sortKey="name" label="Name" />,
                         width: 300,
                         key: 'name',
-                        render: ({ ...props }: CollectedHub) => {
-                            return <TableBodyCell label={<Link href={`collected-hub-staff/${props.id}`}>{props.name}</Link>} />;
+                        render: ({ ...props }: Station) => {
+                            return <TableBodyCell label={<Link href={`station/${props.id}`}>{props.name}</Link>} />;
                         },
                     },
                     {
                         title: () => <TableHeaderCell key="description" sortKey="description" label="Description" />,
                         width: 400,
                         key: 'description',
-                        render: ({ ...props }: CollectedHub) => <TableBodyCell label={<span>{props.description}</span>} />,
+                        render: ({ ...props }: Station) => <TableBodyCell label={<span>{props.description}</span>} />,
                     },
 
                     {
                         title: () => <TableHeaderCell key="address" sortKey="address" label="address" />,
                         width: 400,
                         key: 'address',
-                        render: ({ ...props }: CollectedHub) => <TableBodyCell label={<span>{props.address}</span>} />,
+                        render: ({ ...props }: Station) => <TableBodyCell label={<span>{props.address}</span>} />,
                     },
                     {
                         title: () => <TableHeaderCell key="status" sortKey="status" label="Status" />,
                         width: 100,
                         key: 'status',
-                        render: ({ ...props }: CollectedHub) => {
+                        render: ({ ...props }: Station) => {
                             return (
                                 <Tag
                                     className={clsx(`text-sm whitespace-normal`)}
@@ -192,12 +194,12 @@ const CollectedHubList: React.FunctionComponent<CollectedHubListProps> = ({ filt
                     },
                 ]}
             />
-            <CreateCollectedHubModal
+            <CreateStationModal
                 open={openCreateModalState}
                 afterClose={() => setOpenCreateModalState(false)}
                 onCancel={() => setOpenCreateModalState(false)}
             />
-            <UpdateCollectedHubModal
+            <UpdateStationModal
                 open={updateModalState}
                 currentValue={currentValue}
                 onCancel={() => setUpdateModalState(false)}
@@ -207,4 +209,4 @@ const CollectedHubList: React.FunctionComponent<CollectedHubListProps> = ({ filt
     );
 };
 
-export default CollectedHubList;
+export default StationList;

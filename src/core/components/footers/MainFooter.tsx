@@ -104,9 +104,9 @@ export const MainFooter: React.FC<MainFooterProps> = () => {
                                 <Link href={routes.staff.home()} className="inline-block text-gray-700">
                                     <span className="text-gray-700 cursor-pointer">Staff</span>
                                 </Link>
-                                <Link href={routes.expert.home()} className="inline-block text-gray-700">
+                                {/* <Link href={routes.expert.home()} className="inline-block text-gray-700">
                                     <span className="text-gray-700 cursor-pointer"> Expert</span>
-                                </Link>
+                                </Link> */}
                             </nav>
                         </div>
                     </div>

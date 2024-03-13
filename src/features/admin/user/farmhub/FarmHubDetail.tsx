@@ -23,9 +23,6 @@ const FarmHubDetail: React.FunctionComponent<FarmHubDetailProps> = ({ farmHub })
                         <Link href={`${farmHub?.id}/edit`}>
                             <Button>Update</Button>
                         </Link>
-                        // <Button type="primary" onClick={() => setOpenUpdateModal(!openUpdateModal)}>
-                        //     Update
-                        // </Button>
                     }
                 >
                     <Descriptions.Item label="Avatar" span={1}>

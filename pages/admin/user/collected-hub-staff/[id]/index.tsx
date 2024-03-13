@@ -21,7 +21,7 @@ const Page: NextPage<PageProps> = ({ id }) => {
         <ProtectWrapper acceptRoles={[UserRole.ADMIN]}>
             <ToggleProvider>
                 <DashboardHeaderLayout title="Hub Detail">
-                    <HubDetail value={data} />
+                    <HubDetail value={data?.payload} />
                 </DashboardHeaderLayout>
             </ToggleProvider>
         </ProtectWrapper>

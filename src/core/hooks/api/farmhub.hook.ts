@@ -5,7 +5,7 @@ import { useQuery } from '@tanstack/react-query';
 export const useQueryFarmHub = () => {
     const { setTotalItem } = useTableUtil();
     return useQuery({
-        queryKey: ['farm-hub'],
+        queryKey: ['farm-hubs'],
         queryFn: async () => {
             const res = await FarmHubAPI.getFarmHubs();
             setTotalItem(res?.payload.length);

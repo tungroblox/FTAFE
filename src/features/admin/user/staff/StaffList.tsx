@@ -27,7 +27,7 @@ const StaffList: React.FunctionComponent<StaffListProps> = ({ filter }) => {
         <div className="flex flex-col w-full gap-2">
             <div className="flex flex-col items-end w-full gap-2 ">
                 <button
-                    onClick={() => router.push(routes.admin.user.staff.create())}
+                    onClick={() => {}}
                     className="flex items-center gap-1 px-3 py-1 text-white duration-300 hover:text-white hover:bg-primary/90 bg-primary"
                 >
                     <PlusIcon className="w-5 h-5 text-white" />

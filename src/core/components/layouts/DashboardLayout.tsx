@@ -36,7 +36,7 @@ const menuAdminList: ItemType[] = [
             },
             {
                 label: 'Station',
-                key: routes.admin.user.delivered_hub_staff.list(),
+                key: routes.admin.user.station.list(),
             },
             {
                 label: 'Collected Hub',

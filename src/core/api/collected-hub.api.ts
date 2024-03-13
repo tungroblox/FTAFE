@@ -20,8 +20,8 @@ export const CollectedHubAPI = {
         return _get(res, 'data.payload');
     },
     getById: async (id: string) => {
-        const res = await http.get(`/admin/collected-hub/${id}`, {});
-        return _get(res, 'data.payload');
+        const res = await http.get(`/admin/collected-hub/${id}/staffs`, {});
+        return _get(res, 'data');
     },
     update: async (id: string, data: UpdateCollectedHub) => {
         const res = await http.put(`/admin/collected-hub/${id}`, data, {});
@@ -33,7 +33,7 @@ export const CollectedHubAPI = {
     },
 
     getStaff: async (id: string) => {
-        const res = await http.get(`/admin/collected-hub/${id}/staffs`, {});
+        const res = await http.get(`/admin/collected-hub/${id}/staffs-filter`, {});
         return _get(res, 'data');
     },
 

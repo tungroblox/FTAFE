@@ -1,14 +1,11 @@
-import { TextInput } from '@components/forms';
-import FormFilterWrapper from '@components/forms/FormFilterWrapper';
 import { TableBodyCell, TableBuilder, TableHeaderCell } from '@components/tables';
-import { IV1GetFilterCandidate } from '@core/api/candidate';
-import { IV1GetFilterExpert } from '@core/api/expert.api';
 import { FarmHubAPI } from '@core/api/farmhub';
 // import { expertApi, IV1GetFilterExpert } from '@core/api/expert.api';
 import { routes } from '@core/routes';
 import { useQueryFarmHub } from '@hooks/api/farmhub.hook';
 import { FarmHub } from '@models/user';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { stringHelper } from '@utils/index';
 // import { ExpertList } from '@models/expert';
 import { Button, Dropdown, Image, Menu, Modal, Tag } from 'antd';
 import clsx from 'clsx';
@@ -18,11 +15,9 @@ import { useRouter } from 'next/router';
 import * as React from 'react';
 import { toast } from 'react-toastify';
 
-interface FarmHubListProps {
-    filter: Partial<IV1GetFilterCandidate>;
-}
+interface FarmHubListProps {}
 
-const FarmHubList: React.FunctionComponent<FarmHubListProps> = ({ filter }) => {
+const FarmHubList: React.FunctionComponent<FarmHubListProps> = () => {
     const { data, isLoading } = useQueryFarmHub();
 
     const farmHub: FarmHub[] = data?.payload;
@@ -70,15 +65,6 @@ const FarmHubList: React.FunctionComponent<FarmHubListProps> = ({ filter }) => {
                     <span>Create New Farm Hub</span>
                 </button>
             </div>
-            <FormFilterWrapper<IV1GetFilterExpert> defaultValues={{ ...filter }}>
-                <div className="w-56">
-                    <TextInput name="name" label="Name" />
-                </div>
-                <div className="w-56">
-                    <TextInput name="email" label="Email" />
-                </div>
-            </FormFilterWrapper>
-
             <TableBuilder<FarmHub>
                 rowKey="id"
                 isLoading={isLoading}
@@ -96,8 +82,7 @@ const FarmHubList: React.FunctionComponent<FarmHubListProps> = ({ filter }) => {
                                         width={64}
                                         height={64}
                                         className="rounded overflow-hidden"
-                                        // src={props.image ? props.image : stringHelper.convertTextToAvatar(props.name)}
-                                        src={'https://farmhubagro.com.ng/wp-content/uploads/2023/05/cropped-farm-hub-logo-removebg-original.png'}
+                                        src={props.image ? props.image : stringHelper.convertTextToAvatar(props.name)}
                                     />
                                 }
                             />
