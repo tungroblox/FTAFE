@@ -1,12 +1,10 @@
 import { TableBodyCell, TableBuilder, TableHeaderCell } from '@components/tables';
 import { FarmHubAPI } from '@core/api/farmhub';
-// import { expertApi, IV1GetFilterExpert } from '@core/api/expert.api';
 import { routes } from '@core/routes';
 import { useQueryFarmHub } from '@hooks/api/farmhub.hook';
-import { FarmHub } from '@models/user';
+import { FarmHub, UserRole } from '@models/user';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { stringHelper } from '@utils/index';
-// import { ExpertList } from '@models/expert';
 import { Button, Dropdown, Image, Menu, Modal, Tag } from 'antd';
 import clsx from 'clsx';
 import { PlusIcon } from 'lucide-react';
@@ -14,6 +12,9 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import * as React from 'react';
 import { toast } from 'react-toastify';
+
+import CreateFarmHubModal from './component/CreateFarmHubModal';
+import UpdateFarmHubModal from './component/UpdateFarmHubModal';
 
 interface FarmHubListProps {}
 
@@ -52,12 +53,27 @@ const FarmHubList: React.FunctionComponent<FarmHubListProps> = () => {
         });
     };
 
+    const [createModalState, setCreateModalState] = React.useState<boolean>(false);
+    const [updateModalState, setUpdateModalState] = React.useState<boolean>(false);
+    const [farmHubValue, setFarmHubValue] = React.useState<FarmHub>({
+        name: '',
+        description: '',
+        image: '',
+        code: '',
+        status: '',
+        address: '',
+        updatedAt: '',
+        roleName: UserRole.FARM_HUB,
+        createdAt: '',
+        id: '',
+    });
+
     return (
         <div className="flex flex-col w-full gap-2">
             <div className="flex flex-col items-end w-full gap-2 ">
                 <button
                     onClick={() => {
-                        router.push(routes.admin.user.farm_hub.create());
+                        setCreateModalState(!createModalState);
                     }}
                     className="flex items-center gap-1 px-3 py-1 text-white duration-300 hover:text-white hover:bg-primary/90 bg-primary"
                 >
@@ -121,8 +137,13 @@ const FarmHubList: React.FunctionComponent<FarmHubListProps> = () => {
                                     overlay={
                                         <Menu>
                                             <Menu.Item key="1">
-                                                <Button>
-                                                    <Link href={routes.admin.user.farm_hub.update(props.id)}>Edit</Link>
+                                                <Button
+                                                    onClick={() => {
+                                                        setUpdateModalState(!updateModalState);
+                                                        setFarmHubValue(props);
+                                                    }}
+                                                >
+                                                    Edit
                                                 </Button>
                                             </Menu.Item>
 
@@ -139,6 +160,13 @@ const FarmHubList: React.FunctionComponent<FarmHubListProps> = () => {
                         },
                     },
                 ]}
+            />
+            <CreateFarmHubModal open={createModalState} afterClose={() => setCreateModalState(false)} onCancel={() => setCreateModalState(false)} />
+            <UpdateFarmHubModal
+                currentValue={farmHubValue}
+                open={updateModalState}
+                afterClose={() => setUpdateModalState(false)}
+                onCancel={() => setUpdateModalState(false)}
             />
         </div>
     );
