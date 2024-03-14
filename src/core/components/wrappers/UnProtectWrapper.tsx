@@ -45,17 +45,9 @@ export const UnProtectWrapper: React.FC<UnProtectionWrapperProps> = ({ children 
                             window.location.reload();
                         }, 3000);
                     });
+                    break;
             }
-            router.push(routes.admin.home());
         }
-        // else {
-        //     toast.error('Bạn không có quyền truy cập');
-        //     authApi.v1GetLogout().then(() => {
-        //         setTimeout(() => {
-        //             // window.location.reload();
-        //         }, 3000);
-        //     });
-        // }
     }, [user]);
 
     return <>{children}</>;
