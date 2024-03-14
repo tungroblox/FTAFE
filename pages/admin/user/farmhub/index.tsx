@@ -13,7 +13,7 @@ interface PageProps {
 
 const Page: NextPage<PageProps> = ({ filter }) => {
     return (
-        <ProtectWrapper acceptRoles={[UserRole.FARM_HUB]}>
+        <ProtectWrapper acceptRoles={[UserRole.ADMIN]}>
             <ModalProvider>
                 <TableUtilProvider>
                     <DashboardHeaderLayout title="Farm Hub Management">
@@ -25,13 +25,4 @@ const Page: NextPage<PageProps> = ({ filter }) => {
     );
 };
 
-// Page.getInitialProps = async (ctx): Promise<PageProps> => {
-//     return {
-//         filter: objectHelper.getObjectWithDefault<Partial<IV1GetFilterCandidate>>(ctx.query, {
-//             ...defaultPagingProps,
-//             name: '',
-//             email: '',
-//         }),
-//     };
-// };
 export default Page;

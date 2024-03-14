@@ -30,11 +30,6 @@ const defaultLinks: NavLink[] = [
         name: 'Home',
         path: routes.home(),
     },
-    {
-        id: 'job-link',
-        name: 'Job',
-        path: routes.job.list(),
-    },
 ];
 
 const candidateLinks = [

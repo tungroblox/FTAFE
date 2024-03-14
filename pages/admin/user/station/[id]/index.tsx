@@ -1,10 +1,10 @@
 import { DashboardHeaderLayout } from '@components/layouts';
 import { ProtectWrapper } from '@components/wrappers';
-import ExpertDetail from '@features/admin/user/expert/ExpertDetail';
-import { useQueryExpertById } from '@hooks/api/expert.hook';
+import { StationAPI } from '@core/api/station.api';
+import StationsDetail from '@features/admin/user/station/StationDetail';
 import { UserRole } from '@models/user';
+import { useQuery } from '@tanstack/react-query';
 import { NextPage } from 'next';
-import * as React from 'react';
 import { ToggleProvider } from 'react-toggle-hook';
 
 interface PageProps {
@@ -12,12 +12,16 @@ interface PageProps {
 }
 
 const Page: NextPage<PageProps> = ({ id }) => {
-    const { data } = useQueryExpertById(id);
+    const { data } = useQuery({
+        queryKey: ['station', id],
+        queryFn: async () => await StationAPI.getById(id),
+    });
+
     return (
         <ProtectWrapper acceptRoles={[UserRole.ADMIN]}>
             <ToggleProvider>
-                <DashboardHeaderLayout title="Expert Detail">
-                    <ExpertDetail expert={data} />
+                <DashboardHeaderLayout title="Station Detail">
+                    <StationsDetail value={data?.payload} />
                 </DashboardHeaderLayout>
             </ToggleProvider>
         </ProtectWrapper>

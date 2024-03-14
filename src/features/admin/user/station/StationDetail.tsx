@@ -1,18 +1,17 @@
 import { TableBuilder, TableHeaderCell } from '@components/tables';
-import { CollectedHubAPI } from '@core/api/collected-hub.api';
-import { CollectedHub, Staff } from '@models/staff';
+import { StationAPI } from '@core/api/station.api';
+import { Staff, Station } from '@models/staff';
 import { useQuery } from '@tanstack/react-query';
 import { convertTextToAvatar } from '@utils/string.helper';
 import { Badge, Descriptions, Image } from 'antd';
-interface HubDetailProps {
-    value: CollectedHub;
+interface StationsDetailProps {
+    value: Station;
 }
 
-const HubDetail: React.FC<HubDetailProps> = ({ value }) => {
-    console.log('value:', value);
+const StationsDetail: React.FC<StationsDetailProps> = ({ value }) => {
     const { data, isLoading } = useQuery({
-        queryKey: ['collected-hub-staff'],
-        queryFn: async () => await CollectedHubAPI.getStaff(value.id),
+        queryKey: ['station-staff'],
+        queryFn: async () => await StationAPI.getStaff(value.id),
     });
     const staffList: Staff[] = data?.payload;
     console.log('staffList:', staffList);
@@ -32,8 +31,8 @@ const HubDetail: React.FC<HubDetailProps> = ({ value }) => {
                         height={80}
                         width={80}
                         className="rounded overflow-hidden"
-                        src={value.image ? value.image : convertTextToAvatar(value.name)}
-                        alt={value.name}
+                        src={value && value.image ? value.image : convertTextToAvatar(value ? value.name : '')}
+                        alt={value && value.name ? value.name : ''}
                     />
                 </Descriptions.Item>
                 <Descriptions.Item label="description" span={3}>
@@ -106,14 +105,6 @@ const HubDetail: React.FC<HubDetailProps> = ({ value }) => {
                                 key: 'phoneNumber',
                                 render: ({ ...props }: Staff) => <p>{props.phoneNumber}</p>,
                             },
-                            // {
-                            //     title: () => <TableHeaderCell key="" sortKey="" label="" />,
-                            //     width: 200,
-                            //     key: 'action',
-                            //     render: ({ ...props }: Staff) => {
-                            //         return <Button onClick={() => {}}>Delete</Button>;
-                            //     },
-                            // },
                         ]}
                     />
                 </div>
@@ -122,4 +113,4 @@ const HubDetail: React.FC<HubDetailProps> = ({ value }) => {
     );
 };
 
-export default HubDetail;
+export default StationsDetail;

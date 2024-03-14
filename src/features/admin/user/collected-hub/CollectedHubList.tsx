@@ -92,7 +92,7 @@ const CollectedHubList: React.FunctionComponent<CollectedHubListProps> = ({ filt
                     <TextInput name="name" label="Name" />
                 </div>
                 <div className="w-56">
-                    <TextInput name="description" label="Phone" />
+                    <TextInput name="description" label="Description" />
                 </div>
                 <div className="w-56">
                     <TextInput name="address" label="Address" />

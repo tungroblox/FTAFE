@@ -8,20 +8,6 @@ export const routes = {
         loginSocial: () => `${config.SERVER_URL}/auth/google/login`,
     },
 
-    job: {
-        list: () => '/job',
-        detail: (id: string) => `/job/${id}`,
-    },
-
-    cv: {
-        list: () => '/cv',
-        detail: (id: string) => `/cv/${id}`,
-        slug: (slug: string) => `/cv/slug/${slug}`,
-        reviewCV: (id: string) => `/cv/review/${id}`,
-        expert: (expertId: string) => `/cv/expert/${expertId}`,
-        interview: (interviewId: string) => `/cv/interview/${interviewId}`,
-    },
-
     user: {
         detail: () => '/user',
         profile: {
@@ -39,38 +25,6 @@ export const routes = {
         },
     },
 
-    interview: {
-        list: () => `/interview`,
-        detail: (id: string) => `/interview/${id}`,
-    },
-
-    expert: {
-        home: () => '/expert',
-        profile: () => '/expert/profile',
-        updateProfile: () => `/expert/profile/update`,
-
-        interview: {
-            list: () => `/expert/interview`,
-            detail: (id: string) => `/expert/interview/${id}`,
-            cv: (id: string) => `/expert/interview/${id}/cv`,
-        },
-        job: {
-            list: () => `/expert/job`,
-            detail: (id: string) => `/expert/job/${id}`,
-        },
-        calendar: () => '/expert/calendar',
-        skillLevel: {
-            detail: () => `/expert/skill-level`,
-            request: () => `/expert/skill-level/request`,
-        },
-        list: () => `/list-experts`,
-        notification: {
-            list: () => `/expert/notification`,
-        },
-    },
-
-    agora: (id: string) => `/agora/${id}`,
-
     admin: {
         home: () => '/admin',
         profile: () => '/admin/profile',
@@ -87,11 +41,10 @@ export const routes = {
                 create: () => `/admin/user/farmhub/create`,
                 update: (id: string) => `/admin/user/farmhub/${id}/edit`,
             },
-            delivered_hub_staff: {
-                list: () => `/admin/user/delivered-hub-staff`,
-                detail: (id: string) => `/admin/user/delivered-hub-staff/${id}`,
-                create: () => `/admin/user/delivered-hub-staff/create`,
-                update: (id: string) => `/admin/user/delivered-hub-staff/${id}/edit`,
+            station: {
+                list: () => `/admin/user/station`,
+                detail: (id: string) => `/admin/user/station/${id}`,
+                create: () => `/admin/user/station/create`,
             },
             collected_hub_staff: {
                 list: () => `/admin/user/collected-hub-staff`,
