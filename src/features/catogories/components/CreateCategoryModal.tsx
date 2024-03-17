@@ -1,4 +1,5 @@
 import { FormWrapper, SelectInput, TextInput } from '@components/forms';
+import { AvatarUploadInput } from '@components/forms/AvatarUploadInput';
 import { NumberInput } from '@components/forms/NumberInput';
 import { CategoryAPI } from '@core/api/category.api';
 import { CreateCategory } from '@models/category';
@@ -27,13 +28,12 @@ const CreateCategoryModal: React.FC<CreateCategoryModalProps> = ({ ...rest }) =>
     const queryClient = useQueryClient();
 
     const { errors } = methods.formState;
-    console.log('errors:', errors);
 
     const createCategoryMutation = useMutation(async (data: CreateCategory) => await CategoryAPI.createCategory(data), {
         onSuccess: (res) => {
             methods.reset();
             toast.success('Create success');
-            queryClient.invalidateQueries();
+            queryClient.invalidateQueries(['categories']);
             rest.afterClose && rest.afterClose();
         },
         onError: (error) => {
@@ -61,7 +61,8 @@ const CreateCategoryModal: React.FC<CreateCategoryModalProps> = ({ ...rest }) =>
                 <form onSubmit={methods.handleSubmit(onSubmit)} className="flex flex-col w-full gap-2">
                     {/* <AvatarUploadInput name="image" label="Image" className="col-span-full" /> */}
 
-                    <TextInput name="image" label="Image Url" required />
+                    {/* <TextInput name="image" label="Image Url" required /> */}
+                    <AvatarUploadInput name="image" label="Avatar" path="categories" />
                     <TextInput name="name" label="Category Name" required />
                     <TextInput name="description" label="Description" placeholder="Mô tả ..." required />
                     <TextInput name="code" label="Code" required />

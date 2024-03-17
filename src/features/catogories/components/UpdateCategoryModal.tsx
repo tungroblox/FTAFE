@@ -62,7 +62,7 @@ const UpdateCategoryModal: React.FC<UpdateCategoryProps> = ({ category, ...rest 
             onSuccess: () => {
                 rest.afterClose && rest.afterClose();
                 toast.success('Update category successfully');
-                queryClient.invalidateQueries();
+                queryClient.invalidateQueries(['categories']);
             },
         });
     };
@@ -93,12 +93,12 @@ const UpdateCategoryModal: React.FC<UpdateCategoryProps> = ({ category, ...rest 
                         options={[
                             {
                                 label: 'Active',
-                                value: 'active',
+                                value: 'Active',
                                 origin: 'active',
                             },
                             {
                                 label: 'Inactive',
-                                value: 'inactive',
+                                value: 'Inactive',
                                 origin: 'inactive',
                             },
                         ]}

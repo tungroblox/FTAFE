@@ -34,6 +34,19 @@ const CreateFarmHubModal: React.FC<CreateFarmHubModalProps> = ({ ...rest }) => {
         },
     });
     const onSubmit = async (data: CreateFarmHubForm) => {
+        Object.keys(data).forEach((fieldName) => {
+            const key = fieldName as keyof CreateFarmHubForm;
+
+            if (data[key] === '') {
+                methods.setError(key, { type: 'manual', message: `${key} không được để trống` });
+            }
+        });
+
+        // Check if any errors were set
+        if (Object.keys(methods.setError).length !== 0) {
+            // If errors were set, stop submission
+            return;
+        }
         createCategoryMutation.mutate(data);
     };
     return (

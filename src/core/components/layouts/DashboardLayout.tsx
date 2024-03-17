@@ -1,6 +1,7 @@
-import { AreaChartOutlined, MenuFoldOutlined, MenuUnfoldOutlined, UserOutlined } from '@ant-design/icons';
+import { AreaChartOutlined, FieldTimeOutlined, HomeOutlined, MenuFoldOutlined, MenuUnfoldOutlined, UserOutlined } from '@ant-design/icons';
 import { routes } from '@core/routes';
 import { useLogoutMutation } from '@hooks/api/auth.hook';
+import { UserRole } from '@models/user';
 import { Person, PersonCheck, SignOut } from 'akar-icons';
 import { Button, Dropdown, Layout, Menu } from 'antd';
 import { ItemType } from 'antd/lib/menu/hooks/useItems';
@@ -20,7 +21,6 @@ const menuAdminList: ItemType[] = [
         label: 'Dashboard',
         key: routes.admin.home(),
     },
-
     {
         icon: <UserOutlined />,
         label: 'User',
@@ -44,6 +44,7 @@ const menuAdminList: ItemType[] = [
             },
         ],
     },
+
     {
         icon: <UserOutlined />,
         label: 'Bán Sản Phẩm',
@@ -67,30 +68,46 @@ const menuAdminList: ItemType[] = [
             },
         ],
     },
+    // {
+    //     icon: <UserOutlined />,
+    //     label: 'Lịch sử',
+    //     key: 'history',
+    //     children: [
+    //         {
+    //             key: routes.admin.category.list(),
+    //             label: 'Nhật ký hoạt động',
+    //         },
+    //         {
+    //             label: 'Biến động số dư',
+    //             key: routes.admin.product.list(),
+    //         },
+    //         {
+    //             label: 'Lịch sử nạp VNPAY',
+    //             key: routes.admin.order.list(),
+    //         },
+    //         {
+    //             label: 'Lịch sử nạp ',
+    //             key: routes.admin.menu.list(),
+    //         },
+    //     ],
+    // },
     {
-        icon: <UserOutlined />,
-        label: 'Lịch sử',
-        key: 'history',
-        children: [
-            {
-                key: routes.admin.category.list(),
-                label: 'Nhật ký hoạt động',
-            },
-            {
-                label: 'Biến động số dư',
-                key: routes.admin.product.list(),
-            },
-            {
-                label: 'Lịch sử nạp VNPAY',
-                key: routes.admin.order.list(),
-            },
-            {
-                label: 'Lịch sử nạp ',
-                key: routes.admin.menu.list(),
-            },
-        ],
+        icon: <AreaChartOutlined />,
+        label: 'Area',
+        key: routes.admin.area(),
+    },
+    {
+        icon: <HomeOutlined />,
+        label: 'Apartment',
+        key: routes.admin.apartment(),
+    },
+    {
+        icon: <FieldTimeOutlined />,
+        label: 'Business day',
+        key: routes.admin.businessDay(),
     },
 ];
+const menuFarmHubList: ItemType[] = [];
 interface DashboardLayoutProps {
     children: React.ReactNode;
 }
@@ -102,12 +119,6 @@ export const DashboardLayout: React.FC<DashboardLayoutProps> = ({ children }) =>
 
     const { mutationLogout } = useLogoutMutation();
     const [isOpen, setIsOpen] = React.useState(false);
-    // const { data: notifications } = useQueryNotificationFilter({
-    //     order: SortOrder.DESC,
-    //     orderBy: 'createdAt',
-    //     page: 0,
-    //     pageSize: 20,
-    // });
     const notifications: any[] = [];
 
     React.useEffect(() => {
@@ -152,8 +163,7 @@ export const DashboardLayout: React.FC<DashboardLayoutProps> = ({ children }) =>
                                     defaultSelectedKeys={[router.pathname]}
                                     items={
                                         //*TODO check user role for the sidebar menu
-                                        // user.type === UserRole.EXPERT ? menuExpertList : user.type === UserRole.ADMIN ? menuAdminList : menuStaffList
-                                        menuAdminList
+                                        user.roleName === UserRole.ADMIN ? menuAdminList : menuFarmHubList
                                     }
                                 />
                             </div>

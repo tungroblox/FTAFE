@@ -1,21 +1,18 @@
-import { LoadingOutlined, PlusOutlined } from '@ant-design/icons';
 import { constant } from '@core/constant';
-import { useFileUploadMutation } from '@hooks/api/file.hook';
+import { getDownloadURL, uploadBytes } from '@firebase/storage';
 import { useMutation } from '@tanstack/react-query';
 import { Upload, UploadProps } from 'antd';
 import { RcFile, UploadChangeParam, UploadFile } from 'antd/lib/upload';
-import clsx from 'clsx';
+import { imagesRef } from 'config/firebase';
 import * as React from 'react';
 import { useFormContext } from 'react-hook-form';
 import { toast } from 'react-toastify';
-
-import { fileApi } from '../../api/file.api';
-
 interface ButtonUploadInputProps extends UploadProps {
     name: string;
     label: string;
     acceptExtension?: string[];
     maxFileSize?: number;
+    path?: string;
 }
 
 export const AvatarUploadInput: React.FC<ButtonUploadInputProps> = ({
@@ -24,7 +21,7 @@ export const AvatarUploadInput: React.FC<ButtonUploadInputProps> = ({
     disabled,
     acceptExtension = ['image/png', 'image/jpeg', 'image/jpg'],
     maxFileSize = 2, // 2MB
-
+    path = 'images',
     ...rest
 }) => {
     const { setValue, watch } = useFormContext();
@@ -34,10 +31,18 @@ export const AvatarUploadInput: React.FC<ButtonUploadInputProps> = ({
 
     const uploadImageMutation = useMutation(
         async (file: RcFile) => {
-            const res = await toast.promise(fileApi.v1PostUpload(file), {
+            // console.log('file:', file);
+            // const res = await toast.promise(fileApi.v1PostUpload(file), {
+            //     pending: 'Uploading file',
+            // });
+            // return res;
+
+            const snapshot = await uploadBytes(imagesRef(path, file.name), file);
+
+            const downloadURL = await toast.promise(getDownloadURL(imagesRef(path, file.name)), {
                 pending: 'Uploading file',
             });
-            return res;
+            return downloadURL;
         },
         {
             onSuccess: (data) => {
@@ -92,7 +97,7 @@ export const AvatarUploadInput: React.FC<ButtonUploadInputProps> = ({
                         ) : (
                             <>
                                 <div className="relative w-20 h-20 overflow-hidden rounded-full">
-                                    <img src={constant.DEFAULT_IMAGE_URL} alt="deafult" className="object-cover w-full h-full" />
+                                    <img src={constant.DEFAULT_IMAGE_URL} alt="default" className="object-cover w-full h-full" />
                                 </div>
                             </>
                         )}

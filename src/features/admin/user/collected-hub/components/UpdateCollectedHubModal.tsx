@@ -52,7 +52,7 @@ const UpdateCollectedHubModal: React.FC<UpdateCollectedHubModalProps> = ({ curre
             onSuccess: () => {
                 rest.afterClose && rest.afterClose();
                 toast.success('Update Hub successfully');
-                queryClient.invalidateQueries();
+                queryClient.invalidateQueries(['collected-hub-list']);
             },
         });
     };

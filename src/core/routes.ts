@@ -28,6 +28,9 @@ export const routes = {
     admin: {
         home: () => '/admin',
         profile: () => '/admin/profile',
+        businessDay: () => '/admin/business-day',
+        apartment: () => '/admin/apartment',
+        area: () => '/admin/area',
         user: {
             customer: {
                 list: () => `/admin/user/customer`,

@@ -38,7 +38,7 @@ const CreateStationModal: React.FC<CreateStationModalProps> = ({ ...rest }) => {
         createCategoryMutation.mutate(data);
     };
 
-    const areaQuery = useQuery({ queryKey: ['area'], queryFn: async () => await AreaAPI.getAll() });
+    const areaQuery = useQuery({ queryKey: ['area'], queryFn: async () => await AreaAPI.getAll({}) });
     const areaList = areaQuery.data || [];
 
     return (

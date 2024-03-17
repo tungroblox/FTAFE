@@ -97,15 +97,6 @@ const CategoryList: React.FunctionComponent<CategoryListProps> = (filter) => {
                 </button>
             </div>
 
-            {/* <FormFilterWrapper<IV1GetFilterExpert> defaultValues={{ ...filter }}>
-                <div className="w-56">
-                    <TextInput name="name" label="Name" />
-                </div>
-                <div className="w-56">
-                    <TextInput name="email" label="Email" />
-                </div>
-            </FormFilterWrapper> */}
-
             <TableBuilder<Category>
                 rowKey="id"
                 isLoading={isLoading}
@@ -134,7 +125,6 @@ const CategoryList: React.FunctionComponent<CategoryListProps> = (filter) => {
                         width: 400,
                         key: 'name',
                         render: ({ ...props }: Category) => (
-                            // <TableBodyCell label={<Link href={routes.admin.user.farm_hub.detail(props.id)}>{props.name}</Link>} />
                             <Button type="text" onClick={() => setOpenDetailModal(true, props.id)}>
                                 {props.name}
                             </Button>

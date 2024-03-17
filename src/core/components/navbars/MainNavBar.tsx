@@ -32,22 +32,6 @@ const defaultLinks: NavLink[] = [
     },
 ];
 
-const candidateLinks = [
-    {
-        id: 'link-profile',
-        name: 'Profile',
-        path: routes.user.profile.detail(),
-        icon: <Person strokeWidth={2} size={24} />,
-    },
-
-    {
-        id: 'link-logout',
-        name: 'Sign Out',
-        path: '',
-        icon: <SignOut strokeWidth={2} size={24} />,
-    },
-];
-
 const userLinks = [
     {
         id: 'link-profile',
@@ -85,12 +69,7 @@ const MainNavbar: React.FunctionComponent<MainNavbarProps> = () => {
     const user = useStoreUser();
 
     const { mutationLogout } = useLogoutMutation();
-    // const { data: notifications } = useQueryNotificationFilter({
-    //     order: SortOrder.DESC,
-    //     orderBy: 'createdAt',
-    //     page: 0,
-    //     pageSize: 20,
-    // });
+
     const notifications: any[] = [];
 
     const wallet = useStoreWallet();

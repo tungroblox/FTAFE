@@ -2,39 +2,37 @@ import { DashOutlined } from '@ant-design/icons';
 import { TextInput } from '@components/forms';
 import FormFilterWrapper from '@components/forms/FormFilterWrapper';
 import { TableBodyCell, TableBuilder, TableHeaderCell } from '@components/tables';
-import { CollectedHubAPI, CollectedHubFilter } from '@core/api/collected-hub.api';
+import { AreaAPI } from '@core/api/area.api';
 import { IV1GetFilterExpert } from '@core/api/expert.api';
 import { PlusIcon } from '@heroicons/react/24/outline';
-import { CollectedHub } from '@models/staff';
+import { Area, AreaFilter } from '@models/area';
+import { Station } from '@models/staff';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { stringHelper } from '@utils/index';
-import { Button, Dropdown, Image, Menu, Modal, Tag } from 'antd';
+import { Button, Dropdown, Menu, Modal, Tag } from 'antd';
 import clsx from 'clsx';
-import Link from 'next/link';
 import { useRouter } from 'next/router';
 import * as React from 'react';
 import { toast } from 'react-toastify';
 
-import CreateCollectedHubModal from './components/CreateCollectedHubModal';
-import UpdateCollectedHubModal from './components/UpdateCollectedHubModal';
-
-interface CollectedHubListProps {
-    filter: Partial<CollectedHubFilter>;
+interface AreaListProps {
+    filter: Partial<AreaFilter>;
 }
 
-const CollectedHubList: React.FunctionComponent<CollectedHubListProps> = ({ filter }) => {
+const AreaList: React.FunctionComponent<AreaListProps> = ({ filter }) => {
+    console.log('filter:', filter);
     const router = useRouter();
 
     const { data, isLoading } = useQuery({
-        queryKey: ['collected-hub-list'],
+        queryKey: ['areas', filter],
         queryFn: async () => {
-            const res = await CollectedHubAPI.getAll(filter);
+            const res = await AreaAPI.getAll(filter);
             return res;
         },
     });
-    const hubs: CollectedHub[] = data;
 
-    const deleteCollectedHubMutation = useMutation(async (id: string) => await CollectedHubAPI.deleteOne(id));
+    const areas: Area[] = data || [];
+
+    const deleteAreaMutation = useMutation(async (id: string) => await AreaAPI.deleteOne(id));
 
     const queryClient = useQueryClient();
 
@@ -47,9 +45,9 @@ const CollectedHubList: React.FunctionComponent<CollectedHubListProps> = ({ filt
             cancelText: 'No, cancel',
             onOk: async () => {
                 try {
-                    await deleteCollectedHubMutation.mutateAsync(id, {
+                    await deleteAreaMutation.mutateAsync(id, {
                         onSuccess: () => {
-                            queryClient.invalidateQueries(['collected-hub-list', filter]);
+                            queryClient.invalidateQueries(['areas', filter]);
                             toast.success('FarmHub deleted successfully!');
                         },
                     });
@@ -63,7 +61,7 @@ const CollectedHubList: React.FunctionComponent<CollectedHubListProps> = ({ filt
     const [openCreateModalState, setOpenCreateModalState] = React.useState<boolean>(false);
     //Update modal
     const [updateModalState, setUpdateModalState] = React.useState<boolean>(false);
-    const [currentValue, setCurrentValue] = React.useState<CollectedHub>({
+    const [currentValue, setCurrentValue] = React.useState<Station>({
         id: '',
         name: '',
         description: '',
@@ -73,6 +71,8 @@ const CollectedHubList: React.FunctionComponent<CollectedHubListProps> = ({ filt
         address: '',
         createdAt: '',
         updatedAt: '',
+        areaId: '',
+        area: null,
     });
 
     return (
@@ -83,71 +83,60 @@ const CollectedHubList: React.FunctionComponent<CollectedHubListProps> = ({ filt
                     className="flex items-center gap-1 px-3 py-1 text-white duration-300 hover:text-white hover:bg-primary/90 bg-primary"
                 >
                     <PlusIcon className="w-5 h-5 text-white" />
-                    <span>Create New Staff</span>
+                    <span>Create New Area</span>
                 </button>
             </div>
 
             <FormFilterWrapper<IV1GetFilterExpert> defaultValues={{ ...filter }}>
                 <div className="w-56">
-                    <TextInput name="name" label="Name" />
+                    <TextInput name="address" label="address" />
                 </div>
                 <div className="w-56">
-                    <TextInput name="description" label="Description" />
+                    <TextInput name="commune" label="commune" />
                 </div>
                 <div className="w-56">
-                    <TextInput name="address" label="Address" />
+                    <TextInput name="district" label="district" />
+                </div>
+                <div className="w-56">
+                    <TextInput name="province" label="province" />
                 </div>
             </FormFilterWrapper>
 
-            <TableBuilder<CollectedHub>
+            <TableBuilder<Area>
                 rowKey="id"
                 isLoading={isLoading}
-                data={hubs}
+                data={areas}
                 columns={[
                     {
-                        title: () => <TableHeaderCell key="image" sortKey="image" label="image" />,
-                        width: 100,
-                        key: 'image',
-                        render: ({ ...props }: CollectedHub) => (
-                            <TableBodyCell
-                                label={
-                                    <Image
-                                        alt=""
-                                        width={64}
-                                        height={64}
-                                        className="rounded overflow-hidden"
-                                        src={props.image ? props.image : stringHelper.convertTextToAvatar(props.name)}
-                                    />
-                                }
-                            />
-                        ),
-                    },
-                    {
-                        title: () => <TableHeaderCell key="name" sortKey="name" label="Name" />,
-                        width: 300,
-                        key: 'name',
-                        render: ({ ...props }: CollectedHub) => {
-                            return <TableBodyCell label={<Link href={`collected-hub-staff/${props.id}`}>{props.name}</Link>} />;
-                        },
-                    },
-                    {
-                        title: () => <TableHeaderCell key="description" sortKey="description" label="Description" />,
+                        title: () => <TableHeaderCell key="province" sortKey="province" label="province" />,
                         width: 400,
-                        key: 'description',
-                        render: ({ ...props }: CollectedHub) => <TableBodyCell label={<span>{props.description}</span>} />,
+                        key: 'province',
+                        render: ({ ...props }: Area) => <TableBodyCell label={<span>{props.province}</span>} />,
+                    },
+                    {
+                        title: () => <TableHeaderCell key="district" sortKey="district" label="district" />,
+                        width: 400,
+                        key: 'district',
+                        render: ({ ...props }: Area) => <TableBodyCell label={<span>{props.district}</span>} />,
+                    },
+                    {
+                        title: () => <TableHeaderCell key="commune" sortKey="commune" label="commune" />,
+                        width: 400,
+                        key: 'commune',
+                        render: ({ ...props }: Area) => <TableBodyCell label={<span>{props.commune}</span>} />,
                     },
 
                     {
                         title: () => <TableHeaderCell key="address" sortKey="address" label="address" />,
                         width: 400,
                         key: 'address',
-                        render: ({ ...props }: CollectedHub) => <TableBodyCell label={<span>{props.address}</span>} />,
+                        render: ({ ...props }: Area) => <TableBodyCell label={<span>{props.address}</span>} />,
                     },
                     {
                         title: () => <TableHeaderCell key="status" sortKey="status" label="Status" />,
                         width: 100,
                         key: 'status',
-                        render: ({ ...props }: CollectedHub) => {
+                        render: ({ ...props }: Area) => {
                             return (
                                 <Tag
                                     className={clsx(`text-sm whitespace-normal`)}
@@ -162,23 +151,26 @@ const CollectedHubList: React.FunctionComponent<CollectedHubListProps> = ({ filt
                         title: () => <TableHeaderCell key="" sortKey="" label="" />,
                         width: 50,
                         key: 'action',
-                        render: ({ ...props }) => {
+                        render: ({ ...props }: Area) => {
                             return (
                                 <Dropdown
                                     overlay={
                                         <Menu>
                                             <Menu.Item key="1">
+                                                <Button onClick={() => router.push(`/admin/area/${props.id}`)}>Detail</Button>
+                                            </Menu.Item>
+                                            <Menu.Item key="2">
                                                 <Button
                                                     onClick={() => {
-                                                        setCurrentValue(props);
-                                                        setUpdateModalState(!updateModalState);
+                                                        // setCurrentValue(props);
+                                                        // setUpdateModalState(!updateModalState);
                                                     }}
                                                 >
                                                     Edit
                                                 </Button>
                                             </Menu.Item>
 
-                                            <Menu.Item key="2">
+                                            <Menu.Item key="3">
                                                 <Button onClick={() => handleDelete(props.id)}>Delete</Button>
                                             </Menu.Item>
                                         </Menu>
@@ -192,19 +184,19 @@ const CollectedHubList: React.FunctionComponent<CollectedHubListProps> = ({ filt
                     },
                 ]}
             />
-            <CreateCollectedHubModal
+            {/* <CreateStationModal
                 open={openCreateModalState}
                 afterClose={() => setOpenCreateModalState(false)}
                 onCancel={() => setOpenCreateModalState(false)}
             />
-            <UpdateCollectedHubModal
+            <UpdateStationModal
                 open={updateModalState}
                 currentValue={currentValue}
                 onCancel={() => setUpdateModalState(false)}
                 afterClose={() => setUpdateModalState(false)}
-            />
+            /> */}
         </div>
     );
 };
 
-export default CollectedHubList;
+export default AreaList;

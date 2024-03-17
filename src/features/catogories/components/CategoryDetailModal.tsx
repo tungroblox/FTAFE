@@ -1,7 +1,11 @@
+import { TableBuilder, TableHeaderCell } from '@components/tables';
 import { CategoryAPI } from '@core/api/category.api';
+import { ProductAPI } from '@core/api/product.api';
 import { Category } from '@models/category';
+import { Product } from '@models/product';
 import { useQuery } from '@tanstack/react-query';
 import { Descriptions, Image, Modal, ModalProps } from 'antd';
+import Link from 'next/link';
 
 //Category Detail Modal
 interface CategoryDetail extends ModalProps {
@@ -17,7 +21,16 @@ const CategoryDetailModal: React.FunctionComponent<CategoryDetail> = ({ category
         },
     });
 
-    console.log('data:', data);
+    const getProductByCategoryQuery = useQuery({
+        queryKey: ['products', categoryId],
+        queryFn: async () => {
+            const res = await ProductAPI.getProductsByCategoryId(categoryId);
+            return res;
+        },
+    });
+
+    const productList: Product[] = getProductByCategoryQuery.data?.payload;
+
     return (
         <Modal {...rest}>
             <Descriptions
@@ -46,6 +59,36 @@ const CategoryDetailModal: React.FunctionComponent<CategoryDetail> = ({ category
                 <Descriptions.Item label="systemPrice">{data?.systemPrice}</Descriptions.Item>
                 <Descriptions.Item label="maxSystemPrice">{data?.maxSystemPrice}</Descriptions.Item>
                 <Descriptions.Item label="minSystemPrice">{data?.minSystemPrice}</Descriptions.Item>
+            </Descriptions>
+            <Descriptions
+                title="List Product"
+                labelStyle={{
+                    fontWeight: 'bold',
+                }}
+                bordered
+                className="p-4 bg-white rounded-lg"
+            >
+                <div className="flex flex-col w-full gap-2">
+                    <TableBuilder<Product>
+                        rowKey="id"
+                        isLoading={getProductByCategoryQuery.isLoading}
+                        data={productList}
+                        columns={[
+                            {
+                                title: () => <TableHeaderCell key="name" sortKey="name" label="name" />,
+                                width: 400,
+                                key: 'firstName',
+                                render: ({ ...props }: Product) => <span>{props.name}</span>,
+                            },
+                            {
+                                title: () => <TableHeaderCell key="" sortKey="" label="" />,
+                                width: 400,
+                                key: 'action',
+                                render: ({ ...props }: Product) => <Link href={`product/${props.id}`}>Detail</Link>,
+                            },
+                        ]}
+                    />
+                </div>
             </Descriptions>
         </Modal>
     );

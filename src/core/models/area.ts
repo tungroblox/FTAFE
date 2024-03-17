@@ -1,3 +1,5 @@
+import { PagingProps } from './interface';
+
 export type Area = {
     id: string;
     province: string;
@@ -7,3 +9,8 @@ export type Area = {
     status: string;
     code: string;
 };
+export interface CreateAreaForm extends Area {}
+
+export interface UpdateAreaForm extends Area {}
+
+export interface AreaFilter extends PagingProps, Pick<Area, 'address' | 'commune' | 'district' | 'province'> {}

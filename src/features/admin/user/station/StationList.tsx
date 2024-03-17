@@ -5,7 +5,7 @@ import { TableBodyCell, TableBuilder, TableHeaderCell } from '@components/tables
 import { IV1GetFilterExpert } from '@core/api/expert.api';
 import { StationAPI, StationFilter } from '@core/api/station.api';
 import { PlusIcon } from '@heroicons/react/24/outline';
-import { CollectedHub, Station } from '@models/staff';
+import { Station } from '@models/staff';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { stringHelper } from '@utils/index';
 import { Button, Dropdown, Image, Menu, Modal, Tag } from 'antd';
@@ -101,7 +101,7 @@ const StationList: React.FunctionComponent<StationListProps> = ({ filter }) => {
                 </div>
             </FormFilterWrapper>
 
-            <TableBuilder<CollectedHub>
+            <TableBuilder<Station>
                 rowKey="id"
                 isLoading={isLoading}
                 data={hubs}

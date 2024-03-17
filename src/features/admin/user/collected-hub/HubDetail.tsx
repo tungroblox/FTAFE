@@ -32,8 +32,8 @@ const HubDetail: React.FC<HubDetailProps> = ({ value }) => {
                         height={80}
                         width={80}
                         className="rounded overflow-hidden"
-                        src={value.image ? value.image : convertTextToAvatar(value.name)}
-                        alt={value.name}
+                        src={value && value.image ? value.image : convertTextToAvatar(value ? value.name : '')}
+                        alt={value && value.name ? value.name : ''}
                     />
                 </Descriptions.Item>
                 <Descriptions.Item label="description" span={3}>
