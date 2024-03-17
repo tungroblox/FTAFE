@@ -86,6 +86,12 @@ const ProductDetail: React.FC<ProductDetailProps> = ({ product }) => {
                             data={item}
                             columns={[
                                 {
+                                    title: () => <TableHeaderCell key="title" sortKey="title" label="title" />,
+                                    width: 400,
+                                    key: 'title',
+                                    render: ({ ...props }: ProductItem) => <p>{props.title}</p>,
+                                },
+                                {
                                     title: () => <TableHeaderCell key="productOrigin" sortKey="productOrigin" label="productOrigin" />,
                                     width: 400,
                                     key: 'productOrigin',
@@ -105,7 +111,7 @@ const ProductDetail: React.FC<ProductDetailProps> = ({ product }) => {
                                 },
                                 {
                                     title: () => <TableHeaderCell key="price" sortKey="price" label="Price" />,
-                                    width: 400,
+                                    width: 150,
                                     key: 'price',
                                     render: ({ ...props }: ProductItem) => <span>{props.price}</span>,
                                 },

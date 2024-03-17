@@ -1,4 +1,5 @@
 import { TableBodyCell, TableBuilder, TableHeaderCell } from '@components/tables';
+import { useTableUtil } from '@context/tableUtilContext';
 import { IV1GetFilterCandidate } from '@core/api/candidate';
 import { CategoryAPI } from '@core/api/category.api';
 import { Category } from '@models/category';
@@ -84,6 +85,13 @@ const CategoryList: React.FunctionComponent<CategoryListProps> = (filter) => {
     };
 
     const categories: Category[] = data?.payload;
+
+    const { setTotalItem } = useTableUtil();
+    console.log('setTotalItem:', setTotalItem);
+
+    React.useEffect(() => {
+        setTotalItem(categories?.length);
+    }, [categories]);
 
     return (
         <div className="flex flex-col w-full gap-2">
