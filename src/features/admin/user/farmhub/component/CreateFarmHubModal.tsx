@@ -1,4 +1,5 @@
 import { FormWrapper, TextInput } from '@components/forms';
+import { AvatarUploadInput } from '@components/forms/AvatarUploadInput';
 import { FarmHubAPI } from '@core/api/farmhub';
 import { CreateFarmHubForm } from '@models/farmhub';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
@@ -65,7 +66,7 @@ const CreateFarmHubModal: React.FC<CreateFarmHubModalProps> = ({ ...rest }) => {
                 ]}
             >
                 <form onSubmit={methods.handleSubmit(onSubmit)} className="flex flex-col w-full gap-2">
-                    <TextInput name="image" label="Image Url" required />
+                    <AvatarUploadInput name="image" label="Image Url" path="farm-hub" />
                     <TextInput name="name" label="Name" required />
                     <TextInput name="address" label="Address" required />
                     <TextInput name="description" label="Description" placeholder="Mô tả ..." required />

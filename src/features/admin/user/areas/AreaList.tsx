@@ -6,13 +6,15 @@ import { AreaAPI } from '@core/api/area.api';
 import { IV1GetFilterExpert } from '@core/api/expert.api';
 import { PlusIcon } from '@heroicons/react/24/outline';
 import { Area, AreaFilter } from '@models/area';
-import { Station } from '@models/staff';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { Button, Dropdown, Menu, Modal, Tag } from 'antd';
 import clsx from 'clsx';
 import { useRouter } from 'next/router';
 import * as React from 'react';
 import { toast } from 'react-toastify';
+
+import AreaCreateModal from './components/AreaCreateModal';
+import UpdateAreaModal from './components/AreaUpdateModal';
 
 interface AreaListProps {
     filter: Partial<AreaFilter>;
@@ -61,18 +63,14 @@ const AreaList: React.FunctionComponent<AreaListProps> = ({ filter }) => {
     const [openCreateModalState, setOpenCreateModalState] = React.useState<boolean>(false);
     //Update modal
     const [updateModalState, setUpdateModalState] = React.useState<boolean>(false);
-    const [currentValue, setCurrentValue] = React.useState<Station>({
+    const [currentValue, setCurrentValue] = React.useState<Area>({
         id: '',
-        name: '',
-        description: '',
-        image: '',
-        code: '',
-        status: '',
+        province: '',
+        district: '',
+        commune: '',
         address: '',
-        createdAt: '',
-        updatedAt: '',
-        areaId: '',
-        area: null,
+        status: '',
+        code: '',
     });
 
     return (
@@ -162,8 +160,8 @@ const AreaList: React.FunctionComponent<AreaListProps> = ({ filter }) => {
                                             <Menu.Item key="2">
                                                 <Button
                                                     onClick={() => {
-                                                        // setCurrentValue(props);
-                                                        // setUpdateModalState(!updateModalState);
+                                                        setCurrentValue(props);
+                                                        setUpdateModalState(!updateModalState);
                                                     }}
                                                 >
                                                     Edit
@@ -184,17 +182,17 @@ const AreaList: React.FunctionComponent<AreaListProps> = ({ filter }) => {
                     },
                 ]}
             />
-            {/* <CreateStationModal
+            <AreaCreateModal
                 open={openCreateModalState}
                 afterClose={() => setOpenCreateModalState(false)}
                 onCancel={() => setOpenCreateModalState(false)}
             />
-            <UpdateStationModal
+            <UpdateAreaModal
                 open={updateModalState}
                 currentValue={currentValue}
                 onCancel={() => setUpdateModalState(false)}
                 afterClose={() => setUpdateModalState(false)}
-            /> */}
+            />
         </div>
     );
 };

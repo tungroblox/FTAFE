@@ -1,4 +1,5 @@
 import { FormWrapper, TextInput } from '@components/forms';
+import { AvatarUploadInput } from '@components/forms/AvatarUploadInput';
 import { CollectedHubAPI, CreateCollectedHub } from '@core/api/collected-hub.api';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { Button, Modal, ModalProps } from 'antd';
@@ -51,7 +52,7 @@ const CreateCollectedHubModal: React.FC<CreateCollectedHubModalProps> = ({ ...re
                 ]}
             >
                 <form onSubmit={methods.handleSubmit(onSubmit)} className="flex flex-col w-full gap-2">
-                    <TextInput name="image" label="Image Url" required />
+                    <AvatarUploadInput label="Image" name="image" path="collected-hubs" />
                     <TextInput name="name" label="Name" required />
                     <TextInput name="address" label="Address" required />
                     <TextInput name="description" label="Description" placeholder="Mô tả ..." required />

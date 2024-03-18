@@ -73,7 +73,7 @@ const UpdateCollectedHubModal: React.FC<UpdateCollectedHubModalProps> = ({ curre
                 ]}
             >
                 <form onSubmit={methods.handleSubmit(onSubmit)} className="flex flex-col w-full gap-2">
-                    <AvatarUploadInput name="image" label="Image" className="col-span-full" />
+                    <AvatarUploadInput name="image" label="Image" className="col-span-full" path="collected-hubs" />
                     <TextInput name="name" label="Name" required />
                     <TextInput name="address" label="Address" required />
                     <TextInput name="description" label="Description" placeholder="Mô tả ..." required />

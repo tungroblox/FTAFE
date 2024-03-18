@@ -1,4 +1,5 @@
 import { FormWrapper, SelectInput, TextInput } from '@components/forms';
+import { AvatarUploadInput } from '@components/forms/AvatarUploadInput';
 import { FarmHubAPI } from '@core/api/farmhub';
 import { UpdateFarmHubForm } from '@models/farmhub';
 import { FarmHub, UserRole } from '@models/user';
@@ -78,8 +79,7 @@ const UpdateFarmHubModal: React.FC<UpdateFarmHubModalProps> = ({ currentValue, .
                 ]}
             >
                 <form onSubmit={methods.handleSubmit(onSubmit)} className="flex flex-col w-full gap-2">
-                    {/* <AvatarUploadInput name="image" label="Image" className="col-span-full" /> */}
-                    <TextInput name="image" label="ImageURL" className="col-span-full " />
+                    <AvatarUploadInput name="image" label="Image" className="col-span-full" path="farm-hub" />
                     <TextInput name="name" label="Name" required />
                     <TextInput name="address" label="Address" required />
                     <TextInput name="description" label="Description" placeholder="Mô tả ..." required />

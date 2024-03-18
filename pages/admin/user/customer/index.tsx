@@ -1,14 +1,14 @@
 import { DashboardHeaderLayout } from '@components/layouts';
 import { ModalProvider } from '@context/modalContext';
 import { TableUtilProvider } from '@context/tableUtilContext';
-import { IV1GetFilterCandidate } from '@core/api/candidate';
 import CustomerList from '@features/admin/user/customer/CustomerList';
+import { CustomerFilter } from '@models/customer';
 import { defaultPagingProps } from '@models/interface';
 import { objectHelper } from '@utils/index';
 import { NextPage } from 'next';
 
 interface PageProps {
-    filter: Partial<IV1GetFilterCandidate>;
+    filter: Partial<CustomerFilter>;
 }
 
 const Page: NextPage<PageProps> = ({ filter }) => {
@@ -27,10 +27,12 @@ const Page: NextPage<PageProps> = ({ filter }) => {
 
 Page.getInitialProps = async (ctx): Promise<PageProps> => {
     return {
-        filter: objectHelper.getObjectWithDefault<Partial<IV1GetFilterCandidate>>(ctx.query, {
+        filter: objectHelper.getObjectWithDefault<Partial<CustomerFilter>>(ctx.query, {
             ...defaultPagingProps,
-            name: '',
             email: '',
+            firstName: '',
+            lastName: '',
+            phoneNumber: '',
         }),
     };
 };

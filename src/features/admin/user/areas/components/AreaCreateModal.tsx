@@ -1,22 +1,22 @@
 import { FormWrapper, SelectInput, TextInput } from '@components/forms';
-import { AvatarUploadInput } from '@components/forms/AvatarUploadInput';
 import { AreaAPI } from '@core/api/area.api';
-import { CreateStation, StationAPI } from '@core/api/station.api';
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { CreateAreaForm } from '@models/area';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { Button, Modal, ModalProps } from 'antd';
 import { useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
 
-interface CreateStationModalProps extends ModalProps {}
+interface AreaCreateModalProps extends ModalProps {}
 const defaultValues = {
-    areaId: '',
-    code: '',
-    name: '',
-    description: '',
-    image: '',
+    id: '',
+    province: '',
+    district: '',
+    commune: '',
     address: '',
+    status: '',
+    code: '',
 };
-const CreateStationModal: React.FC<CreateStationModalProps> = ({ ...rest }) => {
+const AreaCreateModal: React.FC<AreaCreateModalProps> = ({ ...rest }) => {
     const methods = useForm({
         defaultValues,
     });
@@ -24,7 +24,7 @@ const CreateStationModal: React.FC<CreateStationModalProps> = ({ ...rest }) => {
 
     const { errors } = methods.formState;
 
-    const createCategoryMutation = useMutation(async (data: CreateStation) => await StationAPI.createOne(data), {
+    const createCategoryMutation = useMutation(async (data: CreateAreaForm) => await AreaAPI.createOne(data), {
         onSuccess: () => {
             methods.reset();
             toast.success('Create success');
@@ -35,12 +35,9 @@ const CreateStationModal: React.FC<CreateStationModalProps> = ({ ...rest }) => {
             toast.error('created fail');
         },
     });
-    const onSubmit = async (data: CreateStation) => {
+    const onSubmit = async (data: CreateAreaForm) => {
         createCategoryMutation.mutate(data);
     };
-
-    const areaQuery = useQuery({ queryKey: ['area'], queryFn: async () => await AreaAPI.getAll({}) });
-    const areaList = areaQuery.data || [];
 
     return (
         <FormWrapper methods={methods}>
@@ -58,19 +55,18 @@ const CreateStationModal: React.FC<CreateStationModalProps> = ({ ...rest }) => {
                 ]}
             >
                 <form onSubmit={methods.handleSubmit(onSubmit)} className="flex flex-col w-full gap-2">
-                    <AvatarUploadInput label="Image" name="image" path="stations" />
-                    <TextInput name="name" label="Name" required />
                     <TextInput name="address" label="Address" required />
-                    <TextInput name="description" label="Description" placeholder="Mô tả ..." required />
+                    <TextInput name="district" label="District" required />
+                    <TextInput name="province" label="Province" required />
+                    <TextInput name="commune" label="Commune" required />
                     <TextInput name="code" label="Code" required />
                     <SelectInput
-                        name="areaId"
-                        label={'Area'}
-                        options={areaList.map((area) => ({
-                            label: area.address,
-                            value: area.id,
-                            origin: area.id,
-                        }))}
+                        name="status"
+                        label="Status"
+                        options={[
+                            { value: 'Active', label: 'Active', origin: 'Active' },
+                            { value: 'InActive', label: 'InActive', origin: 'InActive' },
+                        ]}
                     />
                 </form>
             </Modal>
@@ -78,4 +74,4 @@ const CreateStationModal: React.FC<CreateStationModalProps> = ({ ...rest }) => {
     );
 };
 
-export default CreateStationModal;
+export default AreaCreateModal;

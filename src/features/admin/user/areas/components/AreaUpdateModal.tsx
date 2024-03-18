@@ -1,7 +1,6 @@
 import { FormWrapper, SelectInput, TextInput } from '@components/forms';
-import { AvatarUploadInput } from '@components/forms/AvatarUploadInput';
-import { StationAPI, UpdateStation } from '@core/api/station.api';
-import { Station } from '@models/staff';
+import { AreaAPI } from '@core/api/area.api';
+import { Area, UpdateAreaForm } from '@models/area';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { Button, Modal, ModalProps } from 'antd';
 import React from 'react';
@@ -9,27 +8,23 @@ import { useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
 
 //Update Category Modal
-interface UpdateStationModalProps extends ModalProps {
-    currentValue: Station;
+interface UpdateAreaModalProps extends ModalProps {
+    currentValue: Area;
 }
 
-const defaultValues: UpdateStation = {
+const defaultValues: UpdateAreaForm = {
     id: '',
-    name: '',
-    description: '',
-    image: '',
-    code: '',
-    status: '',
+    province: '',
+    district: '',
+    commune: '',
     address: '',
-    areaId: '',
+    status: '',
+    code: '',
 };
 
-const UpdateStationModal: React.FC<UpdateStationModalProps> = ({ currentValue, ...rest }) => {
+const UpdateAreaModal: React.FC<UpdateAreaModalProps> = ({ currentValue, ...rest }) => {
     const updateHubMutation = useMutation({
-        mutationFn: async (data: UpdateStation) => {
-            const res = await StationAPI.update(currentValue.id, data);
-            return res;
-        },
+        mutationFn: async (data: UpdateAreaForm) => await AreaAPI.updateOne(currentValue.id, data),
     });
 
     const methods = useForm({
@@ -39,17 +34,16 @@ const UpdateStationModal: React.FC<UpdateStationModalProps> = ({ currentValue, .
     React.useEffect(() => {
         methods.setValue('code', currentValue.code);
         methods.setValue('id', currentValue.id);
-        methods.setValue('areaId', currentValue.areaId);
-        methods.setValue('name', currentValue.name);
+        methods.setValue('province', currentValue.province);
+        methods.setValue('district', currentValue.district);
+        methods.setValue('commune', currentValue.commune);
         methods.setValue('address', currentValue.address);
-        methods.setValue('description', currentValue.description);
-        methods.setValue('image', currentValue.image);
         methods.setValue('status', currentValue.status);
     }, [currentValue]);
 
     const queryClient = useQueryClient();
 
-    const onSubmit = (data: UpdateStation) => {
+    const onSubmit = (data: UpdateAreaForm) => {
         updateHubMutation.mutateAsync(data, {
             onSuccess: () => {
                 rest.afterClose && rest.afterClose();
@@ -75,10 +69,10 @@ const UpdateStationModal: React.FC<UpdateStationModalProps> = ({ currentValue, .
                 ]}
             >
                 <form onSubmit={methods.handleSubmit(onSubmit)} className="flex flex-col w-full gap-2">
-                    <AvatarUploadInput name="image" label="Image" className="col-span-full" path="stations" />
-                    <TextInput name="name" label="Name" required />
                     <TextInput name="address" label="Address" required />
-                    <TextInput name="description" label="Description" placeholder="Mô tả ..." required />
+                    <TextInput name="province" label="province" required />
+                    <TextInput name="district" label="district" required />
+                    <TextInput name="commune" label="commune" required />
                     <TextInput name="code" label="Code" required />
 
                     <SelectInput
@@ -102,4 +96,4 @@ const UpdateStationModal: React.FC<UpdateStationModalProps> = ({ currentValue, .
         </FormWrapper>
     );
 };
-export default UpdateStationModal;
+export default UpdateAreaModal;
