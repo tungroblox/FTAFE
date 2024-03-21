@@ -1,4 +1,5 @@
 import { DatePicker, DatePickerProps } from 'antd';
+import { RangePickerProps } from 'antd/lib/date-picker';
 import moment from 'moment';
 import * as React from 'react';
 import { Controller, useFormContext } from 'react-hook-form';
@@ -11,7 +12,11 @@ interface DateInputProps extends DateInputType {
 }
 
 export const DateInput: React.FC<DateInputProps> = ({ label, name, format = 'YYYY-MM-DD HH:mm:ss', isHiddenError, required, ...rest }) => {
-    const { control, setValue } = useFormContext();
+    const { control, setValue, clearErrors } = useFormContext();
+    const disabledDate: RangePickerProps['disabledDate'] = (current) => {
+        // Can not select days before today and today
+        return current && current <= moment().endOf('day');
+    };
 
     return (
         <FieldWrapper name={name} label={label} isHiddenError={isHiddenError} required={required}>
@@ -20,6 +25,8 @@ export const DateInput: React.FC<DateInputProps> = ({ label, name, format = 'YYY
                 name={name}
                 render={({ field }) => (
                     <DatePicker
+                        disabledDate={disabledDate}
+                        showTime
                         locale={{
                             timePickerLocale: {},
                             lang: {
@@ -58,7 +65,8 @@ export const DateInput: React.FC<DateInputProps> = ({ label, name, format = 'YYY
                         {...field}
                         value={moment(field.value)}
                         onChange={(value) => {
-                            setValue(name, value?.format('YYYY-MM-DD'));
+                            clearErrors();
+                            setValue(name, value?.format('YYYY-MM-DD HH:mm:ss'));
                         }}
                         {...rest}
                     />

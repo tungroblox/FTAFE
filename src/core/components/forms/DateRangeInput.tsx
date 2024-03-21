@@ -1,11 +1,12 @@
 import { DatePicker } from 'antd';
+import { RangePickerProps } from 'antd/lib/date-picker';
 import moment from 'moment';
 import * as React from 'react';
 import { Controller, useFormContext } from 'react-hook-form';
 
 import { FieldsWrapper } from './FieldsWrapper';
 const { RangePicker } = DatePicker;
-interface DateRanagerInputProps {
+interface DateRangerInputProps {
     startDateName: string;
     endDateName: string;
     startDateLabel: string;
@@ -13,8 +14,12 @@ interface DateRanagerInputProps {
     label: string;
 }
 
-export const DateRangerInput: React.FC<DateRanagerInputProps> = ({ label, endDateLabel, endDateName, startDateLabel, startDateName, ...rest }) => {
-    const { control, setValue, getValues } = useFormContext();
+export const DateRangerInput: React.FC<DateRangerInputProps> = ({ label, endDateLabel, endDateName, startDateLabel, startDateName, ...rest }) => {
+    const { control, setValue, getValues, clearErrors } = useFormContext();
+    const disabledDate: RangePickerProps['disabledDate'] = (current) => {
+        // Can not select days before today
+        return current && current <= moment().endOf('day');
+    };
 
     return (
         <FieldsWrapper
@@ -31,10 +36,12 @@ export const DateRangerInput: React.FC<DateRanagerInputProps> = ({ label, endDat
             label={label}
         >
             <Controller
-                control={control}
                 name={''}
+                control={control}
                 render={({ field }) => (
                     <RangePicker
+                        showTime
+                        disabledDate={disabledDate}
                         locale={{
                             timePickerLocale: {},
                             lang: {
@@ -69,16 +76,17 @@ export const DateRangerInput: React.FC<DateRanagerInputProps> = ({ label, endDat
                             },
                         }}
                         className="w-full"
-                        format="YYYY-MM-DD"
+                        format="YYYY-MM-DD HH:mm:ss"
                         {...field}
                         onChange={(value) => {
                             if (!value) {
                                 return;
                             }
-                            const [end, start] = value;
+                            const [start, end] = value;
 
                             setValue(startDateName, start?.toDate().getTime());
                             setValue(endDateName, end?.toDate().getTime());
+                            clearErrors();
                         }}
                         {...rest}
                         defaultValue={[moment(getValues(startDateName)), moment(getValues(endDateName))]}

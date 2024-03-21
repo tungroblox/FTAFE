@@ -1,55 +1,29 @@
+import { DashOutlined } from '@ant-design/icons';
 import { TableBuilder, TableHeaderCell } from '@components/tables';
-import { ProductAPI } from '@core/api/product.api';
-import { routes } from '@core/routes';
-import { Product } from '@models/product';
+import { BusinessDayAPI } from '@core/api/business-day.api';
+import { BusinessDay } from '@models/business-day';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { Button, Dropdown, Menu, Modal, Tag } from 'antd';
 import clsx from 'clsx';
 import { PlusIcon } from 'lucide-react';
-import Link from 'next/link';
-import * as React from 'react';
+import moment from 'moment';
+import { useRouter } from 'next/router';
+import { useState } from 'react';
 import { toast } from 'react-toastify';
 
-import CreateProductModal from './components/CreateProductModal';
-import UpdateProductModal from './components/UpdateProductModal';
+import CreateBusinessDayModal from './components/CreateBusinessDayModal';
 
-interface ProductListProps {}
+interface BusinessDayListProps {}
+const BusinessDayList: React.FC<BusinessDayListProps> = () => {
+    const { data, isLoading } = useQuery({ queryKey: ['businessDays'], queryFn: async () => await BusinessDayAPI.getAll() });
+    const [createModalState, setCreateModalState] = useState(false);
 
-const ProductList: React.FunctionComponent<ProductListProps> = () => {
-    const { data, isLoading } = useQuery({
-        queryKey: ['products'],
-        queryFn: async () => {
-            const res = await ProductAPI.getProducts();
-            return res;
-        },
-    });
-    const products: Product[] = data?.payload;
-
-    const [openCreateModalState, setOpenCreateModalState] = React.useState<boolean>(false);
-    // Update modal
-    const [openUpdateModalState, setOpenUpdateModalState] = React.useState<boolean>(false);
-    const [productValue, setProductValue] = React.useState({
-        id: '',
-        categoryId: '',
-        name: '',
-        description: '',
-        code: '',
-        status: '',
-        label: '',
-        createdAt: '',
-        updatedAt: '',
-    });
-
-    const deleteProductMutation = useMutation({
-        mutationFn: async (productId: string) => {
-            const res = await ProductAPI.deleteProduct(productId);
-            return res;
-        },
-    });
+    const deleteMutation = useMutation(async (id: string) => await BusinessDayAPI.deleteOne(id));
 
     const queryClient = useQueryClient();
+    const router = useRouter();
 
-    const handleDeleteProduct = (id: string) => {
+    const handleDelete = (id: string) => {
         Modal.confirm({
             title: 'Are you sure?',
             content: 'You will not be able to recover this data!',
@@ -58,10 +32,10 @@ const ProductList: React.FunctionComponent<ProductListProps> = () => {
             cancelText: 'No, cancel',
             onOk: async () => {
                 try {
-                    await deleteProductMutation.mutateAsync(id, {
+                    await deleteMutation.mutateAsync(id, {
                         onSuccess: () => {
-                            queryClient.invalidateQueries(['products']);
-                            toast.success('Product deleted successfully!');
+                            queryClient.invalidateQueries(['businessDays']);
+                            toast.success('deleted successfully!');
                         },
                     });
                 } catch (error) {
@@ -76,45 +50,55 @@ const ProductList: React.FunctionComponent<ProductListProps> = () => {
             <div className="flex flex-col items-end w-full gap-2 ">
                 <button
                     onClick={() => {
-                        setOpenCreateModalState(!openCreateModalState);
+                        setCreateModalState(!createModalState);
                     }}
                     className="flex items-center gap-1 px-3 py-1 text-white duration-300 hover:text-white hover:bg-primary/90 bg-primary"
                 >
                     <PlusIcon className="w-5 h-5 text-white" />
-                    <span>Create New Product</span>
+                    <span>Tạo ngày bán</span>
                 </button>
             </div>
-            {/* <FormFilterWrapper<IV1GetFilterExpert> defaultValues={{ ...filter }}>
-                <div className="w-56">
-                    <TextInput name="name" label="Name" />
-                </div>
-                <div className="w-56">
-                    <TextInput name="email" label="Email" />
-                </div>
-            </FormFilterWrapper> */}
-
-            <TableBuilder<Product>
+            <TableBuilder<BusinessDay>
                 rowKey="id"
                 isLoading={isLoading}
-                data={products}
+                data={data?.payload}
                 columns={[
                     {
-                        title: () => <TableHeaderCell key="name" sortKey="name" label="Product Name" />,
+                        title: () => <TableHeaderCell key="name" sortKey="name" label="Name" />,
                         width: 400,
                         key: 'name',
-                        render: ({ ...props }: Product) => <Link href={routes.admin.product.detail(props.id)}>{props.name}</Link>,
+                        render: ({ ...props }: BusinessDay) => <p>{props.name}</p>,
+                    },
+
+                    {
+                        title: () => <TableHeaderCell key="regiterDay" sortKey="regiterDay" label="Ngày đăng ký" />,
+                        width: 400,
+                        key: 'regiterDay',
+                        render: ({ ...props }: BusinessDay) => {
+                            return <p>{moment(props.regiterDay).format('MMMM Do YYYY, h:mm:ss')}</p>;
+                        },
                     },
                     {
-                        title: () => <TableHeaderCell key="code" sortKey="code" label="Code" />,
+                        title: () => <TableHeaderCell key="endOfRegister" sortKey="endOfRegister" label="Ngày Kết thúc đăng ký" />,
                         width: 400,
-                        key: 'code',
-                        render: ({ ...props }: Product) => <span>{props.code}</span>,
+                        key: 'endOfRegister',
+                        render: ({ ...props }: BusinessDay) => {
+                            return <p>{moment(props.endOfRegister).format('MMMM Do YYYY, h:mm:ss')}</p>;
+                        },
+                    },
+                    {
+                        title: () => <TableHeaderCell key="openDay" sortKey="openDay" label="Ngày mở bán" />,
+                        width: 400,
+                        key: 'openDay',
+                        render: ({ ...props }: BusinessDay) => {
+                            return <p>{moment(props.openDay).format('MMMM Do YYYY, h:mm:ss')}</p>;
+                        },
                     },
                     {
                         title: () => <TableHeaderCell key="status" sortKey="status" label="Status" />,
                         width: 400,
                         key: 'status',
-                        render: ({ ...props }: Product) => {
+                        render: ({ ...props }: BusinessDay) => {
                             return (
                                 <Tag
                                     className={clsx(`text-sm whitespace-normal`)}
@@ -129,7 +113,7 @@ const ProductList: React.FunctionComponent<ProductListProps> = () => {
                         title: () => <TableHeaderCell key="" sortKey="" label="" />,
                         width: 400,
                         key: 'action',
-                        render: ({ ...props }: Product) => {
+                        render: ({ ...props }: BusinessDay) => {
                             return (
                                 <Dropdown
                                     overlay={
@@ -137,32 +121,32 @@ const ProductList: React.FunctionComponent<ProductListProps> = () => {
                                             <Menu.Item key="1">
                                                 <Button
                                                     onClick={() => {
-                                                        setOpenUpdateModalState(!openUpdateModalState);
-                                                        setProductValue(props);
+                                                        router.push(`/admin/business-day/${props.id}`);
                                                     }}
                                                 >
-                                                    Edit
+                                                    Menu
                                                 </Button>
                                             </Menu.Item>
-
                                             <Menu.Item key="2">
-                                                <Button onClick={() => handleDeleteProduct(props.id)}>Delete</Button>
+                                                <Button onClick={() => {}}>Edit</Button>
+                                            </Menu.Item>
+
+                                            <Menu.Item key="3">
+                                                <Button onClick={() => handleDelete(props.id)}>Delete</Button>
                                             </Menu.Item>
                                         </Menu>
                                     }
                                     trigger={['click']}
                                 >
-                                    <span className="cursor-pointer">Actions</span>
+                                    <DashOutlined />
                                 </Dropdown>
                             );
                         },
                     },
                 ]}
             />
-            <CreateProductModal open={openCreateModalState} onCancel={() => setOpenCreateModalState(false)} />
-            <UpdateProductModal open={openUpdateModalState} onCancel={() => setOpenUpdateModalState(false)} currentValue={productValue} />
+            <CreateBusinessDayModal open={createModalState} onCancel={() => setCreateModalState(false)} />
         </div>
     );
 };
-
-export default ProductList;
+export default BusinessDayList;

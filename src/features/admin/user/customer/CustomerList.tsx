@@ -11,6 +11,7 @@ import { Button, Dropdown, Image, Menu } from 'antd';
 // import { expertApi, IV1GetFilterExpert } from '@core/api/expert.api';
 // import { ExpertList } from '@models/expert';
 import * as React from 'react';
+import { toast } from 'react-toastify';
 
 interface CustomerListProps {
     filter: Partial<CustomerFilter>;
@@ -113,11 +114,23 @@ const CustomerList: React.FunctionComponent<CustomerListProps> = ({ filter }) =>
                                     overlay={
                                         <Menu>
                                             <Menu.Item key="1">
-                                                <Button onClick={() => {}}>Edit</Button>
+                                                <Button
+                                                    onClick={() => {
+                                                        toast.warn('chưa có api');
+                                                    }}
+                                                >
+                                                    Edit
+                                                </Button>
                                             </Menu.Item>
 
                                             <Menu.Item key="2">
-                                                <Button onClick={() => {}}>Delete</Button>
+                                                <Button
+                                                    onClick={() => {
+                                                        toast.warn('chưa có api');
+                                                    }}
+                                                >
+                                                    Delete
+                                                </Button>
                                             </Menu.Item>
                                         </Menu>
                                     }

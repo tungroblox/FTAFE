@@ -6,10 +6,10 @@ export type Apartment = {
     name: string;
     code: string;
     address: string;
+    status: string;
     createdAt: string;
     updatedAt: string | null;
-    status: string;
 };
-export interface CreateApartmentForm extends Apartment {}
+export interface CreateApartmentForm extends Omit<Apartment, 'createdAt' | 'updatedAt'> {}
 export interface UpdateApartmentForm extends Apartment {}
 export interface ApartmentFilter extends PagingProps, Pick<Apartment, 'address' | 'name'> {}
