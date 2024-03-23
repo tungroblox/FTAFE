@@ -38,6 +38,7 @@ export interface User extends BaseModel {
     //     payments: [];
     //     transactions: [];
     // };
+    farmHub: FarmHub | null;
 }
 
 export const userDefaultValues: User = {
@@ -53,6 +54,7 @@ export const userDefaultValues: User = {
     updatedAt: '',
     isDeleted: false,
     roleName: UserRole.GUESS,
+    farmHub: null,
 };
 
 export interface UserItem extends User {

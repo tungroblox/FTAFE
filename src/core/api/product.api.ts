@@ -2,7 +2,7 @@ import { CreateProduct, UpdateProduct } from '@models/product';
 import _get from 'lodash.get';
 
 import { http } from './http';
-export const ProductAPI = {
+export const productAPI = {
     getProducts: async () => {
         const res = await http.get('/products');
 

@@ -1,15 +1,15 @@
-import { TableBuilder, TableHeaderCell } from '@components/tables';
-import { ProductAPI } from '@core/api/product.api';
+import { TableActionCell, TableBuilder, TableHeaderCell } from '@components/tables';
+import { productAPI } from '@core/api/product.api';
 import { routes } from '@core/routes';
 import { Product } from '@models/product';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { Button, Dropdown, Menu, Modal, Tag } from 'antd';
+import { Button, Modal, Tag } from 'antd';
 import clsx from 'clsx';
-import { PlusIcon } from 'lucide-react';
 import Link from 'next/link';
 import * as React from 'react';
 import { toast } from 'react-toastify';
 
+import { WarningOutlined } from '@ant-design/icons';
 import CreateProductModal from './components/CreateProductModal';
 import UpdateProductModal from './components/UpdateProductModal';
 
@@ -19,7 +19,7 @@ const ProductList: React.FunctionComponent<ProductListProps> = () => {
     const { data, isLoading } = useQuery({
         queryKey: ['products'],
         queryFn: async () => {
-            const res = await ProductAPI.getProducts();
+            const res = await productAPI.getProducts();
             return res;
         },
     });
@@ -42,7 +42,7 @@ const ProductList: React.FunctionComponent<ProductListProps> = () => {
 
     const deleteProductMutation = useMutation({
         mutationFn: async (productId: string) => {
-            const res = await ProductAPI.deleteProduct(productId);
+            const res = await productAPI.deleteProduct(productId);
             return res;
         },
     });
@@ -51,17 +51,18 @@ const ProductList: React.FunctionComponent<ProductListProps> = () => {
 
     const handleDeleteProduct = (id: string) => {
         Modal.confirm({
-            title: 'Are you sure?',
-            content: 'You will not be able to recover this data!',
-            okText: 'Yes, delete it!',
+            title: 'Bạn có muốn xoá?',
+            content: 'Hành động này sẽ không thể hoàn tác lại được!',
+            okText: 'Xoá!',
             okType: 'danger',
-            cancelText: 'No, cancel',
+            icon: <WarningOutlined style={{ color: 'red' }} />,
+            cancelText: 'Trở lại',
             onOk: async () => {
                 try {
                     await deleteProductMutation.mutateAsync(id, {
                         onSuccess: () => {
                             queryClient.invalidateQueries(['products']);
-                            toast.success('Product deleted successfully!');
+                            toast.success('Xoá thành công!');
                         },
                     });
                 } catch (error) {
@@ -72,8 +73,8 @@ const ProductList: React.FunctionComponent<ProductListProps> = () => {
     };
 
     return (
-        <div className="flex flex-col w-full gap-2">
-            <div className="flex flex-col items-end w-full gap-2 ">
+        <div className="flex flex-col w-full gap-10">
+            {/* <div className="flex flex-col items-end w-full gap-2 ">
                 <button
                     onClick={() => {
                         setOpenCreateModalState(!openCreateModalState);
@@ -81,9 +82,11 @@ const ProductList: React.FunctionComponent<ProductListProps> = () => {
                     className="flex items-center gap-1 px-3 py-1 text-white duration-300 hover:text-white hover:bg-primary/90 bg-primary"
                 >
                     <PlusIcon className="w-5 h-5 text-white" />
-                    <span>Create New Product</span>
+                    <span>
+                        <strong>Thêm Sản Phẩm</strong>
+                    </span>
                 </button>
-            </div>
+            </div> */}
             {/* <FormFilterWrapper<IV1GetFilterExpert> defaultValues={{ ...filter }}>
                 <div className="w-56">
                     <TextInput name="name" label="Name" />
@@ -99,13 +102,13 @@ const ProductList: React.FunctionComponent<ProductListProps> = () => {
                 data={products}
                 columns={[
                     {
-                        title: () => <TableHeaderCell key="name" sortKey="name" label="Product Name" />,
+                        title: () => <TableHeaderCell key="name" sortKey="name" label="Sản Phẩm" />,
                         width: 400,
                         key: 'name',
                         render: ({ ...props }: Product) => <Link href={routes.admin.product.detail(props.id)}>{props.name}</Link>,
                     },
                     {
-                        title: () => <TableHeaderCell key="code" sortKey="code" label="Code" />,
+                        title: () => <TableHeaderCell key="code" sortKey="code" label="Mã Code" />,
                         width: 400,
                         key: 'code',
                         render: ({ ...props }: Product) => <span>{props.code}</span>,
@@ -126,34 +129,49 @@ const ProductList: React.FunctionComponent<ProductListProps> = () => {
                         },
                     },
                     {
-                        title: () => <TableHeaderCell key="" sortKey="" label="" />,
+                        title: () => <TableHeaderCell key="detail" sortKey="detail" label="Các sản phẩm" />,
                         width: 400,
+                        key: 'createdAt',
+                        render: ({ ...props }: Product) => (
+                            <div
+                                onClick={() => {
+                                    console.log('props:', props.id);
+                                }}
+                            >
+                                <Link href={routes.farmhub.product.detail(props.id)}>Xem chi tiết</Link>
+                            </div>
+                        ),
+                    },
+                    {
+                        title: () => <TableHeaderCell key="" sortKey="" label="" />,
+                        width: 100,
                         key: 'action',
                         render: ({ ...props }: Product) => {
                             return (
-                                <Dropdown
-                                    overlay={
-                                        <Menu>
-                                            <Menu.Item key="1">
-                                                <Button
-                                                    onClick={() => {
-                                                        setOpenUpdateModalState(!openUpdateModalState);
-                                                        setProductValue(props);
-                                                    }}
-                                                >
-                                                    Edit
+                                <TableActionCell
+                                    label="Chỉnh Sửa"
+                                    actions={[
+                                        {
+                                            label: (
+                                                <Button type="primary" className="w-full">
+                                                    Thay Đổi
                                                 </Button>
-                                            </Menu.Item>
-
-                                            <Menu.Item key="2">
-                                                <Button onClick={() => handleDeleteProduct(props.id)}>Delete</Button>
-                                            </Menu.Item>
-                                        </Menu>
-                                    }
-                                    trigger={['click']}
-                                >
-                                    <span className="cursor-pointer">Actions</span>
-                                </Dropdown>
+                                            ),
+                                            onClick: () => {
+                                                setOpenUpdateModalState(!openUpdateModalState);
+                                                setProductValue(props);
+                                            },
+                                        },
+                                        {
+                                            label: (
+                                                <Button type="primary" danger className="w-full">
+                                                    Xóa
+                                                </Button>
+                                            ),
+                                            onClick: () => handleDeleteProduct(props.id),
+                                        },
+                                    ]}
+                                />
                             );
                         },
                     },

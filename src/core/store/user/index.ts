@@ -24,6 +24,7 @@ const initialState: UserState = {
     isAuth: false,
     isDeleted: false,
     roleName: UserRole.GUESS,
+    farmHub: null,
 };
 
 const reducer = createSlice({
@@ -36,9 +37,9 @@ const reducer = createSlice({
     },
     extraReducers: (builder) => {
         builder.addCase(userThunk.getCurrentUser.fulfilled, (state, { payload }) => {
-            const { wallet, ...rest } = payload;
+            const { wallet, farmHub, ...rest } = payload;
 
-            return { ...state, ...rest, isLogin: true, isAuth: true };
+            return { ...state, farmHub, ...rest, isLogin: true, isAuth: true };
         });
 
         builder.addCase(userThunk.getCurrentUser.rejected, (state) => {

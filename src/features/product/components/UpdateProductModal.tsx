@@ -1,6 +1,6 @@
 import { FormWrapper, SelectInput, TextInput } from '@components/forms';
 import { CategoryAPI } from '@core/api/category.api';
-import { ProductAPI } from '@core/api/product.api';
+import { productAPI } from '@core/api/product.api';
 import { Category } from '@models/category';
 import { Product, UpdateProduct } from '@models/product';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
@@ -27,7 +27,7 @@ const defaultValues = {
 };
 
 const UpdateProductModal: React.FC<UpdateProductModalProps> = ({ currentValue, ...rest }) => {
-    const updateProductMutation = useMutation(async (data: UpdateProduct) => await ProductAPI.updateProduct(currentValue.id, data));
+    const updateProductMutation = useMutation(async (data: UpdateProduct) => await productAPI.updateProduct(currentValue.id, data));
 
     const methods = useForm({
         defaultValues,

@@ -13,5 +13,16 @@ export interface ProductItem {
     price: number;
     quantity: number;
     minOrder: number;
+    status: string;
     unit: string;
+    productImages: productImage[];
+}
+
+export interface productImage {
+    id: string;
+    productItemId: string;
+    caption: string;
+    imageUrl: string;
+    displayIndex: number;
+    status: string;
 }

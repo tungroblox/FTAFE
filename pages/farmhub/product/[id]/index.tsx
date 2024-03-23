@@ -1,6 +1,6 @@
 import { DashboardHeaderLayout } from '@components/layouts';
 import { productAPI } from '@core/api/product.api';
-import ProductDetail from '@features/product/ProductDetail';
+import ProductDetailFarmHub from '@features/product/ProductDetailFarmHub';
 import { Product } from '@models/product';
 import { useQuery } from '@tanstack/react-query';
 import { NextPage } from 'next';
@@ -18,8 +18,8 @@ const Page: NextPage<PageProps> = ({ id }) => {
 
     return (
         <ToggleProvider>
-            <DashboardHeaderLayout title="Product Detail">
-                <ProductDetail product={product} />
+            <DashboardHeaderLayout title=" Thông tin sản phẩm">
+                <ProductDetailFarmHub product={product} />
             </DashboardHeaderLayout>
         </ToggleProvider>
     );

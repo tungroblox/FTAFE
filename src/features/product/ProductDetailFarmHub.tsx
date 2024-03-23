@@ -1,18 +1,16 @@
 import { WarningOutlined } from '@ant-design/icons';
-import { TableBuilder, TableHeaderCell } from '@components/tables';
+import { TableActionCell, TableBuilder, TableHeaderCell } from '@components/tables';
 import { ProductItemAPI } from '@core/api/product-item.api';
-import { routes } from '@core/routes';
 import { Product } from '@models/product';
 import { ProductItem } from '@models/product-item';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { Badge, Button, Descriptions, Image, Modal } from 'antd';
-import Link from 'next/link';
 import { toast } from 'react-toastify';
 
-interface ProductDetailProps {
+interface ProductDetailFarmHubProps {
     product: Product;
 }
-const ProductDetail: React.FC<ProductDetailProps> = ({ product }) => {
+const ProductDetailFarmHub: React.FC<ProductDetailFarmHubProps> = ({ product }) => {
     const { data, isLoading } = useQuery({
         queryFn: async (_) => await ProductItemAPI.getAllByProductId(product.id),
         queryKey: ['product-items', 'product', product?.id],
@@ -140,7 +138,8 @@ const ProductDetail: React.FC<ProductDetailProps> = ({ product }) => {
                                     width: 400,
                                     key: 'status',
                                     render: ({ ...props }: ProductItem) => {
-                                        return <Link href={routes.admin.user.farm_hub.detail(props.farmHubId)}>{props.farmHubId}</Link>;
+                                        // return <Link href={routes.admin.user.farm_hub.detail(props.farmHubId)}>{props.farmHubId}</Link>;
+                                        return <Badge status={props.status === 'Selling' ? 'success' : 'warning'} text={props.status} />;
                                     },
                                 },
                                 {
@@ -148,7 +147,32 @@ const ProductDetail: React.FC<ProductDetailProps> = ({ product }) => {
                                     width: 200,
                                     key: 'action',
                                     render: ({ ...props }: Product) => {
-                                        return <Button onClick={() => handleDeleteProductItem(props.id)}>Delete</Button>;
+                                        return (
+                                            <TableActionCell
+                                                label="Chỉnh Sửa"
+                                                actions={[
+                                                    //    {
+                                                    //        label: (
+                                                    //            <Button type="primary" className="w-full">
+                                                    //                Thay Đổi
+                                                    //            </Button>
+                                                    //        ),
+                                                    //        onClick: () => {
+                                                    //            setOpenUpdateModalState(!openUpdateModalState);
+                                                    //            setProductValue(props);
+                                                    //        },
+                                                    //    },
+                                                    {
+                                                        label: (
+                                                            <Button type="primary" danger className="w-full">
+                                                                Xóa
+                                                            </Button>
+                                                        ),
+                                                        onClick: () => handleDeleteProductItem(props.id),
+                                                    },
+                                                ]}
+                                            />
+                                        );
                                     },
                                 },
                             ]}
@@ -160,4 +184,4 @@ const ProductDetail: React.FC<ProductDetailProps> = ({ product }) => {
     );
 };
 
-export default ProductDetail;
+export default ProductDetailFarmHub;

@@ -1,6 +1,6 @@
 import { FormWrapper, SelectInput, TextInput } from '@components/forms';
 import { CategoryAPI } from '@core/api/category.api';
-import { ProductAPI } from '@core/api/product.api';
+import { productAPI } from '@core/api/product.api';
 import { Category } from '@models/category';
 import { CreateProduct } from '@models/product';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
@@ -24,7 +24,7 @@ const CreateProductModal: React.FC<CreateProductModalProps> = ({ ...rest }) => {
 
     const queryClient = useQueryClient();
 
-    const createProductMutation = useMutation(async (data: CreateProduct) => await ProductAPI.createProduct(data), {
+    const createProductMutation = useMutation(async (data: CreateProduct) => await productAPI.createProduct(data), {
         onSuccess: (res) => {
             methods.reset();
             toast.success('Create success');
@@ -48,24 +48,24 @@ const CreateProductModal: React.FC<CreateProductModalProps> = ({ ...rest }) => {
         <FormWrapper methods={methods}>
             <Modal
                 {...rest}
-                title="Create Category"
+                title="Tạo sản phẩm"
                 width={600}
                 footer={[
                     <Button key="close" type="default" onClick={rest.onCancel}>
-                        Cancel
+                        Trở lại
                     </Button>,
                     <Button key="create" type="primary" onClick={() => methods.handleSubmit(onSubmit)()}>
-                        Save
+                        Tạo
                     </Button>,
                 ]}
             >
                 <form onSubmit={methods.handleSubmit(onSubmit)} className="flex flex-col w-full gap-2">
-                    <TextInput name="name" label="Product Name" required />
-                    <TextInput name="description" label="Description" placeholder="Mô tả ..." required />
-                    <TextInput name="code" label="Code" required />
+                    <TextInput name="name" label=" Tên sản phẩm" placeholder="Tên sản phẩm ..." required />
+                    <TextInput name="description" label="Mô tả sản phẩm" placeholder="Mô tả ..." required />
+                    <TextInput name="code" label="Mã Code" required />
                     <TextInput name="label" label="Label" required />
                     <SelectInput
-                        label="Category"
+                        label="Loại sản phẩm"
                         name="categoryId"
                         options={categoryList.map((c: Category) => {
                             return {

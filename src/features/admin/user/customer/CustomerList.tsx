@@ -30,10 +30,10 @@ const CustomerList: React.FunctionComponent<CustomerListProps> = ({ filter }) =>
         <div className="flex flex-col w-full gap-2">
             <FormFilterWrapper<IV1GetFilterExpert> defaultValues={{ ...filter }}>
                 <div className="w-56">
-                    <TextInput name="firstName" label="firstName" />
+                    <TextInput name="firstName" label="First Name" />
                 </div>
                 <div className="w-56">
-                    <TextInput name="lastName" label="lastName" />
+                    <TextInput name="lastName" label="Last Name" />
                 </div>
                 <div className="w-56">
                     <TextInput name="email" label="Email" />
@@ -58,7 +58,7 @@ const CustomerList: React.FunctionComponent<CustomerListProps> = ({ filter }) =>
                                         alt=""
                                         width={64}
                                         height={64}
-                                        className="rounded overflow-hidden"
+                                        className="overflow-hidden rounded"
                                         src={props.avatar ? props.avatar : convertTextToAvatar(props.firstName)}
                                     />
                                 }
