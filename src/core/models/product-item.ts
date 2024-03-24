@@ -26,3 +26,8 @@ export interface productImage {
     displayIndex: number;
     status: string;
 }
+
+export type CreateProductItem = Pick<
+    ProductItem,
+    'title' | 'description' | 'productOrigin' | 'specialTag' | 'storageType' | 'price' | 'quantity' | 'minOrder' | 'unit'
+>;

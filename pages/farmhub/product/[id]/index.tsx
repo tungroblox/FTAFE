@@ -1,6 +1,6 @@
 import { DashboardHeaderLayout } from '@components/layouts';
 import { productAPI } from '@core/api/product.api';
-import ProductDetailFarmHub from '@features/product/ProductDetailFarmHub';
+import ProductDetailFarmHub from '@features/farmhub/ProductDetailFarmHub';
 import { Product } from '@models/product';
 import { useQuery } from '@tanstack/react-query';
 import { NextPage } from 'next';

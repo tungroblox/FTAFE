@@ -128,7 +128,7 @@ const menuFarmHubList: ItemType[] = [
     {
         icon: <DatabaseOutlined />,
         label: 'Danh sách sản phẩm',
-        key: routes.farmhub.product.list(),
+        key: 'product',
         children: [
             {
                 key: routes.farmhub.category.list(),

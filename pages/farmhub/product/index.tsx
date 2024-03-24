@@ -3,7 +3,7 @@ import { ProtectWrapper } from '@components/wrappers';
 import { ModalProvider } from '@context/modalContext';
 import { TableUtilProvider } from '@context/tableUtilContext';
 import { IV1GetFilterCandidate } from '@core/api/candidate';
-import ProductList from '@features/product/ProductList';
+import ProductList from '@features/farmhub/ProductList';
 import { UserRole } from '@models/user';
 import { NextPage } from 'next';
 

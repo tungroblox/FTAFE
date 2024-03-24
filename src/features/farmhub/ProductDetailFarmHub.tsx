@@ -5,14 +5,18 @@ import { Product } from '@models/product';
 import { ProductItem } from '@models/product-item';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { Badge, Button, Descriptions, Image, Modal } from 'antd';
+import { PlusIcon } from 'lucide-react';
+import moment from 'moment';
+import React from 'react';
 import { toast } from 'react-toastify';
+import CreateProductItemModal from '../product/components/CreateProductItemModal';
 
 interface ProductDetailFarmHubProps {
     product: Product;
 }
 const ProductDetailFarmHub: React.FC<ProductDetailFarmHubProps> = ({ product }) => {
     const { data, isLoading } = useQuery({
-        queryFn: async (_) => await ProductItemAPI.getAllByProductId(product.id),
+        queryFn: async (_) => await ProductItemAPI.getAllByProductId(product.id || ''),
         queryKey: ['product-items', 'product', product?.id],
     });
 
@@ -21,6 +25,7 @@ const ProductDetailFarmHub: React.FC<ProductDetailFarmHubProps> = ({ product }) 
     const deleteItemMutation = useMutation(async (id: string) => await ProductItemAPI.deleteProductItem(id));
 
     const queryClient = useQueryClient();
+    const [openCreateModalState, setOpenCreateModalState] = React.useState<boolean>(false);
 
     const handleDeleteProductItem = (id: string) => {
         Modal.confirm({
@@ -47,6 +52,19 @@ const ProductDetailFarmHub: React.FC<ProductDetailFarmHubProps> = ({ product }) 
 
     return (
         <>
+            {/* <div className="flex flex-col items-end w-full gap-2 ">
+                <button
+                    onClick={() => {
+                        setOpenCreateModalState(!openCreateModalState);
+                    }}
+                    className="flex items-center gap-1 px-3 py-1 text-white duration-300 hover:text-white hover:bg-primary/90 bg-primary"
+                >
+                    <PlusIcon className="w-5 h-5 text-white" />
+                    <span>
+                        <strong>Thêm Sản Phẩm</strong>
+                    </span>
+                </button>
+            </div> */}
             <div className="flex flex-col w-full gap-4">
                 <Descriptions
                     labelStyle={{
@@ -55,7 +73,19 @@ const ProductDetailFarmHub: React.FC<ProductDetailFarmHubProps> = ({ product }) 
                     bordered
                     title={'Thông tin liên quan đến sản phẩm'}
                     className="p-4 bg-white rounded-lg"
-                    extra={<Button>Update</Button>}
+                    extra={
+                        <button
+                            onClick={() => {
+                                setOpenCreateModalState(!openCreateModalState);
+                            }}
+                            className="flex items-center gap-1 px-3 py-1 text-white duration-300 hover:text-white hover:bg-primary/90 bg-primary"
+                        >
+                            <PlusIcon className="w-5 h-5 text-white" />
+                            <span>
+                                <strong>Thêm Sản Phẩm</strong>
+                            </span>
+                        </button>
+                    }
                 >
                     <Descriptions.Item label="Sản Phẩm" span={3}>
                         {product?.name}
@@ -68,7 +98,7 @@ const ProductDetailFarmHub: React.FC<ProductDetailFarmHubProps> = ({ product }) 
                         <Badge status={product?.status === 'Active' ? 'processing' : 'error'} text={product?.status} />
                     </Descriptions.Item>
                     <Descriptions.Item label="Ngày tạo" span={2}>
-                        {product?.createdAt}
+                        {moment(product?.createdAt).format('DD/MM/YYYY')}
                     </Descriptions.Item>
                 </Descriptions>
                 <Descriptions
@@ -180,6 +210,7 @@ const ProductDetailFarmHub: React.FC<ProductDetailFarmHubProps> = ({ product }) 
                     </div>
                 </Descriptions>
             </div>
+            <CreateProductItemModal open={openCreateModalState} onCancel={() => setOpenCreateModalState(false)} />
         </>
     );
 };
