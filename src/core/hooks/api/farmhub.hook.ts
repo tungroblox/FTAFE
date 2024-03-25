@@ -71,3 +71,13 @@ export const useQueryGetFarmHubMenu = (id: string) => {
         },
     });
 };
+
+export const useQueryGetAllMenus = () => {
+    return useQuery({
+        queryKey: ['menus'],
+        queryFn: async () => {
+            const res = await MenuAPI.getAllMenus();
+            return res;
+        },
+    });
+};

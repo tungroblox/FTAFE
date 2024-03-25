@@ -88,6 +88,11 @@ export const routes = {
             create: () => '/farmhub/categories/create',
             edit: () => '/farmhub/categories/edit',
         },
+        businessDay: {
+            list: () => '/farmhub/business-day',
+            create: () => '/farmhub/business-day/create',
+            edit: () => '/farmhub/business-day/edit',
+        },
         order: {
             list: () => '/farmhub/order',
             create: () => '/farmhub/order/create',

@@ -131,8 +131,8 @@ const menuFarmHubList: ItemType[] = [
         key: 'product',
         children: [
             {
-                key: routes.farmhub.category.list(),
-                label: 'Chuyên mục',
+                key: routes.farmhub.businessDay.list(),
+                label: 'Ngày bán',
                 icon: <FolderOpenOutlined />,
             },
             {

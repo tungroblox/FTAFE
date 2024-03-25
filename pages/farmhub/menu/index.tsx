@@ -3,21 +3,21 @@ import { ProtectWrapper } from '@components/wrappers';
 import { ModalProvider } from '@context/modalContext';
 import { TableUtilProvider } from '@context/tableUtilContext';
 import { IV1GetFilterCandidate } from '@core/api/candidate';
-import ProductList from '@features/farmhub/product/ProductList';
+import MenuList from '@features/farmhub/menu/MenuList';
 import { UserRole } from '@models/user';
 import { NextPage } from 'next';
 
-interface ProductPageProps {
+interface MenuListPageProps {
     filter: Partial<IV1GetFilterCandidate>;
 }
 
-const ProductPage: NextPage<ProductPageProps> = ({ filter }) => {
+const MenuListPage: NextPage<MenuListPageProps> = ({ filter }) => {
     return (
         <ProtectWrapper acceptRoles={[UserRole.FARM_HUB]}>
             <ModalProvider>
                 <TableUtilProvider>
                     <DashboardHeaderLayout title="Quản Lý Sản Phẩm">
-                        <ProductList />
+                        <MenuList />
                     </DashboardHeaderLayout>
                 </TableUtilProvider>
             </ModalProvider>
@@ -25,4 +25,4 @@ const ProductPage: NextPage<ProductPageProps> = ({ filter }) => {
     );
 };
 
-export default ProductPage;
+export default MenuListPage;
