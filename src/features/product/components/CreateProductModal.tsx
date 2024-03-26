@@ -27,7 +27,7 @@ const CreateProductModal: React.FC<CreateProductModalProps> = ({ ...rest }) => {
     const createProductMutation = useMutation(async (data: CreateProduct) => await productAPI.createProduct(data), {
         onSuccess: (res) => {
             methods.reset();
-            toast.success('Create success');
+            toast.success('Tạo thành công.');
             queryClient.invalidateQueries();
             rest.afterClose && rest.afterClose();
         },

@@ -13,10 +13,11 @@ import CreateProductItemModal from '../../product/components/CreateProductItemMo
 
 interface ProductDetailFarmHubProps {
     product: Product;
+    farmHubId: string;
 }
-const ProductDetailFarmHub: React.FC<ProductDetailFarmHubProps> = ({ product }) => {
+const ProductDetailFarmHub: React.FC<ProductDetailFarmHubProps> = ({ product, farmHubId }) => {
     const { data, isLoading } = useQuery({
-        queryFn: async (_) => await ProductItemAPI.getAllByProductId(product.id || ''),
+        queryFn: async (_) => await ProductItemAPI.getProductItemByFarmHubIdAndProductId(farmHubId, product.id as string),
         queryKey: ['product-items', 'product', product?.id],
     });
 

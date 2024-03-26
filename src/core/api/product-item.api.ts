@@ -11,6 +11,10 @@ export const ProductItemAPI = {
         const res = await http.get(`/product-item/${productId}`);
         return _get(res, 'data');
     },
+    getProductItemByFarmHubIdAndProductId: async (farmHubId: string, productId: string) => {
+        const res = await http.get(`/farmhub/${farmHubId}/product/${productId}/product-items`);
+        return _get(res, 'data');
+    },
     deleteProductItem: async (productId: string) => {
         const res = await http.delete(`/product-item/${productId}`);
         return res;
