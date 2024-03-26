@@ -38,6 +38,9 @@ export const UnProtectWrapper: React.FC<UnProtectionWrapperProps> = ({ children 
                 case UserRole.FARM_HUB:
                     if (!router.pathname.startsWith('/farmhub')) router.push(routes.farmhub.home());
                     break;
+                case UserRole.COLLECTED_STAFF:
+                    if (!router.pathname.startsWith('/staff')) router.push(routes.staff.home());
+                    break;
                 default:
                     toast.error('Bạn không có quyền truy cập');
                     authApi.v1GetLogout().then(() => {

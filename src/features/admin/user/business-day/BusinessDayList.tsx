@@ -145,7 +145,11 @@ const BusinessDayList: React.FC<BusinessDayListProps> = () => {
                     },
                 ]}
             />
-            <CreateBusinessDayModal open={createModalState} onCancel={() => setCreateModalState(false)} />
+            <CreateBusinessDayModal
+                open={createModalState}
+                onCancel={() => setCreateModalState(false)}
+                afterClose={() => setCreateModalState(false)}
+            />
         </div>
     );
 };

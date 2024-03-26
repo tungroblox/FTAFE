@@ -108,6 +108,14 @@ const menuAdminList: ItemType[] = [
     },
 ];
 const menuFarmHubList: ItemType[] = [];
+
+const menuStaffList: ItemType[] = [
+    {
+        icon: <AreaChartOutlined />,
+        label: 'Tình trạng hàng hóa',
+        key: routes.staff.home(),
+    },
+];
 interface DashboardLayoutProps {
     children: React.ReactNode;
 }
@@ -163,7 +171,7 @@ export const DashboardLayout: React.FC<DashboardLayoutProps> = ({ children }) =>
                                     defaultSelectedKeys={[router.pathname]}
                                     items={
                                         //*TODO check user role for the sidebar menu
-                                        user.roleName === UserRole.ADMIN ? menuAdminList : menuFarmHubList
+                                        user.roleName === UserRole.ADMIN ? menuAdminList : UserRole.COLLECTED_STAFF ? menuStaffList : menuFarmHubList
                                     }
                                 />
                             </div>

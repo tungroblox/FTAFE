@@ -2,10 +2,10 @@ import { DashOutlined } from '@ant-design/icons';
 import { TextInput } from '@components/forms';
 import FormFilterWrapper from '@components/forms/FormFilterWrapper';
 import { TableBodyCell, TableBuilder, TableHeaderCell } from '@components/tables';
-import { AreaAPI } from '@core/api/area.api';
+import { ApartmentAPI } from '@core/api/apartment.api';
 import { IV1GetFilterExpert } from '@core/api/expert.api';
 import { PlusIcon } from '@heroicons/react/24/outline';
-import { Area, AreaFilter } from '@models/area';
+import { Apartment, ApartmentFilter } from '@models/apartment';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { Button, Dropdown, Menu, Modal, Tag } from 'antd';
 import clsx from 'clsx';
@@ -13,27 +13,27 @@ import { useRouter } from 'next/router';
 import * as React from 'react';
 import { toast } from 'react-toastify';
 
-import AreaCreateModal from './components/AreaCreateModal';
-import UpdateAreaModal from './components/AreaUpdateModal';
+import CreateApartmentModal from './component/CreateApartmentComponent';
+import UpdateApartmentModal from './component/UpdateApartmentComponent';
 
-interface AreaListProps {
-    filter: Partial<AreaFilter>;
+interface ApartmentListProps {
+    filter: Partial<ApartmentFilter>;
 }
 
-const AreaList: React.FunctionComponent<AreaListProps> = ({ filter }) => {
+const ApartmentList: React.FunctionComponent<ApartmentListProps> = ({ filter }) => {
     const router = useRouter();
 
     const { data, isLoading } = useQuery({
-        queryKey: ['areas', filter],
+        queryKey: ['apartments'],
         queryFn: async () => {
-            const res = await AreaAPI.getAll(filter);
+            const res = await ApartmentAPI.getAll(filter);
             return res;
         },
     });
 
-    const areas: Area[] = data || [];
+    const list: Apartment[] = data || [];
 
-    const deleteAreaMutation = useMutation(async (id: string) => await AreaAPI.deleteOne(id));
+    const deleteApartmentMutation = useMutation(async (id: string) => await ApartmentAPI.deleteOne(id));
 
     const queryClient = useQueryClient();
 
@@ -46,7 +46,7 @@ const AreaList: React.FunctionComponent<AreaListProps> = ({ filter }) => {
             cancelText: 'No, cancel',
             onOk: async () => {
                 try {
-                    await deleteAreaMutation.mutateAsync(id, {
+                    await deleteApartmentMutation.mutateAsync(id, {
                         onSuccess: () => {
                             queryClient.invalidateQueries(['areas', filter]);
                             toast.success('FarmHub deleted successfully!');
@@ -62,14 +62,15 @@ const AreaList: React.FunctionComponent<AreaListProps> = ({ filter }) => {
     const [openCreateModalState, setOpenCreateModalState] = React.useState<boolean>(false);
     //Update modal
     const [updateModalState, setUpdateModalState] = React.useState<boolean>(false);
-    const [currentValue, setCurrentValue] = React.useState<Area>({
+    const [currentValue, setCurrentValue] = React.useState<Apartment>({
         id: '',
-        province: '',
-        district: '',
-        commune: '',
         address: '',
         status: '',
         code: '',
+        areaId: '',
+        createdAt: '',
+        updatedAt: '',
+        name: '',
     });
 
     return (
@@ -86,54 +87,35 @@ const AreaList: React.FunctionComponent<AreaListProps> = ({ filter }) => {
 
             <FormFilterWrapper<IV1GetFilterExpert> defaultValues={{ ...filter }}>
                 <div className="w-56">
+                    <TextInput name="name" label="name" />
+                </div>
+                <div className="w-56">
                     <TextInput name="address" label="address" />
-                </div>
-                <div className="w-56">
-                    <TextInput name="commune" label="commune" />
-                </div>
-                <div className="w-56">
-                    <TextInput name="district" label="district" />
-                </div>
-                <div className="w-56">
-                    <TextInput name="province" label="province" />
                 </div>
             </FormFilterWrapper>
 
-            <TableBuilder<Area>
+            <TableBuilder<Apartment>
                 rowKey="id"
                 isLoading={isLoading}
-                data={areas}
+                data={list}
                 columns={[
                     {
-                        title: () => <TableHeaderCell key="province" sortKey="province" label="province" />,
+                        title: () => <TableHeaderCell key="name" sortKey="name" label="name" />,
                         width: 400,
-                        key: 'province',
-                        render: ({ ...props }: Area) => <TableBodyCell label={<span>{props.province}</span>} />,
+                        key: 'name',
+                        render: ({ ...props }: Apartment) => <TableBodyCell label={<span>{props.name}</span>} />,
                     },
-                    {
-                        title: () => <TableHeaderCell key="district" sortKey="district" label="district" />,
-                        width: 400,
-                        key: 'district',
-                        render: ({ ...props }: Area) => <TableBodyCell label={<span>{props.district}</span>} />,
-                    },
-                    {
-                        title: () => <TableHeaderCell key="commune" sortKey="commune" label="commune" />,
-                        width: 400,
-                        key: 'commune',
-                        render: ({ ...props }: Area) => <TableBodyCell label={<span>{props.commune}</span>} />,
-                    },
-
                     {
                         title: () => <TableHeaderCell key="address" sortKey="address" label="address" />,
                         width: 400,
                         key: 'address',
-                        render: ({ ...props }: Area) => <TableBodyCell label={<span>{props.address}</span>} />,
+                        render: ({ ...props }: Apartment) => <TableBodyCell label={<span>{props.address}</span>} />,
                     },
                     {
                         title: () => <TableHeaderCell key="status" sortKey="status" label="Status" />,
                         width: 100,
                         key: 'status',
-                        render: ({ ...props }: Area) => {
+                        render: ({ ...props }: Apartment) => {
                             return (
                                 <Tag
                                     className={clsx(`text-sm whitespace-normal`)}
@@ -148,13 +130,13 @@ const AreaList: React.FunctionComponent<AreaListProps> = ({ filter }) => {
                         title: () => <TableHeaderCell key="" sortKey="" label="" />,
                         width: 50,
                         key: 'action',
-                        render: ({ ...props }: Area) => {
+                        render: ({ ...props }: Apartment) => {
                             return (
                                 <Dropdown
                                     overlay={
                                         <Menu>
                                             <Menu.Item key="1">
-                                                <Button onClick={() => router.push(`/admin/area/${props.id}`)}>Detail</Button>
+                                                <Button onClick={() => {}}>Detail</Button>
                                             </Menu.Item>
                                             <Menu.Item key="2">
                                                 <Button
@@ -181,12 +163,12 @@ const AreaList: React.FunctionComponent<AreaListProps> = ({ filter }) => {
                     },
                 ]}
             />
-            <AreaCreateModal
+            <CreateApartmentModal
+                onCancel={() => setOpenCreateModalState(false)}
                 open={openCreateModalState}
                 afterClose={() => setOpenCreateModalState(false)}
-                onCancel={() => setOpenCreateModalState(false)}
             />
-            <UpdateAreaModal
+            <UpdateApartmentModal
                 open={updateModalState}
                 currentValue={currentValue}
                 onCancel={() => setUpdateModalState(false)}
@@ -196,4 +178,4 @@ const AreaList: React.FunctionComponent<AreaListProps> = ({ filter }) => {
     );
 };
 
-export default AreaList;
+export default ApartmentList;

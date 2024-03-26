@@ -89,43 +89,43 @@ export const routes = {
             detail: (id: string) => `/staff/expert/${id}`,
         },
 
-        skillLevelRequest: {
-            list: () => `/staff/skill-level-request`,
-            detail: (id: string) => `/staff/skill-level-request/${id}`,
-        },
-        interview: {
-            list: () => `/staff/manage-interview`,
-            detail: (id: string) => `/staff/manage-interview/${id}`,
-        },
+        // skillLevelRequest: {
+        //     list: () => `/staff/skill-level-request`,
+        //     detail: (id: string) => `/staff/skill-level-request/${id}`,
+        // },
+        // interview: {
+        //     list: () => `/staff/manage-interview`,
+        //     detail: (id: string) => `/staff/manage-interview/${id}`,
+        // },
 
-        skill: {
-            list: () => `/staff/skill`,
-            detail: (id: string) => `/staff/skill/${id}`,
-            create: () => `/staff/skill/create`,
-            update: (id: string) => `/staff/skill/${id}/update`,
-            skillLevel: {
-                list: (skillId: string): string => `/staff/skill/${skillId}/skill-level`,
-                detail: (skillId: string, id: string): string => `/staff/skill/${skillId}/skill-level/${id}`,
-            },
-        },
-        skillGroup: {
-            list: () => `/staff/skill-group`,
-            detail: (id: string) => `/staff/skill-group/${id}`,
-            create: () => `/staff/skill-group/create`,
-            update: (id: string) => `/staff/skill-group/${id}/update`,
-        },
-        job: {
-            list: () => `/staff/job`,
-            detail: (id: string) => `/staff/job/${id}`,
-            create: () => `/staff/job/create`,
-            update: (id: string) => `/staff/job/${id}/update`,
-            jobLevel: {
-                list: (jobId: string): string => `/staff/job/${jobId}/job-level`,
-                detail: (jobId: string, id: string): string => `/staff/job/${jobId}/job-level/${id}`,
-                create: (jobId: string): string => `/staff/job/${jobId}/job-level/create`,
-                update: (jobId: string, id: string): string => `/staff/job/${jobId}/job-level/${id}/update`,
-            },
-        },
+        // skill: {
+        //     list: () => `/staff/skill`,
+        //     detail: (id: string) => `/staff/skill/${id}`,
+        //     create: () => `/staff/skill/create`,
+        //     update: (id: string) => `/staff/skill/${id}/update`,
+        //     skillLevel: {
+        //         list: (skillId: string): string => `/staff/skill/${skillId}/skill-level`,
+        //         detail: (skillId: string, id: string): string => `/staff/skill/${skillId}/skill-level/${id}`,
+        //     },
+        // },
+        // skillGroup: {
+        //     list: () => `/staff/skill-group`,
+        //     detail: (id: string) => `/staff/skill-group/${id}`,
+        //     create: () => `/staff/skill-group/create`,
+        //     update: (id: string) => `/staff/skill-group/${id}/update`,
+        // },
+        // job: {
+        //     list: () => `/staff/job`,
+        //     detail: (id: string) => `/staff/job/${id}`,
+        //     create: () => `/staff/job/create`,
+        //     update: (id: string) => `/staff/job/${id}/update`,
+        //     jobLevel: {
+        //         list: (jobId: string): string => `/staff/job/${jobId}/job-level`,
+        //         detail: (jobId: string, id: string): string => `/staff/job/${jobId}/job-level/${id}`,
+        //         create: (jobId: string): string => `/staff/job/${jobId}/job-level/create`,
+        //         update: (jobId: string, id: string): string => `/staff/job/${jobId}/job-level/${id}/update`,
+        //     },
+        // },
     },
 
     home: () => '/',

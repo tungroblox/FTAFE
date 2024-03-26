@@ -4,7 +4,7 @@ import { Wallet } from './wallet';
 export enum UserRole {
     ADMIN = 'Admin',
     GUESS = 'Guess',
-    COLLECTED_STAFF = 'Collected_staff',
+    COLLECTED_STAFF = 'CollectedStaff',
     CUSTOMER = 'Customer',
     DELIVERED_STAFF = 'Delivered_staff',
     FARM_HUB = 'FarmHub',

@@ -11,5 +11,5 @@ export type Apartment = {
     updatedAt: string | null;
 };
 export interface CreateApartmentForm extends Omit<Apartment, 'createdAt' | 'updatedAt'> {}
-export interface UpdateApartmentForm extends Apartment {}
+export interface UpdateApartmentForm extends Omit<Apartment, 'updatedAt' | 'createdAt'> {}
 export interface ApartmentFilter extends PagingProps, Pick<Apartment, 'address' | 'name'> {}

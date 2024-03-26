@@ -2,24 +2,38 @@ import { DashboardHeaderLayout } from '@components/layouts';
 import { ProtectWrapper } from '@components/wrappers';
 import { ModalProvider } from '@context/modalContext';
 import { TableUtilProvider } from '@context/tableUtilContext';
+import ApartmentList from '@features/admin/apartment/ApartmentList';
+import { ApartmentFilter } from '@models/apartment';
+import { defaultPagingProps } from '@models/interface';
 import { UserRole } from '@models/user';
+import { objectHelper } from '@utils/index';
 import { NextPage } from 'next';
 
-interface PageProps {}
-const Page: NextPage<PageProps> = () => {
+interface PageProps {
+    filter: Partial<ApartmentFilter>;
+}
+
+const Page: NextPage<PageProps> = ({ filter }) => {
     return (
-        <>
-            <ProtectWrapper acceptRoles={[UserRole.ADMIN]}>
-                <ModalProvider>
-                    <TableUtilProvider>
-                        <DashboardHeaderLayout title="Apartment Management">
-                            <></>
-                        </DashboardHeaderLayout>
-                    </TableUtilProvider>
-                </ModalProvider>
-            </ProtectWrapper>
-        </>
+        <ProtectWrapper acceptRoles={[UserRole.ADMIN]}>
+            <ModalProvider>
+                <TableUtilProvider>
+                    <DashboardHeaderLayout title="Apartment Management">
+                        <ApartmentList filter={filter} />
+                    </DashboardHeaderLayout>
+                </TableUtilProvider>
+            </ModalProvider>
+        </ProtectWrapper>
     );
 };
 
+Page.getInitialProps = async (ctx): Promise<PageProps> => {
+    return {
+        filter: objectHelper.getObjectWithDefault<Partial<ApartmentFilter>>(ctx.query, {
+            ...defaultPagingProps,
+            address: '',
+            name,
+        }),
+    };
+};
 export default Page;
