@@ -120,6 +120,7 @@ const menuAdminList: ItemType[] = [
     },
 ];
 
+const menuUndefined: ItemType[] = [];
 const menuStaffList: ItemType[] = [
     {
         icon: <AreaChartOutlined />,
@@ -215,8 +216,13 @@ export const DashboardLayout: React.FC<DashboardLayoutProps> = ({ children }) =>
                                     }}
                                     defaultSelectedKeys={[router.pathname]}
                                     items={
-                                        //*TODO check user role for the sidebar menu
-                                        user.roleName === UserRole.ADMIN ? menuAdminList : UserRole.COLLECTED_STAFF ? menuStaffList : menuFarmHubList
+                                        user.roleName === UserRole.ADMIN
+                                            ? menuAdminList
+                                            : user.roleName === UserRole.FARM_HUB
+                                            ? menuFarmHubList
+                                            : user.roleName === UserRole.COLLECTED_STAFF
+                                            ? menuStaffList
+                                            : menuUndefined
                                     }
                                 />
                             </div>

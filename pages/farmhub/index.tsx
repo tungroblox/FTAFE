@@ -3,7 +3,6 @@ import { ProtectWrapper } from '@components/wrappers';
 import { ModalProvider } from '@context/modalContext';
 import { TableUtilProvider } from '@context/tableUtilContext';
 import { IV1GetFilterCandidate } from '@core/api/candidate';
-import FarmHubList from '@features/admin/user/farmhub/FarmHubList';
 import { UserRole } from '@models/user';
 import { NextPage } from 'next';
 
@@ -17,7 +16,8 @@ const Page: NextPage<PageProps> = ({ filter }) => {
             <ModalProvider>
                 <TableUtilProvider>
                     <DashboardHeaderLayout title="Farm Hub Management">
-                        <FarmHubList />
+                        {/* <FarmHubList /> */}
+                        <></>
                     </DashboardHeaderLayout>
                 </TableUtilProvider>
             </ModalProvider>
