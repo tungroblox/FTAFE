@@ -1,18 +1,15 @@
-import { TableActionCell, TableBuilder, TableHeaderCell } from '@components/tables';
+import { TableBuilder, TableHeaderCell } from '@components/tables';
 import { productAPI } from '@core/api/product.api';
 import { routes } from '@core/routes';
 import { Product } from '@models/product';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { Button, Modal, Tag } from 'antd';
+import { Modal, Tag } from 'antd';
 import clsx from 'clsx';
 import Link from 'next/link';
 import * as React from 'react';
 import { toast } from 'react-toastify';
 
 import { WarningOutlined } from '@ant-design/icons';
-import { PlusIcon } from '@heroicons/react/24/outline';
-import CreateProductModal from './components/CreateProductModal';
-import UpdateProductModal from './components/UpdateProductModal';
 
 interface ProductListProps {}
 
@@ -75,7 +72,7 @@ const ProductList: React.FunctionComponent<ProductListProps> = () => {
 
     return (
         <div className="flex flex-col w-full gap-10">
-            <div className="flex flex-col items-end w-full gap-2 ">
+            {/* <div className="flex flex-col items-end w-full gap-2 ">
                 <button
                     onClick={() => {
                         setOpenCreateModalState(!openCreateModalState);
@@ -87,7 +84,7 @@ const ProductList: React.FunctionComponent<ProductListProps> = () => {
                         <strong>Thêm Sản Phẩm</strong>
                     </span>
                 </button>
-            </div>
+            </div> */}
             {/* <FormFilterWrapper<IV1GetFilterExpert> defaultValues={{ ...filter }}>
                 <div className="w-56">
                     <TextInput name="name" label="Name" />
@@ -106,7 +103,7 @@ const ProductList: React.FunctionComponent<ProductListProps> = () => {
                         title: () => <TableHeaderCell key="name" sortKey="name" label="Sản Phẩm" />,
                         width: 400,
                         key: 'name',
-                        render: ({ ...props }: Product) => <Link href={routes.admin.product.detail(props.id)}>{props.name}</Link>,
+                        render: ({ ...props }: Product) => <span>{props.name}</span>,
                     },
                     {
                         title: () => <TableHeaderCell key="code" sortKey="code" label="Mã Code" />,
@@ -132,7 +129,7 @@ const ProductList: React.FunctionComponent<ProductListProps> = () => {
                     {
                         title: () => <TableHeaderCell key="detail" sortKey="detail" label="Các sản phẩm" />,
                         width: 400,
-                        key: 'createdAt',
+                        key: 'detail',
                         render: ({ ...props }: Product) => (
                             <div
                                 onClick={() => {
@@ -143,43 +140,20 @@ const ProductList: React.FunctionComponent<ProductListProps> = () => {
                             </div>
                         ),
                     },
-                    {
-                        title: () => <TableHeaderCell key="" sortKey="" label="" />,
-                        width: 100,
-                        key: 'action',
-                        render: ({ ...props }: Product) => {
-                            return (
-                                <TableActionCell
-                                    label="Chỉnh Sửa"
-                                    actions={[
-                                        {
-                                            label: (
-                                                <Button type="primary" className="w-full">
-                                                    Thay Đổi
-                                                </Button>
-                                            ),
-                                            onClick: () => {
-                                                setOpenUpdateModalState(!openUpdateModalState);
-                                                setProductValue(props);
-                                            },
-                                        },
-                                        {
-                                            label: (
-                                                <Button type="primary" danger className="w-full">
-                                                    Xóa
-                                                </Button>
-                                            ),
-                                            onClick: () => handleDeleteProduct(props.id),
-                                        },
-                                    ]}
-                                />
-                            );
-                        },
-                    },
+                    // {
+                    //     title: () => <TableHeaderCell key="" sortKey="" label="" />,
+                    //     width: 100,
+                    //     key: 'action',
+                    //     render: ({ ...props }: Product) => (
+                    //         <Link href={routes.farmhub.product.detail(props.id)}>
+                    //             <button className="text-blue-500">Xem Chi tiết</button>
+                    //         </Link>
+                    //     ),
+                    // },
                 ]}
             />
-            <CreateProductModal open={openCreateModalState} onCancel={() => setOpenCreateModalState(false)} />
-            <UpdateProductModal open={openUpdateModalState} onCancel={() => setOpenUpdateModalState(false)} currentValue={productValue} />
+            {/* <CreateProductModal open={openCreateModalState} onCancel={() => setOpenCreateModalState(false)} />
+            <UpdateProductModal open={openUpdateModalState} onCancel={() => setOpenUpdateModalState(false)} currentValue={productValue} /> */}
         </div>
     );
 };

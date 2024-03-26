@@ -1,5 +1,6 @@
 import _get from 'lodash.get';
 
+import { CreateProductItem } from '@models/product-item';
 import { http } from './http';
 export const ProductItemAPI = {
     getAllByProductId: async (productId: string) => {
@@ -13,5 +14,9 @@ export const ProductItemAPI = {
     deleteProductItem: async (productId: string) => {
         const res = await http.delete(`/product-item/${productId}`);
         return res;
+    },
+    createProductItem: async (body: CreateProductItem, id: string) => {
+        const res = await http.post(`product/${id}/product-item`, body);
+        return _get(res, 'data');
     },
 };

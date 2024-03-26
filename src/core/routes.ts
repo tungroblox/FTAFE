@@ -79,6 +79,30 @@ export const routes = {
     },
     farmhub: {
         home: () => '/farmhub',
+        product: {
+            list: () => '/farmhub/product',
+            detail: (id: string) => `/farmhub/product/${id}`,
+        },
+        category: {
+            list: () => '/farmhub/categories',
+            create: () => '/farmhub/categories/create',
+            edit: () => '/farmhub/categories/edit',
+        },
+        businessDay: {
+            list: () => '/farmhub/business-day',
+            create: () => '/farmhub/business-day/create',
+            edit: () => '/farmhub/business-day/edit',
+        },
+        order: {
+            list: () => '/farmhub/order',
+            create: () => '/farmhub/order/create',
+            edit: () => '/farmhub/order/edit',
+        },
+        menu: {
+            list: () => '/farmhub/menu',
+            create: () => '/farmhub/menu/create',
+            edit: () => '/farmhub/menu/edit',
+        },
     },
 
     staff: {

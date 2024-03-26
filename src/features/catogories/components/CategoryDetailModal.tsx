@@ -1,6 +1,6 @@
 import { TableBuilder, TableHeaderCell } from '@components/tables';
 import { CategoryAPI } from '@core/api/category.api';
-import { ProductAPI } from '@core/api/product.api';
+import { productAPI } from '@core/api/product.api';
 import { Category } from '@models/category';
 import { Product } from '@models/product';
 import { useQuery } from '@tanstack/react-query';
@@ -24,7 +24,7 @@ const CategoryDetailModal: React.FunctionComponent<CategoryDetail> = ({ category
     const getProductByCategoryQuery = useQuery({
         queryKey: ['products', categoryId],
         queryFn: async () => {
-            const res = await ProductAPI.getProductsByCategoryId(categoryId);
+            const res = await productAPI.getProductsByCategoryId(categoryId);
             return res;
         },
     });

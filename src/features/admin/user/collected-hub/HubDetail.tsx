@@ -83,13 +83,13 @@ const HubDetail: React.FC<HubDetailProps> = ({ value }) => {
                                 ),
                             },
                             {
-                                title: () => <TableHeaderCell key="firstName" sortKey="firstName" label="firstName" />,
+                                title: () => <TableHeaderCell key="firstName" sortKey="firstName" label="First Name" />,
                                 width: 400,
                                 key: 'firstName',
                                 render: ({ ...props }: Staff) => <p>{props.firstName}</p>,
                             },
                             {
-                                title: () => <TableHeaderCell key="lastName" sortKey="lastName" label="lastName" />,
+                                title: () => <TableHeaderCell key="lastName" sortKey="lastName" label="Last Name" />,
                                 width: 400,
                                 key: 'lastName',
                                 render: ({ ...props }: Staff) => <p>{props.lastName}</p>,

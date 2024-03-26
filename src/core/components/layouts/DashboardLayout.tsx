@@ -1,5 +1,17 @@
-import { AreaChartOutlined, FieldTimeOutlined, HomeOutlined, MenuFoldOutlined, MenuUnfoldOutlined, UserOutlined } from '@ant-design/icons';
+import {
+    AreaChartOutlined,
+    DatabaseOutlined,
+    FieldTimeOutlined,
+    FolderOpenOutlined,
+    HomeOutlined,
+    MenuFoldOutlined,
+    MenuOutlined,
+    MenuUnfoldOutlined,
+    OrderedListOutlined,
+    UserOutlined,
+} from '@ant-design/icons';
 import { routes } from '@core/routes';
+import { ArchiveBoxIcon } from '@heroicons/react/24/outline';
 import { useLogoutMutation } from '@hooks/api/auth.hook';
 import { UserRole } from '@models/user';
 import { Person, PersonCheck, SignOut } from 'akar-icons';
@@ -107,13 +119,46 @@ const menuAdminList: ItemType[] = [
         key: routes.admin.businessDay(),
     },
 ];
-const menuFarmHubList: ItemType[] = [];
 
 const menuStaffList: ItemType[] = [
     {
         icon: <AreaChartOutlined />,
         label: 'Tình trạng hàng hóa',
         key: routes.staff.home(),
+    },
+];
+const menuFarmHubList: ItemType[] = [
+    {
+        icon: <AreaChartOutlined />,
+        label: 'Dashboard',
+        key: routes.farmhub.home(),
+    },
+    {
+        icon: <DatabaseOutlined />,
+        label: 'Danh sách sản phẩm',
+        key: 'product',
+        children: [
+            {
+                key: routes.farmhub.businessDay.list(),
+                label: 'Ngày bán',
+                icon: <FolderOpenOutlined />,
+            },
+            {
+                label: 'Sản phẩm',
+                key: routes.farmhub.product.list(),
+                icon: <ArchiveBoxIcon className="w-4 h-4 text-jacarta-700 dark:text-white" strokeWidth={2} />,
+            },
+            {
+                label: 'Đơn hàng',
+                key: routes.farmhub.order.list(),
+                icon: <OrderedListOutlined />,
+            },
+            {
+                label: 'Menu',
+                key: routes.farmhub.menu.list(),
+                icon: <MenuOutlined />,
+            },
+        ],
     },
 ];
 interface DashboardLayoutProps {

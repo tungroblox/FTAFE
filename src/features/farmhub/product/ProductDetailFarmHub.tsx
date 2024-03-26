@@ -1,20 +1,22 @@
 import { WarningOutlined } from '@ant-design/icons';
-import { TableBuilder, TableHeaderCell } from '@components/tables';
+import { TableActionCell, TableBuilder, TableHeaderCell } from '@components/tables';
 import { ProductItemAPI } from '@core/api/product-item.api';
-import { routes } from '@core/routes';
 import { Product } from '@models/product';
 import { ProductItem } from '@models/product-item';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { Badge, Button, Descriptions, Image, Modal } from 'antd';
-import Link from 'next/link';
+import { PlusIcon } from 'lucide-react';
+import moment from 'moment';
+import React from 'react';
 import { toast } from 'react-toastify';
+import CreateProductItemModal from '../../product/components/CreateProductItemModal';
 
-interface ProductDetailProps {
+interface ProductDetailFarmHubProps {
     product: Product;
 }
-const ProductDetail: React.FC<ProductDetailProps> = ({ product }) => {
+const ProductDetailFarmHub: React.FC<ProductDetailFarmHubProps> = ({ product }) => {
     const { data, isLoading } = useQuery({
-        queryFn: async (_) => await ProductItemAPI.getAllByProductId(product.id),
+        queryFn: async (_) => await ProductItemAPI.getAllByProductId(product.id || ''),
         queryKey: ['product-items', 'product', product?.id],
     });
 
@@ -23,6 +25,7 @@ const ProductDetail: React.FC<ProductDetailProps> = ({ product }) => {
     const deleteItemMutation = useMutation(async (id: string) => await ProductItemAPI.deleteProductItem(id));
 
     const queryClient = useQueryClient();
+    const [openCreateModalState, setOpenCreateModalState] = React.useState<boolean>(false);
 
     const handleDeleteProductItem = (id: string) => {
         Modal.confirm({
@@ -49,6 +52,19 @@ const ProductDetail: React.FC<ProductDetailProps> = ({ product }) => {
 
     return (
         <>
+            {/* <div className="flex flex-col items-end w-full gap-2 ">
+                <button
+                    onClick={() => {
+                        setOpenCreateModalState(!openCreateModalState);
+                    }}
+                    className="flex items-center gap-1 px-3 py-1 text-white duration-300 hover:text-white hover:bg-primary/90 bg-primary"
+                >
+                    <PlusIcon className="w-5 h-5 text-white" />
+                    <span>
+                        <strong>Thêm Sản Phẩm</strong>
+                    </span>
+                </button>
+            </div> */}
             <div className="flex flex-col w-full gap-4">
                 <Descriptions
                     labelStyle={{
@@ -57,7 +73,19 @@ const ProductDetail: React.FC<ProductDetailProps> = ({ product }) => {
                     bordered
                     title={'Thông tin liên quan đến sản phẩm'}
                     className="p-4 bg-white rounded-lg"
-                    extra={<Button>Update</Button>}
+                    extra={
+                        <button
+                            onClick={() => {
+                                setOpenCreateModalState(!openCreateModalState);
+                            }}
+                            className="flex items-center gap-1 px-3 py-1 text-white duration-300 hover:text-white hover:bg-primary/90 bg-primary"
+                        >
+                            <PlusIcon className="w-5 h-5 text-white" />
+                            <span>
+                                <strong>Thêm Sản Phẩm</strong>
+                            </span>
+                        </button>
+                    }
                 >
                     <Descriptions.Item label="Sản Phẩm" span={3}>
                         {product?.name}
@@ -70,7 +98,7 @@ const ProductDetail: React.FC<ProductDetailProps> = ({ product }) => {
                         <Badge status={product?.status === 'Active' ? 'processing' : 'error'} text={product?.status} />
                     </Descriptions.Item>
                     <Descriptions.Item label="Ngày tạo" span={2}>
-                        {product?.createdAt}
+                        {moment(product?.createdAt).format('DD/MM/YYYY')}
                     </Descriptions.Item>
                 </Descriptions>
                 <Descriptions
@@ -140,7 +168,8 @@ const ProductDetail: React.FC<ProductDetailProps> = ({ product }) => {
                                     width: 400,
                                     key: 'status',
                                     render: ({ ...props }: ProductItem) => {
-                                        return <Link href={routes.admin.user.farm_hub.detail(props.farmHubId)}>{props.farmHubId}</Link>;
+                                        // return <Link href={routes.admin.user.farm_hub.detail(props.farmHubId)}>{props.farmHubId}</Link>;
+                                        return <Badge status={props.status === 'Selling' ? 'success' : 'warning'} text={props.status} />;
                                     },
                                 },
                                 {
@@ -148,7 +177,32 @@ const ProductDetail: React.FC<ProductDetailProps> = ({ product }) => {
                                     width: 200,
                                     key: 'action',
                                     render: ({ ...props }: Product) => {
-                                        return <Button onClick={() => handleDeleteProductItem(props.id)}>Delete</Button>;
+                                        return (
+                                            <TableActionCell
+                                                label="Chỉnh Sửa"
+                                                actions={[
+                                                    //    {
+                                                    //        label: (
+                                                    //            <Button type="primary" className="w-full">
+                                                    //                Thay Đổi
+                                                    //            </Button>
+                                                    //        ),
+                                                    //        onClick: () => {
+                                                    //            setOpenUpdateModalState(!openUpdateModalState);
+                                                    //            setProductValue(props);
+                                                    //        },
+                                                    //    },
+                                                    {
+                                                        label: (
+                                                            <Button type="primary" danger className="w-full">
+                                                                Xóa
+                                                            </Button>
+                                                        ),
+                                                        onClick: () => handleDeleteProductItem(props.id),
+                                                    },
+                                                ]}
+                                            />
+                                        );
                                     },
                                 },
                             ]}
@@ -156,8 +210,9 @@ const ProductDetail: React.FC<ProductDetailProps> = ({ product }) => {
                     </div>
                 </Descriptions>
             </div>
+            <CreateProductItemModal open={openCreateModalState} onCancel={() => setOpenCreateModalState(false)} />
         </>
     );
 };
 
-export default ProductDetail;
+export default ProductDetailFarmHub;
