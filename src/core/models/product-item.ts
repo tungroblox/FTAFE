@@ -16,6 +16,7 @@ export interface ProductItem {
     status: string;
     unit: string;
     productImages: productImage[];
+    sold: number;
 }
 
 export interface productImage {
