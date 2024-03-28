@@ -1,5 +1,6 @@
 import { WarningOutlined } from '@ant-design/icons';
 import { TableActionCell, TableBuilder, TableHeaderCell } from '@components/tables';
+import { useTableUtil } from '@context/tableUtilContext';
 import { ProductItemAPI } from '@core/api/product-item.api';
 import { Product } from '@models/product';
 import { ProductItem } from '@models/product-item';
@@ -17,8 +18,13 @@ interface ProductDetailFarmHubProps {
     farmHubId: string;
 }
 const ProductDetailFarmHub: React.FC<ProductDetailFarmHubProps> = ({ product, farmHubId }) => {
+    const { setTotalItem } = useTableUtil();
     const { data, isLoading } = useQuery({
-        queryFn: async (_) => await ProductItemAPI.getProductItemByFarmHubIdAndProductId(farmHubId, product.id as string),
+        queryFn: async (_) => {
+            const res = await ProductItemAPI.getProductItemByFarmHubIdAndProductId(farmHubId, product.id as string);
+            setTotalItem(res?.payload.length);
+            return res;
+        },
         queryKey: ['product-items', 'product', product?.id],
     });
 

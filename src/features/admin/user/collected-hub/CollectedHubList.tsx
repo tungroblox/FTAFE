@@ -30,7 +30,10 @@ const CollectedHubList: React.FunctionComponent<CollectedHubListProps> = ({ filt
     const { data, isLoading } = useQuery({
         queryKey: ['collected-hub-list'],
         queryFn: async () => {
-            const res = await CollectedHubAPI.getAll(filter);
+            const res = await CollectedHubAPI.getAll({
+                ...filter,
+                pageSize: 999,
+            });
             setTotalItem(res.length);
             return res;
         },

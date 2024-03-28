@@ -24,13 +24,14 @@ interface StationListProps {
 }
 
 const StationList: React.FunctionComponent<StationListProps> = ({ filter }) => {
+    console.log('filter:', filter);
     const router = useRouter();
-    const { setTotalItem } = useTableUtil();
+    const { setTotalItem, setPageSize } = useTableUtil();
 
     const { data, isLoading } = useQuery({
         queryKey: ['stations', filter],
         queryFn: async () => {
-            const res = await StationAPI.getAll(filter);
+            const res = await StationAPI.getAll({ ...filter, pageSize: 999 });
             setTotalItem(res.length);
             return res;
         },

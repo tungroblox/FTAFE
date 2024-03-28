@@ -2,6 +2,7 @@ import { DashOutlined } from '@ant-design/icons';
 import { TextInput } from '@components/forms';
 import FormFilterWrapper from '@components/forms/FormFilterWrapper';
 import { TableBodyCell, TableBuilder, TableHeaderCell } from '@components/tables';
+import { useTableUtil } from '@context/tableUtilContext';
 import { CustomerAPI } from '@core/api/customer.api';
 import { IV1GetFilterExpert } from '@core/api/expert.api';
 import { Customer, CustomerFilter } from '@models/customer';
@@ -18,14 +19,18 @@ interface CustomerListProps {
 }
 
 const CustomerList: React.FunctionComponent<CustomerListProps> = ({ filter }) => {
+    const { setTotalItem } = useTableUtil();
     const { data, isLoading } = useQuery({
         queryKey: ['customers', filter],
         queryFn: async () => {
-            const res = await CustomerAPI.getAll(filter);
+            const res = await CustomerAPI.getAll({ ...filter, pageSize: 999 });
             return res;
         },
     });
     const listCustomer = data?.payload || [];
+    React.useEffect(() => {
+        setTotalItem(listCustomer.length);
+    }, [listCustomer]);
     return (
         <div className="flex flex-col w-full gap-2">
             <FormFilterWrapper<IV1GetFilterExpert> defaultValues={{ ...filter }}>
