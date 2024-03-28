@@ -9,6 +9,7 @@ import { PlusIcon } from 'lucide-react';
 import moment from 'moment';
 import React from 'react';
 import { toast } from 'react-toastify';
+
 import CreateProductItemModal from '../../product/components/CreateProductItemModal';
 
 interface ProductDetailFarmHubProps {

@@ -1,5 +1,6 @@
 import { WarningOutlined } from '@ant-design/icons';
 import { TableActionCell, TableBuilder, TableHeaderCell } from '@components/tables';
+import { useTableUtil } from '@context/tableUtilContext';
 import { productAPI } from '@core/api/product.api';
 import { routes } from '@core/routes';
 import { PlusIcon } from '@heroicons/react/24/outline';
@@ -19,10 +20,12 @@ import UpdateProductModal from './components/UpdateProductModal';
 interface ProductListProps {}
 
 const ProductList: React.FunctionComponent<ProductListProps> = () => {
+    const { setTotalItem } = useTableUtil();
     const { data, isLoading } = useQuery({
         queryKey: ['products'],
         queryFn: async () => {
             const res = await productAPI.getProducts();
+            setTotalItem(res?.payload.length);
             return res;
         },
     });

@@ -31,13 +31,7 @@ export const AvatarUploadInput: React.FC<ButtonUploadInputProps> = ({
 
     const uploadImageMutation = useMutation(
         async (file: RcFile) => {
-            // console.log('file:', file);
-            // const res = await toast.promise(fileApi.v1PostUpload(file), {
-            //     pending: 'Uploading file',
-            // });
-            // return res;
-
-            const snapshot = await uploadBytes(imagesRef(path, file.name), file);
+            await uploadBytes(imagesRef(path, file.name), file);
 
             const downloadURL = await toast.promise(getDownloadURL(imagesRef(path, file.name)), {
                 pending: 'Uploading file',
