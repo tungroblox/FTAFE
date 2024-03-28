@@ -1,7 +1,12 @@
+import { WarningOutlined } from '@ant-design/icons';
 import { TableActionCell, TableBuilder, TableHeaderCell } from '@components/tables';
+import { useTableUtil } from '@context/tableUtilContext';
 import { productAPI } from '@core/api/product.api';
 import { routes } from '@core/routes';
+import { PlusIcon } from '@heroicons/react/24/outline';
 import { Product } from '@models/product';
+import { UserRole } from '@models/user';
+import { useStoreUser } from '@store/index';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { Button, Modal, Tag } from 'antd';
 import clsx from 'clsx';
@@ -9,18 +14,18 @@ import Link from 'next/link';
 import * as React from 'react';
 import { toast } from 'react-toastify';
 
-import { WarningOutlined } from '@ant-design/icons';
-import { PlusIcon } from '@heroicons/react/24/outline';
 import CreateProductModal from './components/CreateProductModal';
 import UpdateProductModal from './components/UpdateProductModal';
 
 interface ProductListProps {}
 
 const ProductList: React.FunctionComponent<ProductListProps> = () => {
+    const { setTotalItem } = useTableUtil();
     const { data, isLoading } = useQuery({
         queryKey: ['products'],
         queryFn: async () => {
             const res = await productAPI.getProducts();
+            setTotalItem(res?.payload.length);
             return res;
         },
     });
@@ -72,6 +77,8 @@ const ProductList: React.FunctionComponent<ProductListProps> = () => {
             },
         });
     };
+
+    const user = useStoreUser();
 
     return (
         <div className="flex flex-col w-full gap-10">
@@ -139,7 +146,15 @@ const ProductList: React.FunctionComponent<ProductListProps> = () => {
                                     console.log('props:', props.id);
                                 }}
                             >
-                                <Link href={routes.farmhub.product.detail(props.id)}>Xem chi tiết</Link>
+                                <Link
+                                    href={
+                                        user.roleName === UserRole.FARM_HUB
+                                            ? routes.farmhub.product.detail(props.id)
+                                            : routes.admin.product.detail(props.id)
+                                    }
+                                >
+                                    Xem chi tiết
+                                </Link>
                             </div>
                         ),
                     },

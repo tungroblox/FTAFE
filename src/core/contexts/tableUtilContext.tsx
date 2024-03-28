@@ -41,6 +41,7 @@ export interface TableProviderProps extends React.PropsWithChildren {}
 export const TableUtilProvider: React.FC<TableProviderProps> = ({ children }) => {
     const [pageSize, setPageSize] = React.useState<number>(10);
     const [page, setPage] = React.useState<number>(0);
+    console.log('page:', page);
     const [totalItem, setTotalItem] = React.useState<number>(0);
     const [sortField, setSortField] = React.useState<string>('createdAt');
     const [sortOrder, setSortOrder] = React.useState<SortOrder>(SortOrder.ASC);

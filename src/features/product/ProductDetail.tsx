@@ -98,12 +98,14 @@ const ProductDetail: React.FC<ProductDetailProps> = ({ product }) => {
                                             fallback="https://www.eclosio.ong/wp-content/uploads/2018/08/default.png"
                                         />
                                     ),
+                                    fixed: 'left',
                                 },
                                 {
                                     title: () => <TableHeaderCell key="title" sortKey="title" label="Tên" />,
                                     width: 200,
                                     key: 'title',
                                     render: ({ ...props }: ProductItem) => <p>{props.title}</p>,
+                                    fixed: 'left',
                                 },
                                 {
                                     title: () => <TableHeaderCell key="productOrigin" sortKey="productOrigin" label="Nơi sản xuất" />,
@@ -136,9 +138,27 @@ const ProductDetail: React.FC<ProductDetailProps> = ({ product }) => {
                                     render: ({ ...props }: ProductItem) => <span>{props.unit}</span>,
                                 },
                                 {
-                                    title: () => <TableHeaderCell key="status" sortKey="status" label="Trạng thái" />,
+                                    title: () => <TableHeaderCell key="sold" sortKey="sold" label="Đã bán" />,
+                                    width: 200,
+                                    key: 'sold',
+                                    render: ({ ...props }: ProductItem) => <span>{props.sold}</span>,
+                                },
+                                {
+                                    title: () => <TableHeaderCell key="outOfStock" sortKey="outOfStock" label="Tình trạng" />,
+                                    width: 200,
+                                    key: 'outOfStock',
+                                    render: ({ ...props }: ProductItem) => <span>{props.outOfStock === false ? 'Còn hàng' : 'Hết hàng'}</span>,
+                                },
+                                {
+                                    title: () => <TableHeaderCell key="minOrder" sortKey="minOrder" label="Số lượng mua thấp nhất" />,
+                                    width: 300,
+                                    key: 'minOrder',
+                                    render: ({ ...props }: ProductItem) => <span>{props.minOrder}</span>,
+                                },
+                                {
+                                    title: () => <TableHeaderCell key="farmHubId" sortKey="farmHubId" label="Mã nông trại" />,
                                     width: 400,
-                                    key: 'status',
+                                    key: 'farmHubId',
                                     render: ({ ...props }: ProductItem) => {
                                         return <Link href={routes.admin.user.farm_hub.detail(props.farmHubId)}>{props.farmHubId}</Link>;
                                     },
@@ -150,6 +170,7 @@ const ProductDetail: React.FC<ProductDetailProps> = ({ product }) => {
                                     render: ({ ...props }: Product) => {
                                         return <Button onClick={() => handleDeleteProductItem(props.id)}>Delete</Button>;
                                     },
+                                    fixed: 'right',
                                 },
                             ]}
                         />

@@ -2,10 +2,7 @@ import { DashboardHeaderLayout } from '@components/layouts';
 import { ModalProvider } from '@context/modalContext';
 import { TableUtilProvider } from '@context/tableUtilContext';
 import { IV1GetFilterStaff } from '@core/api/staff.api';
-import StaffList from '@features/admin/user/staff/StaffList';
-import { defaultPagingProps } from '@models/interface';
 // import { UserRole } from '@models/user';
-import { objectHelper } from '@utils/index';
 import { NextPage } from 'next';
 
 interface StaffListPageProps {
@@ -18,7 +15,8 @@ const StaffListPage: NextPage<StaffListPageProps> = ({ filter }) => {
         <ModalProvider>
             <TableUtilProvider>
                 <DashboardHeaderLayout title="Sản Phẩm">
-                    <StaffList filter={filter} />
+                    {/* <StaffList filter={filter} /> */}
+                    <></>
                 </DashboardHeaderLayout>
             </TableUtilProvider>
         </ModalProvider>
@@ -26,14 +24,14 @@ const StaffListPage: NextPage<StaffListPageProps> = ({ filter }) => {
     );
 };
 
-StaffListPage.getInitialProps = async (ctx): Promise<StaffListPageProps> => {
-    return {
-        filter: objectHelper.getObjectWithDefault<Partial<IV1GetFilterStaff>>(ctx.query, {
-            ...defaultPagingProps,
-            name: '',
-            email: '',
-            phone: '',
-        }),
-    };
-};
+// StaffListPage.getInitialProps = async (ctx): Promise<StaffListPageProps> => {
+//     return {
+//         filter: objectHelper.getObjectWithDefault<Partial<IV1GetFilterStaff>>(ctx.query, {
+//             ...defaultPagingProps,
+//             name: '',
+//             email: '',
+//             phone: '',
+//         }),
+//     };
+// };
 export default StaffListPage;

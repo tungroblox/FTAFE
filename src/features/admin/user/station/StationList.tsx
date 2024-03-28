@@ -2,6 +2,7 @@ import { DashOutlined } from '@ant-design/icons';
 import { TextInput } from '@components/forms';
 import FormFilterWrapper from '@components/forms/FormFilterWrapper';
 import { TableBodyCell, TableBuilder, TableHeaderCell } from '@components/tables';
+import { useTableUtil } from '@context/tableUtilContext';
 import { IV1GetFilterExpert } from '@core/api/expert.api';
 import { StationAPI, StationFilter } from '@core/api/station.api';
 import { PlusIcon } from '@heroicons/react/24/outline';
@@ -23,12 +24,15 @@ interface StationListProps {
 }
 
 const StationList: React.FunctionComponent<StationListProps> = ({ filter }) => {
+    console.log('filter:', filter);
     const router = useRouter();
+    const { setTotalItem, setPageSize } = useTableUtil();
 
     const { data, isLoading } = useQuery({
         queryKey: ['stations', filter],
         queryFn: async () => {
-            const res = await StationAPI.getAll(filter);
+            const res = await StationAPI.getAll({ ...filter, pageSize: 999 });
+            setTotalItem(res.length);
             return res;
         },
     });

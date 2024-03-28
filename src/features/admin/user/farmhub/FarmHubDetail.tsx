@@ -1,7 +1,8 @@
 import { TableBuilder, TableHeaderCell } from '@components/tables';
 import { useQueryGetFarmHubMenu } from '@hooks/api/farmhub.hook';
 import { FarmHubMenu } from '@models/farmhub-menu';
-import { FarmHub } from '@models/user';
+import { FarmHub, UserRole } from '@models/user';
+import { useStoreUser } from '@store/index';
 import { Badge, Descriptions, Image, Tag } from 'antd';
 import clsx from 'clsx';
 import * as React from 'react';
@@ -12,6 +13,8 @@ interface FarmHubDetailProps {
 
 const FarmHubDetail: React.FunctionComponent<FarmHubDetailProps> = ({ farmHub }) => {
     const { data, isLoading } = useQueryGetFarmHubMenu(farmHub?.id);
+
+    const user = useStoreUser();
 
     return (
         <>
@@ -58,57 +61,59 @@ const FarmHubDetail: React.FunctionComponent<FarmHubDetailProps> = ({ farmHub })
                         {farmHub?.createdAt}
                     </Descriptions.Item>
                 </Descriptions>
-                <Descriptions
-                    labelStyle={{
-                        fontWeight: 'bold',
-                    }}
-                    bordered
-                    title={'Menu'}
-                    className="p-4 bg-white rounded-lg"
-                >
-                    <div className="flex flex-col w-full gap-2">
-                        <TableBuilder<FarmHubMenu>
-                            rowKey="id"
-                            isLoading={isLoading}
-                            data={data?.payload}
-                            columns={[
-                                {
-                                    title: () => <TableHeaderCell key="name" sortKey="productOrigin" label="name" />,
-                                    width: 400,
-                                    key: 'name',
-                                    render: ({ ...props }: FarmHubMenu) => <p>{props.name}</p>,
-                                },
-                                {
-                                    title: () => <TableHeaderCell key="tag" sortKey="tag" label="tag" />,
-                                    width: 400,
-                                    key: 'tag',
-                                    render: ({ ...props }: FarmHubMenu) => <p>{props.tag}</p>,
-                                },
-                                {
-                                    title: () => <TableHeaderCell key="businessDayId" sortKey="businessDayId" label="businessDayId" />,
-                                    width: 400,
-                                    key: 'businessDayId',
-                                    render: ({ ...props }: FarmHubMenu) => <p>{props.businessDayId}</p>,
-                                },
-                                {
-                                    title: () => <TableHeaderCell key="status" sortKey="status" label="Status" />,
-                                    width: 400,
-                                    key: 'status',
-                                    render: ({ ...props }: FarmHubMenu) => {
-                                        return (
-                                            <Tag
-                                                className={clsx(`text-sm whitespace-normal`)}
-                                                color={typeof props.status === 'string' && props.status === 'Active' ? 'geekblue' : 'volcano'}
-                                            >
-                                                {props.status}
-                                            </Tag>
-                                        );
+                {user.roleName === UserRole.FARM_HUB && (
+                    <Descriptions
+                        labelStyle={{
+                            fontWeight: 'bold',
+                        }}
+                        bordered
+                        title={'Menu'}
+                        className="p-4 bg-white rounded-lg"
+                    >
+                        <div className="flex flex-col w-full gap-2">
+                            <TableBuilder<FarmHubMenu>
+                                rowKey="id"
+                                isLoading={isLoading}
+                                data={data?.payload}
+                                columns={[
+                                    {
+                                        title: () => <TableHeaderCell key="name" sortKey="productOrigin" label="name" />,
+                                        width: 400,
+                                        key: 'name',
+                                        render: ({ ...props }: FarmHubMenu) => <p>{props.name}</p>,
                                     },
-                                },
-                            ]}
-                        />
-                    </div>
-                </Descriptions>
+                                    {
+                                        title: () => <TableHeaderCell key="tag" sortKey="tag" label="tag" />,
+                                        width: 400,
+                                        key: 'tag',
+                                        render: ({ ...props }: FarmHubMenu) => <p>{props.tag}</p>,
+                                    },
+                                    {
+                                        title: () => <TableHeaderCell key="businessDayId" sortKey="businessDayId" label="businessDayId" />,
+                                        width: 400,
+                                        key: 'businessDayId',
+                                        render: ({ ...props }: FarmHubMenu) => <p>{props.businessDayId}</p>,
+                                    },
+                                    {
+                                        title: () => <TableHeaderCell key="status" sortKey="status" label="Status" />,
+                                        width: 400,
+                                        key: 'status',
+                                        render: ({ ...props }: FarmHubMenu) => {
+                                            return (
+                                                <Tag
+                                                    className={clsx(`text-sm whitespace-normal`)}
+                                                    color={typeof props.status === 'string' && props.status === 'Active' ? 'geekblue' : 'volcano'}
+                                                >
+                                                    {props.status}
+                                                </Tag>
+                                            );
+                                        },
+                                    },
+                                ]}
+                            />
+                        </div>
+                    </Descriptions>
+                )}
             </div>
         </>
     );

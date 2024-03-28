@@ -2,6 +2,7 @@ import { DashOutlined } from '@ant-design/icons';
 import { TextInput } from '@components/forms';
 import FormFilterWrapper from '@components/forms/FormFilterWrapper';
 import { TableBodyCell, TableBuilder, TableHeaderCell } from '@components/tables';
+import { useTableUtil } from '@context/tableUtilContext';
 import { ApartmentAPI } from '@core/api/apartment.api';
 import { IV1GetFilterExpert } from '@core/api/expert.api';
 import { PlusIcon } from '@heroicons/react/24/outline';
@@ -22,11 +23,13 @@ interface ApartmentListProps {
 
 const ApartmentList: React.FunctionComponent<ApartmentListProps> = ({ filter }) => {
     const router = useRouter();
+    const { setTotalItem } = useTableUtil();
 
     const { data, isLoading } = useQuery({
         queryKey: ['apartments'],
         queryFn: async () => {
             const res = await ApartmentAPI.getAll(filter);
+            setTotalItem(res.length);
             return res;
         },
     });

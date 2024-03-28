@@ -2,6 +2,7 @@ import { DashOutlined } from '@ant-design/icons';
 import { TextInput } from '@components/forms';
 import FormFilterWrapper from '@components/forms/FormFilterWrapper';
 import { TableBodyCell, TableBuilder, TableHeaderCell } from '@components/tables';
+import { useTableUtil } from '@context/tableUtilContext';
 import { AreaAPI } from '@core/api/area.api';
 import { IV1GetFilterExpert } from '@core/api/expert.api';
 import { PlusIcon } from '@heroicons/react/24/outline';
@@ -22,11 +23,13 @@ interface AreaListProps {
 
 const AreaList: React.FunctionComponent<AreaListProps> = ({ filter }) => {
     const router = useRouter();
+    const { setTotalItem } = useTableUtil();
 
     const { data, isLoading } = useQuery({
         queryKey: ['areas', filter],
         queryFn: async () => {
             const res = await AreaAPI.getAll(filter);
+            setTotalItem(res.length);
             return res;
         },
     });

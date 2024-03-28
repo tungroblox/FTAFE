@@ -44,7 +44,7 @@ const CategoryList: React.FunctionComponent<CategoryListProps> = (filter) => {
         createdAt: '',
         updatedAt: '',
     });
-
+    const { setTotalItem } = useTableUtil();
     const { data, isLoading } = useQuery({
         queryKey: ['categories'],
         queryFn: async () => {
@@ -85,9 +85,6 @@ const CategoryList: React.FunctionComponent<CategoryListProps> = (filter) => {
     };
 
     const categories: Category[] = data?.payload;
-
-    const { setTotalItem } = useTableUtil();
-    console.log('setTotalItem:', setTotalItem);
 
     React.useEffect(() => {
         setTotalItem(categories?.length);
