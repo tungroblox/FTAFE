@@ -1,6 +1,5 @@
 import { Empty, Table } from 'antd';
 import { ColumnsType } from 'antd/lib/table';
-import * as React from 'react';
 
 interface TableBuilderDescriptionProps<T extends object> {
     data: T[];
@@ -42,7 +41,12 @@ export const TableBuilderDescription = <T extends object>({ columns, data, isLoa
                 triggerDesc: 'Sắp xếp giảm dần',
             }}
             loading={isLoading}
-            pagination={false}
+            pagination={{
+                pageSize: 10,
+                showSizeChanger: true,
+                pageSizeOptions: ['10', '20', '50', '100'],
+                showTotal: (total, range) => `${range[0]}-${range[1]} of ${total} items`,
+            }}
         />
     );
 };

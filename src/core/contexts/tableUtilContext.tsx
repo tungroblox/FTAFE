@@ -24,7 +24,7 @@ export interface ITableUtilContext {
 
 const TableUtilContext = React.createContext<ITableUtilContext>({
     pageSize: 10,
-    page: 1,
+    page: 0,
     totalItem: 0,
     handleOnChangePage: () => {},
     setPageSize: () => {},

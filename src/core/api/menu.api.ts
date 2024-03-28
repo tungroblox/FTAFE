@@ -1,6 +1,7 @@
 import _get from 'lodash.get';
 
 import { CreateMenu } from '@models/farmhub-menu';
+import { CreateProductItemInMenu } from '@models/product-item';
 import { http } from '.';
 
 export const MenuAPI = {
@@ -26,6 +27,18 @@ export const MenuAPI = {
     },
     updateMenu: async (id: string, body: CreateMenu) => {
         const res = await http.put(`menu/${id}`, body);
+        return _get(res, 'data');
+    },
+    getproductItemByMenuId: async (menuId: string) => {
+        const res = await http.get(`menu/${menuId}/product-items`);
+        return _get(res, 'data');
+    },
+    deleteProductItem: async (productId: string) => {
+        const res = await http.delete(`product-item-in-menu/${productId}`);
+        return res;
+    },
+    createProductItem: async (body: CreateProductItemInMenu, id: string) => {
+        const res = await http.post(`menu/${id}/product-item`, body);
         return _get(res, 'data');
     },
 };

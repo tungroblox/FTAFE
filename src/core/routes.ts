@@ -102,6 +102,7 @@ export const routes = {
             list: () => '/farmhub/menu',
             create: () => '/farmhub/menu/create',
             edit: () => '/farmhub/menu/edit',
+            detail: (id: string) => `/farmhub/menu/${id}`,
         },
     },
 

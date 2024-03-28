@@ -1,12 +1,14 @@
 import { WarningOutlined } from '@ant-design/icons';
 import { TableActionCell, TableBuilder, TableHeaderCell } from '@components/tables';
 import { MenuAPI } from '@core/api/menu.api';
+import { routes } from '@core/routes';
 import { useQueryGetAllMenus } from '@hooks/api/farmhub.hook';
 import { Menu } from '@models/menu';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { Modal, Tag } from 'antd';
 import clsx from 'clsx';
 import { PlusIcon } from 'lucide-react';
+import Link from 'next/link';
 import React from 'react';
 import { toast } from 'react-toastify';
 import CreateMenuModal from './CreateMenuModal';
@@ -130,6 +132,23 @@ const MenuList: React.FC<MenuListProps> = () => {
                                             },
                                         ]}
                                     />
+                                );
+                            },
+                        },
+                        {
+                            title: () => <TableHeaderCell key="" sortKey="" label="" />,
+                            width: 400,
+                            key: 'detail',
+                            render: ({ ...props }: Menu) => {
+                                return (
+                                    <div>
+                                        <Link
+                                            href={routes.farmhub.menu.detail(props.id)}
+                                            className="py-2 text-center text-white cursor-pointer bg-primary"
+                                        >
+                                            Xem sản phẩm của menu
+                                        </Link>
+                                    </div>
                                 );
                             },
                         },

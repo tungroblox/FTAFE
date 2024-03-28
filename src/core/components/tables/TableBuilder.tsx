@@ -45,10 +45,12 @@ export const TableBuilder = <T extends object>({ data, columns, rowKey, isLoadin
                 }}
                 loading={isLoading}
                 pagination={{
-                    total: totalItem,
-                    current: Number(page + 1),
+                    pageSize: 10,
+                    // showSizeChanger: true,
+                    pageSizeOptions: ['10', '20', '50', '100'],
+                    showTotal: (total, range) => `${range[0]}-${range[1]} of ${total} items`,
                 }}
-                onChange={(pagination) => handleOnChangePage((pagination.current || 0) - 1, pagination.pageSize || 10)}
+                // onChange={(pagination) => handleOnChangePage((pagination.current || 0) - 1, pagination.pageSize || 10)}
             />
         </div>
     );

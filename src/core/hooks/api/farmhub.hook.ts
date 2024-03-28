@@ -2,6 +2,7 @@ import { useTableUtil } from '@context/tableUtilContext';
 import { FarmHubAPI } from '@core/api/farmhub';
 import { MenuAPI } from '@core/api/menu.api';
 import { CreateFarmHubForm, UpdateFarmHubForm } from '@models/farmhub';
+import { Menu } from '@models/menu';
 import { useMutation, useQuery } from '@tanstack/react-query';
 
 export const useQueryFarmHub = () => {
@@ -80,4 +81,36 @@ export const useQueryGetAllMenus = () => {
             return res;
         },
     });
+};
+
+export const useQueryGetMenuById = (id: string) => {
+    return useQuery({
+        queryKey: ['menu', id],
+        queryFn: async () => {
+            const res = await MenuAPI.getById(id);
+            return res.payload as Menu;
+        },
+    });
+};
+
+export const useQueryGetProductItemByMenuId = (menuId: string) => {
+    return useQuery({
+        queryKey: ['product-items'],
+        queryFn: async () => {
+            const res = await MenuAPI.getproductItemByMenuId(menuId);
+            return res;
+        },
+    });
+};
+
+export const useDeleteProductItemInMenuMutation = () => {
+    const { mutate, mutateAsync, ...rest } = useMutation(async (productId: string) => {
+        const res = MenuAPI.deleteProductItem(productId);
+        return res;
+    });
+    return {
+        mutationDeleteProductItemInMenu: mutate,
+        mutationDeleteProductItemInMenuAsync: mutateAsync,
+        ...rest,
+    };
 };

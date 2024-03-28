@@ -98,7 +98,7 @@ const ProductDetailFarmHub: React.FC<ProductDetailFarmHubProps> = ({ product, fa
                     <Descriptions.Item label="Trạng thái" span={1}>
                         <Badge status={product?.status === 'Active' ? 'processing' : 'error'} text={product?.status} />
                     </Descriptions.Item>
-                    <Descriptions.Item label="Ngày tạo" span={2}>
+                    <Descriptions.Item label="Ngày tạo" span={1}>
                         {moment(product?.createdAt).format('DD/MM/YYYY')}
                     </Descriptions.Item>
                 </Descriptions>

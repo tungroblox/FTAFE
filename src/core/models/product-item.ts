@@ -31,3 +31,9 @@ export type CreateProductItem = Pick<
     ProductItem,
     'title' | 'description' | 'productOrigin' | 'specialTag' | 'storageType' | 'price' | 'quantity' | 'minOrder' | 'unit'
 >;
+
+export interface CreateProductItemInMenu {
+    productItemId: string;
+    salePrice: number;
+    saleQuantity: number;
+}
